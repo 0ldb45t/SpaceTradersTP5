@@ -1,13 +1,13 @@
 import { createWebHistory, createRouter } from "vue-router";
-import Home from "@/components/HomePage.component.vue";
+import RegisterAgentPage from "@/components/RegisterAgentPage.component.vue";
 
 
 
 const routes = [
     {
         path: "/",
-        name: "Home",
-        component: Home,
+        name: "RegisterAgentPage",
+        component: RegisterAgentPage,
     },
 ];
 const router = createRouter({

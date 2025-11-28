@@ -1,0 +1,1 @@
+export const fetchUrl = "https://api.spacetraders.io/v2/";
