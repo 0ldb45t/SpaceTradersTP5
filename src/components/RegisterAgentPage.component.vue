@@ -1,12 +1,12 @@
 <template>
-    <div class="w-100 d-flex flex-column justify-content-center align-items-center">
-        <h1 class="position-fixed rounded-5">
+    <div class="truc w-100 d-flex flex-column justify-content-center align-items-center">
+        <h1 class="rounded-5">
             Sélectionner un item de navigation dans le menu Direction : )
         </h1>
-        <button @click="fetchData">Get datas</button>
-        <hr/><br/><br/>
-        <CreateAgent v-if="localAgent == undefined"/>
-        <AgentComponent :agent="localAgent" v-else/>
+        <button @click="fetchDataAgent">Get agent Spike</button>
+        <button @click="fetchDataShips">Get systems data</button>
+        <CreateAgent v-if="localAgent === undefined" />
+        <AgentComponent :agent="localAgent" v-else />
     </div>
 </template>
 <script setup>
@@ -16,25 +16,38 @@ import { fetchUrl } from "../stores/fetchUrl";
 import { Agent } from '@/stores/agent';
 import CreateAgent from './CreateAgent.component.vue';
 import AgentComponent from './Agent.component.vue';
-//localStorage.setItem("agent", JSON.stringify(new Agent()));
 
-let localAgent = new Agent(JSON.parse(localStorage.getItem("agent")));
+
+const checkAgent = () => {
+    return localStorage.getItem("agent") === null;
+}
+
+let localAgent = checkAgent()
+    ? undefined
+    : new Agent(JSON.parse(localStorage.getItem("agent")));
 
 const options = {
     method: 'GET',
     headers: { Accept: 'application/json', Authorization: 'Bearer ' + SPIKE_TOKEN }
 };
-const fetchData = async () => {
+const fetchDataAgent = async () => {
     fetch(fetchUrl + "my/agent", options)
         .then(response => response.json())
-        .then(json => localStorage.setItem("agent", JSON.stringify(json.data)))
+        .then(json => {
+            localStorage.setItem("agent", JSON.stringify(json.data))
+            localAgent = json.data.agent;
+        })
+}
+const fetchDataShips = async () => {
+    fetch(fetchUrl + "my/ships", options)
+        .then(response => response.json())
+        .then(json => console.log(json));
 }
 </script>
 <style scoped>
-div {
+.truc {
     height: 100vh;
-    /*background-image: url("/home.jpg");
-    /*source : https://www.flickr.com/photos/nasawebbtelescope/52259221868/in/album-72177720300469752*/
+    background-image: url("/home.jpg");
     background-position: center;
     background-size: cover;
     margin-top: -5%;

@@ -1,5 +1,6 @@
 import { createWebHistory, createRouter } from "vue-router";
 import RegisterAgentPage from "@/components/RegisterAgentPage.component.vue";
+import ShowCurrentLocationPageComponent from "@/components/ShowCurrentLocationPage.component.vue";
 
 
 
@@ -9,6 +10,14 @@ const routes = [
         name: "RegisterAgentPage",
         component: RegisterAgentPage,
     },
+    {
+        path: "/currentLocation",
+        name: "CurrentLocationPage",
+        component: ShowCurrentLocationPageComponent,
+        params: {
+            nomAgent: String,
+        }
+    }
 ];
 const router = createRouter({
     history: createWebHistory(import.meta.env.baseUrl),

@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-info">
+    <div class="text-light">
         <h1>Créer votre agent:</h1>
         <label>Quel est le nom de votre agent? </label>
         <input v-model="symbol" />
@@ -29,12 +29,7 @@ const postAgentRequest = () => (
             localStorage.setItem("agent", JSON.stringify(jsonItem.data.agent))
             console.log(jsonItem)
         })
+        .catch(error => console.log(error))
 );
 </script>
-<style scoped>
-.truc {
-    background-color: rgb(168, 95, 0);
-    display: flex;
-
-}
-</style>
+<style scoped></style>
