@@ -11,23 +11,23 @@
 </template>
 <script setup>
 import { onBeforeMount } from 'vue';
-import { TOKEN } from '../stores/env';
+import { SPIKE_TOKEN, TOKEN } from '../stores/env';
 import { fetchUrl } from "../stores/fetchUrl";
 import { Agent } from '@/stores/agent';
 import CreateAgent from './CreateAgent.component.vue';
 import AgentComponent from './Agent.component.vue';
 //localStorage.setItem("agent", JSON.stringify(new Agent()));
-let localAgent = JSON.parse(localStorage.getItem("agent")) ;
-console.log(localAgent);
+
+let localAgent = new Agent(JSON.parse(localStorage.getItem("agent")));
 
 const options = {
     method: 'GET',
-    headers: { Accept: 'application/json', Authorization: 'Bearer ' + TOKEN }
+    headers: { Accept: 'application/json', Authorization: 'Bearer ' + SPIKE_TOKEN }
 };
 const fetchData = async () => {
-    fetch(fetchUrl, options)
+    fetch(fetchUrl + "my/agent", options)
         .then(response => response.json())
-        .then(json => console.log(json))
+        .then(json => localStorage.setItem("agent", JSON.stringify(json.data)))
 }
 </script>
 <style scoped>
