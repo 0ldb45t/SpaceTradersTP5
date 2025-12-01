@@ -11,7 +11,7 @@ const routes = [
         component: RegisterAgentPage,
     },
     {
-        path: "/currentLocation",
+        path: "/currentLocation/:nomAgent",
         name: "CurrentLocationPage",
         component: ShowCurrentLocationPageComponent,
         params: {

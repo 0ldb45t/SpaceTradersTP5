@@ -1,41 +1,37 @@
 <template>
-    <div class="truc w-100 d-flex flex-column justify-content-center align-items-center">
-        <h1 class="rounded-5">
-            Sélectionner un item de navigation dans le menu Direction : )
-        </h1>
+    <div class="truc w-100 d-flex flex-column justify-content-center align-items-center container">
         <button @click="fetchDataAgent">Get agent Spike</button>
         <button @click="fetchDataShips">Get systems data</button>
-        <CreateAgent v-if="localAgent === undefined" />
-        <AgentComponent :agent="localAgent" v-else />
+        <CreateAgent v-if="localAgent === undefined" :feedback="feedBack" />
+        <p v-if='feedBack !== ""'>{{ feedBack }}</p>
+        <AgentComponent v-else />
     </div>
 </template>
 <script setup>
-import { onBeforeMount } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import { SPIKE_TOKEN, TOKEN } from '../stores/env';
 import { fetchUrl } from "../stores/fetchUrl";
-import { Agent } from '@/stores/agent';
+import { Agent, agent } from '@/stores/agent';
 import CreateAgent from './CreateAgent.component.vue';
 import AgentComponent from './Agent.component.vue';
 
-
-const checkAgent = () => {
-    return localStorage.getItem("agent") === null;
-}
-
-let localAgent = checkAgent()
-    ? undefined
-    : new Agent(JSON.parse(localStorage.getItem("agent")));
-
+const feedBack = ref("");
+const localAgent = ref({});
 const options = {
     method: 'GET',
     headers: { Accept: 'application/json', Authorization: 'Bearer ' + SPIKE_TOKEN }
+};
+const optionsMain = {
+    method: 'GET',
+    headers: { Accept: 'application/json', Authorization: 'Bearer ' + TOKEN }
 };
 const fetchDataAgent = async () => {
     fetch(fetchUrl + "my/agent", options)
         .then(response => response.json())
         .then(json => {
             localStorage.setItem("agent", JSON.stringify(json.data))
-            localAgent = json.data.agent;
+            agent.value = new Agent(json.data);
+            localAgent.value = new Agent(json.data)
         })
 }
 const fetchDataShips = async () => {
@@ -43,16 +39,15 @@ const fetchDataShips = async () => {
         .then(response => response.json())
         .then(json => console.log(json));
 }
+onBeforeMount(() => { getCurrentAccount(); fetchDataAgent() })//fetchDataAgent())
+const getCurrentAccount = async () => {
+    fetch(fetchUrl, optionsMain)
+        .then(response => response.json())
+        .then(json => console.log(json)
+        );
+}
 </script>
 <style scoped>
-.truc {
-    height: 100vh;
-    background-image: url("/home.jpg");
-    background-position: center;
-    background-size: cover;
-    margin-top: -5%;
-}
-
 h1 {
     color: rgba(150, 255, 241, 0.7);
     padding: 20px;

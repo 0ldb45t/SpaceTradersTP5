@@ -12,7 +12,11 @@ import { fetchUrl } from '@/stores/fetchUrl';
 import { TOKEN, MAIL } from '@/stores/env';
 import { ref } from 'vue';
 const symbol = ref("");
-
+const props = defineProps(
+    {
+        feedBack: { type: Object, required: true }
+    }
+);
 const postAgentRequest = () => (
     fetch(`${fetchUrl}register`,
         {
@@ -22,8 +26,11 @@ const postAgentRequest = () => (
         }
     )
         .then(response => {
-            if(response.ok)
+            if (response.ok) {
+                feedBack = "Sauvegarde réussie!";
                 return response.json()
+            }
+            else feedBack = response.error.message;
         })
         .then(jsonItem => {
             localStorage.setItem("agent", JSON.stringify(jsonItem.data.agent))
