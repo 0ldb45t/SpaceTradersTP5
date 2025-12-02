@@ -1,19 +1,18 @@
 <template>
-    <div :class="cell.class" class="square flex-shrink-0" @mouseover="doWeDisplayData"></div>
+    <div :class="cell[0].class" class="square flex-shrink-0" @mouseover="doWeDisplayData"></div>
 </template>
 <script setup>
 import { defineProps, ref } from 'vue';
 const emit = defineEmits(['displayData'])
 const props = defineProps({ cell: { type: Object, required: false } });
 let cell = props.cell;
-let hover = ref(false);
-let i = 0;
+
 if (props.cell === undefined)
-    cell = new Object({ class: 'noir' });
+    cell = [new Object({ class: 'noir' })];
 
 const doWeDisplayData = (e) => {
 
-    if (cell?.symbol !== undefined)
+    if (cell[0].symbol !== undefined)
         emit('displayData', cell)
 };
 </script>

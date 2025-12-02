@@ -45,13 +45,17 @@ for (let i = 0; i < astres.length; i++) {
     if (dividedY > yMax.value)
         yMax.value = dividedY;
 
-    astresXY[`${dividedX}, ${dividedY}`] = astres[i];
-    const item = astresXY[`${dividedX}, ${dividedY}`];
+    if (astresXY[`${dividedX}, ${dividedY}`] !== undefined)
+        astresXY[`${dividedX}, ${dividedY}`].push(astres[i]);
+    else {
+        astresXY[`${dividedX}, ${dividedY}`] = [];
+        astresXY[`${dividedX}, ${dividedY}`].push(astres[i]);
+    }
+    const item = astresXY[`${dividedX}, ${dividedY}`][astresXY[`${dividedX}, ${dividedY}`].length - 1];
 
     if (dividedX === divideByt10AndRounded(props.position.x) && dividedY === divideByt10AndRounded(props.position.y)) {
         item.class = 'jaune';
         item.vousEtesIci = `Vous êtes ici!`
-
     }
     else if (astres[i].type === 'MOON') {
         item.class = 'bg-info';
@@ -72,7 +76,7 @@ for (let i = 0; i < astres.length; i++) {
         item.class = 'bg-danger';
     }
     else if (astres[i].type === 'GAS_GIANT') {
-        item.class = 'bg-light';
+        item.class = 'bg-danger';
     }
 
     else {

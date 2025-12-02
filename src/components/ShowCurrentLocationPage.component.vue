@@ -6,19 +6,24 @@
             <p>Symbole du WayPoint: {{ ships[0]?.nav.systemSymbol }}</p>
             <p>Position du WayPoint: { x: {{ shipPosition.x }}, y: {{ shipPosition.y }} }</p>
         </div>
-        <div class="data p-5 w-25 text-center flex-column align-self-end borderGreen" v-if="cell.symbol">
+        <div class="data p-5 w-25 text-center flex-column align-self-end borderGreen" v-if="cell.length > 0">
             <strong>
-                <p :class="{ vousEtesIci: cell.vousEtesIci }">{{ cell.vousEtesIci ?? 'Vous visez : ' }}</p>
                 <p>
-                    {{ cell.symbol }} : {{ cell.type }} :
+                    'Vous visez : '
                 </p>
-                <p>
-                    [x:{{ cell.x }}, y:{{ cell.y }}]
-                </p>
+                <div v-for="item in cell">
+                    <p :class="{ vousEtesIci: item.vousEtesIci }">{{ item.vousEtesIci }}</p>
+                    <p>
+                        {{ item.symbol }} : {{ item.type }} :
+                    </p>
+                    <p>
+                        [x:{{ item.x }}, y:{{ item.y }}]
+                    </p>
+                </div>
             </strong>
         </div>
     </div>
-    <div class="w-100">
+    <div class="w-100 mb-5">
         <MapComponent v-if="readytoMap" :astres="systemData" :position="shipPosition"
             @displayData="(cell) => { onCellHover(cell) }" />
     </div>
