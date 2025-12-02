@@ -1,18 +1,17 @@
 <template>
-    <div class="card w-100">
-        <h1 v-if="props.position">Position: {{ props?.position.symbol }}</h1>
-        <div class=" d-flex justify-content-center flex-column align-items-center w-100">
-            <div v-for="(row, x) in absoluteCoordinate" :key="x" class="row flex-shrink-0 w-100">
-                <div v-for="(y, i) in row" :class="y" :key="i" class="square flex-shrink-0">
 
-                </div>
-            </div>
+    <div class=" d-flex justify-content-center flex-column align-items-center w-100 mb-5">
+        <div v-for="(row, x) in absoluteCoordinate" :key="x" class="row flex-shrink-0">
+            <MapCellComponent v-for="(y, i) in row" :cell="y" :key="i">
+
+            </MapCellComponent>
         </div>
     </div>
 
+
 </template>
 <script setup>
-
+import MapCellComponent from './MapCell.component.vue';
 import { defineProps, onMounted, ref } from 'vue';
 const props = defineProps(
     {
@@ -27,59 +26,55 @@ let xMin = ref(0);
 let xMax = ref(0);
 let yMin = ref(0);
 let yMax = ref(0);
-let xMinT = ref(0);
-let xMaxT = ref(0);
-let yMinT = ref(0);
-let yMaxT = ref(0);
+
+
+const divideByt10AndRounded = (n) => Math.round(n / 10);
+
 for (let i = 0; i < astres.length; i++) {
-    if (Math.round(astres[i].x / 10) < xMin.value) {
-        xMin.value = Math.round(astres[i].x / 10);
-        xMinT.value = astres[i].x;
+    const dividedX = divideByt10AndRounded(astres[i].x);
+    const dividedY = divideByt10AndRounded(astres[i].y);
+
+    if (dividedX < xMin.value)
+        xMin.value = dividedX;
+    if (dividedX > xMax.value)
+        xMax.value = dividedX;
+    if (dividedY < yMin.value)
+        yMin.value = dividedY;
+    if (dividedY > yMax.value)
+        yMax.value = dividedY;
+
+    astresXY[`${dividedX}, ${dividedY}`] = astres[i];
+    const item = astresXY[`${dividedX}, ${dividedY}`];
+
+    if (dividedX === divideByt10AndRounded(props.position.x) && dividedY === divideByt10AndRounded(props.position.y)) {
+        item.class = 'jaune';
+        item.vousEtesIci = `Vous êtes ici! x: ${dividedX}, Y: ${dividedY}`
 
     }
-    if (Math.round(astres[i].x / 10) > xMax.value) {
-        xMax.value = Math.round(astres[i].x / 10);
-        xMaxT.value = astres[i].x;
-
-    }
-
-    if (Math.round(astres[i].y / 10) < yMin.value) {
-        yMin.value = Math.round(astres[i].y / 10);
-        yMinT.value = astres[i].y;
-
-    }
-
-    if (Math.round(astres[i].y / 10) > yMax.value) {
-        yMax.value = Math.round(astres[i].y / 10);
-        yMaxT.value = astres[i].y;
-
-    }
-    if (Math.round(astres[i].x / 10) === Math.round(props.position.x / 10) &&  Math.round(astres[i].y / 10) === Math.round(props.position.y / 10) )
-        astresXY[`${Math.round(astres[i].x / 10)},${Math.round(astres[i].y / 10)}`] = 'jaune';
     else if (astres[i].type === 'MOON') {
-        astresXY[`${Math.round(astres[i].x / 10)},${Math.round(astres[i].y / 10)}`] = 'bg-info';
+        item.class = 'bg-info';
     }
     else if (astres[i].type === 'ORBITAL_STATION') {
-        astresXY[`${Math.round(astres[i].x / 10)},${Math.round(astres[i].y / 10)}`] = 'bg-success';
+        item.class = 'bg-success';
     }
     else if (astres[i].type === 'ASTEROID') {
-        astresXY[`${Math.round(astres[i].x / 10)},${Math.round(astres[i].y / 10)}`] = 'bg-dark';
+        item.class = 'bg-dark';
     }
     else if (astres[i].type === 'FUEL_STATION') {
-        astresXY[`${Math.round(astres[i].x / 10)},${Math.round(astres[i].y / 10)}`] = 'bg-warning';
+        item.class = 'bg-warning';
     }
     else if (astres[i].type === 'PLANET') {
-        astresXY[`${Math.round(astres[i].x / 10)},${Math.round(astres[i].y / 10)}`] = 'bg-primary';
+        item.class = 'bg-primary';
     }
     else if (astres[i].type === 'JUMP_GATE') {
-        astresXY[`${Math.round(astres[i].x / 10)},${Math.round(astres[i].y / 10)}`] = 'bg-danger';
+        item.class = 'bg-danger';
     }
     else {
-        astresXY[`${Math.round(astres[i].x / 10)},${Math.round(astres[i].y / 10)}`] = 'bg-secondary';
+        item.class = 'bg-secondary';
     }
+    item.class += ' rond';
 
 }
-
 const toAbsolute = () => {
     let i = 0;
     let j = 0;
@@ -87,7 +82,7 @@ const toAbsolute = () => {
     for (let x = yMin.value; x <= yMax.value; x++) {
         returned[i] = [];
         for (let y = xMin.value; y <= xMax.value; y++) {
-            returned[i][j++] = astresXY[`${x},${y}`] ?? 'noir';
+            returned[i][j++] = astresXY[`${x}, ${y}`] ?? undefined;
         }
         i++;
         j = 0;
@@ -104,21 +99,5 @@ const absoluteCoordinate = ref(toAbsolute());
     flex-direction: row;
     flex-wrap: nowrap;
     flex-grow: 0;
-}
-.square {
-    width: 7px;
-    flex-grow: 0;
-    padding: 0;
-}
-.rouge {
-    background-color: red;
-}
-
-.noir {
-    background-color: black;
-}
-.jaune{
-    background-color: yellow;
-    border-radius: 10%;
 }
 </style>

@@ -1,10 +1,12 @@
 <template>
-    <div class="card">
+    <div class="card w-100 bg-dark bg-gradient text-light rounded-5 p-5">
         <h1>Position de : {{ nomAgent }}</h1>
         <p>Symbole du systeme: {{ ships[0]?.nav.systemSymbol }}</p>
         <p>Symbole du WayPoint: {{ ships[0]?.nav.systemSymbol }}</p>
         <p>Position du WayPoint: { x: {{ shipPosition.x }}, y: {{ shipPosition.y }} }</p>
-        <MapComponent v-if="readytoMap" :astres="systemData" :position="shipPosition" />
+        <div class="w-100">
+            <MapComponent v-if="readytoMap" :astres="systemData" :position="shipPosition" />
+        </div>
     </div>
 </template>
 <script setup>
@@ -70,6 +72,4 @@ const fetchDataCurrentSystem = () => {
 onBeforeMount(async () => {
     fetchDataShips()
 });
-
-
 </script>

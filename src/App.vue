@@ -1,6 +1,5 @@
-
 <template>
-    <div class="h-100">
+    <div class="main">
         <div class="container h-100">
             <HeaderComponent />
             <RouterView />
@@ -19,5 +18,6 @@ html {
     background-image: url("/home.jpg");
     background-position: center;
     background-size: cover;
+
 }
 </style>
