@@ -1,6 +1,6 @@
 <template>
-    <div class="card bg-gradient bg-light rounded-5 p-5">
-        <h1> {{ agent?.symbol }}</h1>
+    <div class="rounded-5 p-5">
+        <h1> Bienvenue {{ agent?.symbol }}</h1>
         <p>Nombre de vaisseaux: {{ agent?.shipCount }}</p>
         <p>Crédits: {{ agent?.credits }}</p>
         <ul v-for="ship in agent?.ships">

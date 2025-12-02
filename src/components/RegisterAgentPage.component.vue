@@ -1,10 +1,13 @@
 <template>
     <div class="truc w-100 d-flex flex-column justify-content-center align-items-center container">
-        <button @click="fetchDataAgent">Get agent Spike</button>
-        <button @click="fetchDataShips">Get systems data</button>
+
+
         <CreateAgent v-if="localAgent === undefined" :feedback="feedBack" />
         <p v-if='feedBack !== ""'>{{ feedBack }}</p>
         <AgentComponent v-else />
+        <div>
+            <p>Cet agent a jusqu'au {{ statusData.resetDate }} pour faire top1</p>
+        </div>
     </div>
 </template>
 <script setup>
@@ -17,6 +20,7 @@ import AgentComponent from './Agent.component.vue';
 
 const feedBack = ref("");
 const localAgent = ref({});
+const statusData = ref({});
 const options = {
     method: 'GET',
     headers: { Accept: 'application/json', Authorization: 'Bearer ' + SPIKE_TOKEN }
@@ -43,16 +47,11 @@ onBeforeMount(() => { getCurrentAccount(); fetchDataAgent() })//fetchDataAgent()
 const getCurrentAccount = async () => {
     fetch(fetchUrl, optionsMain)
         .then(response => response.json())
-        .then(json => console.log(json)
-        );
+        .then(json => statusData.value = json);
 }
+/*
+<button @click="fetchDataAgent">Get agent Spike</button>
+<button @click="fetchDataShips">Get systems data</button>
+*/
 </script>
-<style scoped>
-h1 {
-    color: rgba(150, 255, 241, 0.7);
-    padding: 20px;
-    background-color: rgba(12, 87, 87, 0.2);
-    border: 5px solid rgba(0, 37, 37, 0.7);
-    text-shadow: #551d57 1px 0 10px;
-}
-</style>
+<style scoped></style>

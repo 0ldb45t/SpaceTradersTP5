@@ -1,12 +1,26 @@
 <template>
-    <div class="card w-100 bg-dark bg-gradient text-light rounded-5 p-5">
-        <h1>Position de : {{ nomAgent }}</h1>
-        <p>Symbole du systeme: {{ ships[0]?.nav.systemSymbol }}</p>
-        <p>Symbole du WayPoint: {{ ships[0]?.nav.systemSymbol }}</p>
-        <p>Position du WayPoint: { x: {{ shipPosition.x }}, y: {{ shipPosition.y }} }</p>
-        <div class="w-100">
-            <MapComponent v-if="readytoMap" :astres="systemData" :position="shipPosition" />
+    <div class="d-flex flex-row pt-5 justify-content-between mb-2">
+        <div class="p-5 text-center align-self-end borderGreen">
+            <h1>Position de : {{ nomAgent }}</h1>
+            <p>Symbole du systeme: {{ ships[0]?.nav.systemSymbol }}</p>
+            <p>Symbole du WayPoint: {{ ships[0]?.nav.systemSymbol }}</p>
+            <p>Position du WayPoint: { x: {{ shipPosition.x }}, y: {{ shipPosition.y }} }</p>
         </div>
+        <div class="data p-5 w-25 text-center flex-column align-self-end borderGreen" v-if="cell.symbol">
+            <strong>
+                <p :class="{ vousEtesIci: cell.vousEtesIci }">{{ cell.vousEtesIci ?? 'Vous visez : ' }}</p>
+                <p>
+                    {{ cell.symbol }} : {{ cell.type }} :
+                </p>
+                <p>
+                    [x:{{ cell.x }}, y:{{ cell.y }}]
+                </p>
+            </strong>
+        </div>
+    </div>
+    <div class="w-100">
+        <MapComponent v-if="readytoMap" :astres="systemData" :position="shipPosition"
+            @displayData="(cell) => { onCellHover(cell) }" />
     </div>
 </template>
 <script setup>
@@ -26,7 +40,7 @@ const options = {
 
 const route = useRoute();
 const nomAgent = route.params.nomAgent;
-
+const cell = ref({});
 const fetchDataShips = async () => {
     fetch(fetchUrl + "my/ships", options)
         .then(response => {
@@ -61,7 +75,6 @@ const fetchDataCurrentSystem = () => {
         .then(response => {
             if (response.ok)
                 return response.json()
-
         })
         .then(json => {
             shipPosition.value = json.data;
@@ -69,7 +82,19 @@ const fetchDataCurrentSystem = () => {
         })
         .then(() => fetchDataSystem())
 }
+const onCellHover = (aCell) => {
+    cell.value = aCell;
+}
 onBeforeMount(async () => {
     fetchDataShips()
 });
 </script>
+<style scoped>
+.vousEtesIci {
+    color: red;
+}
+
+.borderGreen {
+    border: 2px solid green;
+}
+</style>

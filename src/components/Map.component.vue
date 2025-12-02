@@ -1,10 +1,11 @@
 <template>
 
-    <div class=" d-flex justify-content-center flex-column align-items-center w-100 mb-5">
-        <div v-for="(row, x) in absoluteCoordinate" :key="x" class="row flex-shrink-0">
-            <MapCellComponent v-for="(y, i) in row" :cell="y" :key="i">
-
-            </MapCellComponent>
+    <div class="map">
+        <div class="d-flex justify-content-center flex-column align-items-center w-100 mb-5">
+            <div v-for="(row, x) in absoluteCoordinate" :key="x" class="row flex-shrink-0">
+                <MapCellComponent v-for="(y, i) in row" :cell="y" :key="i"
+                    @displayData="(cell) => $emit('displayData', (cell))" />
+            </div>
         </div>
     </div>
 
@@ -12,7 +13,7 @@
 </template>
 <script setup>
 import MapCellComponent from './MapCell.component.vue';
-import { defineProps, onMounted, ref } from 'vue';
+import { ref } from 'vue';
 const props = defineProps(
     {
         astres: { type: Array, required: true },
@@ -21,6 +22,7 @@ const props = defineProps(
 );
 
 const astres = props.astres;
+
 let astresXY = [];
 let xMin = ref(0);
 let xMax = ref(0);
@@ -28,7 +30,7 @@ let yMin = ref(0);
 let yMax = ref(0);
 
 
-const divideByt10AndRounded = (n) => Math.round(n / 10);
+const divideByt10AndRounded = (n) => Math.floor(n / 10);
 
 for (let i = 0; i < astres.length; i++) {
     const dividedX = divideByt10AndRounded(astres[i].x);
@@ -48,7 +50,7 @@ for (let i = 0; i < astres.length; i++) {
 
     if (dividedX === divideByt10AndRounded(props.position.x) && dividedY === divideByt10AndRounded(props.position.y)) {
         item.class = 'jaune';
-        item.vousEtesIci = `Vous êtes ici! x: ${dividedX}, Y: ${dividedY}`
+        item.vousEtesIci = `Vous êtes ici!`
 
     }
     else if (astres[i].type === 'MOON') {
@@ -69,6 +71,10 @@ for (let i = 0; i < astres.length; i++) {
     else if (astres[i].type === 'JUMP_GATE') {
         item.class = 'bg-danger';
     }
+    else if (astres[i].type === 'GAS_GIANT') {
+        item.class = 'bg-light';
+    }
+
     else {
         item.class = 'bg-secondary';
     }
@@ -76,21 +82,21 @@ for (let i = 0; i < astres.length; i++) {
 
 }
 const toAbsolute = () => {
-    let i = 0;
-    let j = 0;
     let returned = [];
-    for (let x = yMin.value; x <= yMax.value; x++) {
-        returned[i] = [];
-        for (let y = xMin.value; y <= xMax.value; y++) {
-            returned[i][j++] = astresXY[`${x}, ${y}`] ?? undefined;
+    for (let y = yMin.value; y <= yMax.value; y++) {
+        const row = [];
+        for (let x = xMin.value; x <= xMax.value; x++) {
+            row.push(astresXY[`${x}, ${y}`] ?? undefined);
         }
-        i++;
-        j = 0;
+        returned.push(row);
     }
     return returned;
+
 }
 
 const absoluteCoordinate = ref(toAbsolute());
+
+
 </script>
 <style scoped>
 .row {
@@ -99,5 +105,10 @@ const absoluteCoordinate = ref(toAbsolute());
     flex-direction: row;
     flex-wrap: nowrap;
     flex-grow: 0;
+}
+
+.map:hover {
+    border: 2px solid green;
+    padding: 5px;
 }
 </style>

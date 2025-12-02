@@ -1,24 +1,21 @@
 <template>
-    <div class="data" v-if="hover && cell.symbol">
-        <strong>
-            <p v-if="cell.vousEtesIci">{{ cell.vousEtesIci + "," }}</p>
-            <p>{{ cell.type }}</p>
-        </strong>
-        <p>{{ cell.symbol }}</p>
-    </div>
-    <div :class="cell.class" class="square flex-shrink-0" @mouseover="showData" @mouseleave="showData"></div>
+    <div :class="cell.class" class="square flex-shrink-0" @mouseover="doWeDisplayData"></div>
 </template>
 <script setup>
 import { defineProps, ref } from 'vue';
+const emit = defineEmits(['displayData'])
 const props = defineProps({ cell: { type: Object, required: false } });
 let cell = props.cell;
 let hover = ref(false);
+let i = 0;
 if (props.cell === undefined)
     cell = new Object({ class: 'noir' });
-const showData = () => {
-    if (hover.value) hover.value = false
-    else hover.value = true;
-}
+
+const doWeDisplayData = (e) => {
+
+    if (cell?.symbol !== undefined)
+        emit('displayData', cell)
+};
 </script>
 <style scoped>
 .square {
@@ -26,6 +23,7 @@ const showData = () => {
     flex-grow: 0;
     padding: 0;
 }
+
 
 .rouge {
     background-color: red;
@@ -37,12 +35,11 @@ const showData = () => {
 }
 
 .jaune {
-    background: radial-gradient(closest-side, #a63f3f, #ffd900, #ffee00);
-    box-shadow: 25px 25px 25px red;
-    z-index: 5;
+    background: radial-gradient(closest-side, #d3be00, #ffd900, #fff569);
 }
-.rond{
-        border-radius: 50%;
+
+.rond {
+    border-radius: 50%;
 }
 
 .data {
@@ -54,5 +51,10 @@ const showData = () => {
     border-radius: 3px;
     width: 250px;
     z-index: 10;
+}
+
+.square:hover {
+    background-color: #3cff00;
+
 }
 </style>
