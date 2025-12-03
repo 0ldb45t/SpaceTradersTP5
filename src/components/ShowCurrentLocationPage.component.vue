@@ -52,7 +52,6 @@ const options = {
 };
 
 const route = useRoute();
-const nomAgent = route.params.nomAgent;
 const cell = ref({});
 const fetchDataShips = async () => {
     fetch(fetchUrl + "my/ships", options)

@@ -1,11 +1,17 @@
 <template>
   <div class="entete mt-5 d-flex flex-row align-items-center">
     <h1 class="p-1 d-inline">TRADERS IN SPACE</h1>
-    <div class=""></div>
+    <div>
+      <p>Test: {{ agent.symbol }}</p>
+    </div>
   </div>
 </template>
-<script setup>
 
+<script setup>
+  import useSpatialStore from '@/store';
+  const store = useSpatialStore();
+  const agent = store.agent;
+  console.log(agent);
 </script>
 <style scoped>
 h1 {
