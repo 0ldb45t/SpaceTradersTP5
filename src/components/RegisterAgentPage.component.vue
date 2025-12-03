@@ -1,13 +1,14 @@
 <template>
-    <div class="w-100 d-flex flex-column justify-content-center align-items-center container">
+    <div class="w-100 d-flex flex-column justify-content-between mt-3 gap-2">
 
 
         <CreateAgent v-if="localAgent === undefined" :feedback="feedBack" />
         <p v-if='feedBack !== ""'>{{ feedBack }}</p>
         <ShowCurrentLocationPageComponent v-else />
         <div>
-            <p v-if="statusData.serverResets !== undefined">Cet agent a jusqu'au
-                {{ new Date(statusData.serverResets.next) }} pour faire top1</p>
+            <p v-if="statusData.serverResets !== undefined">
+                Cet agent a jusqu'au{{ new Date(statusData.serverResets.next) }} pour faire top1
+            </p>
         </div>
     </div>
 </template>
@@ -20,7 +21,7 @@ import ShowCurrentLocationPageComponent from './ShowCurrentLocationPage.componen
 
 const store = useSpatialStore();
 
-const agent = store.agent;
+
 const fetchUrl = store.fetchUrl;
 const TOKEN = store.TOKEN;
 const SPIKE_TOKEN = store.SPIKE_TOKEN;
@@ -43,22 +44,26 @@ const fetchDataAgent = async () => {
         })
         .then(json => {
             localStorage.setItem("agent", JSON.stringify(json.data))
-
-            console.log(agent)
             localAgent.value = new Agent(json.data)
+            store.setAgent(localAgent.value);
         })
 }
 
 onBeforeMount(() => {
+    if (localStorage.getItem("agent") !== null) {
+        localAgent.value = JSON.parse(localStorage.getItem("agent"));
+        store.setAgent(localAgent.value);
+        return;
+    }
     getCurrentAccount();
-    fetchDataAgent();
-    store.setAgent(localAgent);
+    fetchDataAgent()
+
 });
 const getCurrentAccount = async () => {
     fetch(fetchUrl, optionsMain)
         .then(response => response.json())
         .then(json => statusData.value = json);
-}
+};
 
 </script>
 <style scoped></style>

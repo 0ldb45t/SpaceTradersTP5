@@ -19,11 +19,7 @@ const routes = [
         }
     }
 ];
-const router = createRouter({
+export const router = createRouter({
     history: createWebHistory(import.meta.env.baseUrl),
     routes,
 });
-
-
-
-export default router;

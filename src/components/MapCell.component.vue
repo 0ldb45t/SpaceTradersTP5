@@ -18,7 +18,7 @@ const doWeDisplayData = (e) => {
 </script>
 <style scoped>
 .square {
-    width: 7px;
+    width: 5px;
     flex-grow: 0;
     padding: 0;
 }
