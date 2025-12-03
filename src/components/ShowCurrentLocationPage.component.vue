@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex flex-row pt-5 justify-content-between mb-2 w-100">
-        <div v-if="agent.symbol !== undefined" class="p-5 text-center align-self-end borderGreen">
-            <h1>Position de : {{ agent.symbol }} : [x: {{ shipPosition.x }}, y: {{ shipPosition.y }} ]</h1>
+        <div v-if="agent?.symbol !== ''" class="p-5 text-center align-self-end borderGreen">
+            <h1>Position de : {{ agent.symbol }} : [ x: {{ shipPosition.x }}, y: {{ shipPosition.y }} ]</h1>
             <h3 class="p-0 m-0">Symbole du systeme: {{ ships[0]?.nav.systemSymbol }}</h3>
             <div v-for="trait in shipPosition.traits">
                 <p>{ Symbole: {{ trait.name }} }</p>
@@ -34,12 +34,12 @@
     </div>
 </template>
 <script setup>
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, ref, watch } from 'vue';
 import useSpatialStore from '@/store';
 import MapComponent from './Map.component.vue';
 
 const store = useSpatialStore();
-const agent = store.agent;
+let agent = store.agent;
 const fetchUrl = store.fetchUrl;
 const SPIKE_TOKEN = store.SPIKE_TOKEN;
 const ships = ref({});
@@ -95,9 +95,16 @@ const fetchDataCurrentSystem = () => {
 const onCellHover = (aCell) => {
     cell.value = aCell;
 }
-onBeforeMount(async () => {
+onBeforeMount(() => {
     fetchDataShips()
 });
+watch(
+    () => store.agentChanged,
+    () => {
+        agent = store.getAgent();
+    },
+    { deep: true }
+);
 </script>
 <style scoped>
 .vousEtesIci {

@@ -21,7 +21,7 @@ import ShowCurrentLocationPageComponent from './ShowCurrentLocationPage.componen
 
 const store = useSpatialStore();
 
-const agent = store.agent;
+
 const fetchUrl = store.fetchUrl;
 const TOKEN = store.TOKEN;
 const SPIKE_TOKEN = store.SPIKE_TOKEN;
@@ -45,13 +45,19 @@ const fetchDataAgent = async () => {
         .then(json => {
             localStorage.setItem("agent", JSON.stringify(json.data))
             localAgent.value = new Agent(json.data)
+            store.setAgent(localAgent.value);
         })
 }
 
 onBeforeMount(() => {
+    if (localStorage.getItem("agent") !== null) {
+        localAgent.value = JSON.parse(localStorage.getItem("agent"));
+        store.setAgent(localAgent.value);
+        return;
+    }
     getCurrentAccount();
-    fetchDataAgent();
-    store.setAgent(localAgent);
+    fetchDataAgent()
+
 });
 const getCurrentAccount = async () => {
     fetch(fetchUrl, optionsMain)
