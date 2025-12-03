@@ -1,10 +1,13 @@
 <template>
-    <div class="d-flex flex-row pt-5 justify-content-between mb-2">
+    <div class="d-flex flex-row pt-5 justify-content-between mb-2 w-100">
         <div class="p-5 text-center align-self-end borderGreen">
-            <h1>Position de : {{ nomAgent }}</h1>
+            <h1>Position de : {{ agent.symbol }}</h1>
             <p>Symbole du systeme: {{ ships[0]?.nav.systemSymbol }}</p>
             <p>Symbole du WayPoint: {{ ships[0]?.nav.systemSymbol }}</p>
             <p>Position du WayPoint: { x: {{ shipPosition.x }}, y: {{ shipPosition.y }} }</p>
+            <p>Position du WayPoint: { x: {{ shipPosition.x }}, y: {{ shipPosition.y }} }</p>
+            <p>Position du WayPoint: { x: {{ shipPosition.x }}, y: {{ shipPosition.y }} }</p>
+
         </div>
         <div class="data p-5 w-25 text-center flex-column align-self-end borderGreen" v-if="cell.length > 0">
             <strong>
@@ -31,12 +34,17 @@
 <script setup>
 import { onBeforeMount, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { SPIKE_TOKEN, TOKEN } from '../store/env';
-import { fetchUrl } from '@/store/fetchUrl';
+import useSpatialStore from '@/store';
 import MapComponent from './Map.component.vue';
+
+const store = useSpatialStore();
+const agent = store.agent;
+const fetchUrl = store.fetchUrl;
+const SPIKE_TOKEN = store.SPIKE_TOKEN;
 const ships = ref({});
 const shipPosition = ref({});
 const systemData = ref({});
+const systemFacts = ref({});
 let readytoMap = ref(false);
 const options = {
     method: 'GET',
@@ -69,7 +77,8 @@ const fetchDataSystem = () => {
         })
         .then(json => {
             systemData.value = json.data.waypoints;
-            console.log(systemData);
+            systemFacts.value = json.data;
+            console.log(systemFacts);
             readytoMap.value = true;
         })
 

@@ -4,20 +4,26 @@
 
         <CreateAgent v-if="localAgent === undefined" :feedback="feedBack" />
         <p v-if='feedBack !== ""'>{{ feedBack }}</p>
-        <AgentComponent v-else />
+        <ShowCurrentLocationPageComponent v-else />
         <div>
-            <p>Cet agent a jusqu'au {{ statusData.resetDate }} pour faire top1</p>
+            <p v-if="statusData.serverResets !== undefined">Cet agent a jusqu'au
+                {{ new Date(statusData.serverResets.next) }} pour faire top1</p>
         </div>
     </div>
 </template>
 <script setup>
 import { onBeforeMount, ref } from 'vue';
-import { SPIKE_TOKEN, TOKEN } from '../store/env';
-import { fetchUrl } from "../store/fetchUrl";
-import { Agent, agent } from '@/store/agent';
+import useSpatialStore from '@/store';
 import CreateAgent from './CreateAgent.component.vue';
-import AgentComponent from './Agent.component.vue';
+import { Agent } from '@/models/agent';
+import ShowCurrentLocationPageComponent from './ShowCurrentLocationPage.component.vue';
 
+const store = useSpatialStore();
+
+const agent = store.agent;
+const fetchUrl = store.fetchUrl;
+const TOKEN = store.TOKEN;
+const SPIKE_TOKEN = store.SPIKE_TOKEN;
 const feedBack = ref("");
 const localAgent = ref({});
 const statusData = ref({});
@@ -31,27 +37,28 @@ const optionsMain = {
 };
 const fetchDataAgent = async () => {
     fetch(fetchUrl + "my/agent", options)
-        .then(response => response.json())
+        .then(response => {
+            if (response.ok)
+                return response.json();
+        })
         .then(json => {
             localStorage.setItem("agent", JSON.stringify(json.data))
-            agent.value = new Agent(json.data);
+
+            console.log(agent)
             localAgent.value = new Agent(json.data)
         })
 }
-const fetchDataShips = async () => {
-    fetch(fetchUrl + "my/ships", options)
-        .then(response => response.json())
-        .then(json => console.log(json));
-}
-onBeforeMount(() => { getCurrentAccount(); fetchDataAgent() })//fetchDataAgent())
+
+onBeforeMount(() => {
+    getCurrentAccount();
+    fetchDataAgent();
+    store.setAgent(localAgent);
+});
 const getCurrentAccount = async () => {
     fetch(fetchUrl, optionsMain)
         .then(response => response.json())
         .then(json => statusData.value = json);
 }
-/*
-<button @click="fetchDataAgent">Get agent Spike</button>
-<button @click="fetchDataShips">Get systems data</button>
-*/
+
 </script>
 <style scoped></style>
