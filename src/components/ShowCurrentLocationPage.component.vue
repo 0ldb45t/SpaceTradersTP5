@@ -1,11 +1,13 @@
 <template>
     <div class="d-flex flex-row pt-5 justify-content-between mb-2 w-100">
-        <div class="p-5 text-center align-self-end borderGreen">
-            <h1>Position de : {{ agent.symbol }}</h1>
-            <p>Symbole du systeme: {{ ships[0]?.nav.systemSymbol }}</p>
-            <p>Symbole du WayPoint: {{ ships[0]?.nav.systemSymbol }}</p>
-            <p>Position du WayPoint: { x: {{ shipPosition.x }}, y: {{ shipPosition.y }} }</p>
-            <p>Position du WayPoint: { x: {{ shipPosition.x }}, y: {{ shipPosition.y }} }</p>
+        <div v-if="agent.symbol !== undefined" class="p-5 text-center align-self-end borderGreen">
+            <h1>Position de : {{ agent.symbol }} : [x: {{ shipPosition.x }}, y: {{ shipPosition.y }} ]</h1>
+            <h3 class="p-0 m-0">Symbole du systeme: {{ ships[0]?.nav.systemSymbol }}</h3>
+            <div v-for="trait in shipPosition.traits">
+                <p>{ Symbole: {{ trait.name }} }</p>
+                <p>{ Description: {{ trait.description }} }</p>
+
+            </div>
             <p>Position du WayPoint: { x: {{ shipPosition.x }}, y: {{ shipPosition.y }} }</p>
 
         </div>
@@ -78,7 +80,6 @@ const fetchDataSystem = () => {
         .then(json => {
             systemData.value = json.data.waypoints;
             systemFacts.value = json.data;
-            console.log(systemFacts);
             readytoMap.value = true;
         })
 
@@ -110,5 +111,9 @@ onBeforeMount(async () => {
 
 .borderGreen {
     border: 2px solid green;
+}
+
+ul {
+    list-style: none;
 }
 </style>

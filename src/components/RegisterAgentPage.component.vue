@@ -6,8 +6,9 @@
         <p v-if='feedBack !== ""'>{{ feedBack }}</p>
         <ShowCurrentLocationPageComponent v-else />
         <div>
-            <p v-if="statusData.serverResets !== undefined">Cet agent a jusqu'au
-                {{ new Date(statusData.serverResets.next) }} pour faire top1</p>
+            <p v-if="statusData.serverResets !== undefined">
+                Cet agent a jusqu'au{{ new Date(statusData.serverResets.next) }} pour faire top1
+            </p>
         </div>
     </div>
 </template>
@@ -43,8 +44,6 @@ const fetchDataAgent = async () => {
         })
         .then(json => {
             localStorage.setItem("agent", JSON.stringify(json.data))
-
-            console.log(agent)
             localAgent.value = new Agent(json.data)
         })
 }
@@ -58,7 +57,7 @@ const getCurrentAccount = async () => {
     fetch(fetchUrl, optionsMain)
         .then(response => response.json())
         .then(json => statusData.value = json);
-}
+};
 
 </script>
 <style scoped></style>
