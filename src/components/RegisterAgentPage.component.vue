@@ -4,10 +4,10 @@
 
         <CreateAgent v-if="localAgent === undefined" :feedback="feedBack" />
         <p v-if='feedBack !== ""'>{{ feedBack }}</p>
-        <AgentComponent v-else />
+        <ShowCurrentLocationPageComponent v-else />
         <div>
-            <p v-if="statusData.serverResets !== undefined">Cet agent a jusqu'au {{ new
-                Date(statusData.serverResets.next) }} pour faire top1</p>
+            <p v-if="statusData.serverResets !== undefined">Cet agent a jusqu'au
+                {{ new Date(statusData.serverResets.next) }} pour faire top1</p>
         </div>
     </div>
 </template>
@@ -15,8 +15,8 @@
 import { onBeforeMount, ref } from 'vue';
 import useSpatialStore from '@/store';
 import CreateAgent from './CreateAgent.component.vue';
-import AgentComponent from './Agent.component.vue';
 import { Agent } from '@/models/agent';
+import ShowCurrentLocationPageComponent from './ShowCurrentLocationPage.component.vue';
 
 const store = useSpatialStore();
 
@@ -43,25 +43,22 @@ const fetchDataAgent = async () => {
         })
         .then(json => {
             localStorage.setItem("agent", JSON.stringify(json.data))
-            store.setAgent(new Agent(json.data));
-            console.log(store.agent)
+
+            console.log(agent)
             localAgent.value = new Agent(json.data)
         })
 }
-/*const fetchDataShips = async () => {
-    fetch(fetchUrl + "my/ships", options)
-        .then(response => response.json())
-        .then(json => console.log(json));
-}*/
-onBeforeMount(() => { getCurrentAccount(); fetchDataAgent(); console.log(statusData) })//fetchDataAgent())
+
+onBeforeMount(() => {
+    getCurrentAccount();
+    fetchDataAgent();
+    store.setAgent(localAgent);
+});
 const getCurrentAccount = async () => {
     fetch(fetchUrl, optionsMain)
         .then(response => response.json())
         .then(json => statusData.value = json);
 }
-/*
-<button @click="fetchDataAgent">Get agent Spike</button>
-<button @click="fetchDataShips">Get systems data</button>
-*/
+
 </script>
 <style scoped></style>
