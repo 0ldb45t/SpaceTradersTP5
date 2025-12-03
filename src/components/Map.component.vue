@@ -94,7 +94,7 @@ const absoluteCoordinate = ref(toAbsolute());
 </script>
 <style scoped>
 .row {
-    height: 7px;
+    height: 5px;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;

@@ -1,5 +1,5 @@
 <template>
-    <div class="w-100 d-flex flex-column justify-content-center align-items-center container">
+    <div class="w-100 d-flex flex-row justify-content-between mt-3">
 
 
         <CreateAgent v-if="localAgent === undefined" :feedback="feedBack" />

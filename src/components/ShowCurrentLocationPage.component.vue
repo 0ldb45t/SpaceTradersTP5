@@ -1,7 +1,7 @@
 <template>
-    <div class="d-flex flex-row pt-5 justify-content-between mb-2 w-100">
+    <div class="d-flex flex-column pt-5 mb-2 w-50 mt-3 gap-2">
         <div v-if="agent?.symbol !== ''" class="p-5 text-center align-self-end borderGreen">
-            <h1>Position de : {{ agent.symbol }} : [ x: {{ shipPosition.x }}, y: {{ shipPosition.y }} ]</h1>
+            <h3>Position de {{ agent.symbol }} : [ x: {{ shipPosition.x }}, y: {{ shipPosition.y }} ]</h3>
             <h3 class="p-0 m-0">Symbole du systeme: {{ ships[0]?.nav.systemSymbol }}</h3>
             <div v-for="trait in shipPosition.traits">
                 <p>{ Symbole: {{ trait.name }} }</p>
@@ -11,7 +11,7 @@
             <p>Position du WayPoint: { x: {{ shipPosition.x }}, y: {{ shipPosition.y }} }</p>
 
         </div>
-        <div class="data p-5 w-25 text-center flex-column align-self-end borderGreen" v-if="cell.length > 0">
+        <div class="data p-5 text-center flex-column borderGreen" v-if="cell.length > 0">
             <strong>
                 <p>
                     'Vous visez : '

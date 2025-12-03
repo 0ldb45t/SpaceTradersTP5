@@ -1,7 +1,6 @@
 <template>
     <div class="h-100 mb-5">
         <HeaderComponent />
-        {{ agent?.symbol }}
         <RouterView />
     </div>
 </template>
