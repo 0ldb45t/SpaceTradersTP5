@@ -1,5 +1,5 @@
 <template>
-    <div class="text-light">
+    <div>
         <h1>Créer votre agent:</h1>
         <label>Quel est le nom de votre agent? </label>
         <input v-model="symbol" />

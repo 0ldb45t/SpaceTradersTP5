@@ -1,15 +1,16 @@
 <template>
-    <div class="main">
-        <div class="container h-100 mb-5">
-            <HeaderComponent />
-            <RouterView />
-        </div>
+    <div class="h-100 mb-5">
+        <HeaderComponent />
+        <RouterView />
     </div>
 </template>
 <script setup>
 import { RouterView } from 'vue-router';
-import { onBeforeMount } from 'vue';
+import { onBeforeMount, watch } from 'vue';
 import HeaderComponent from './components/Header.component.vue';
+import useSpatialStore from './store'
+const store = useSpatialStore();
+let agent = store.agent;
 
 </script>
 <style>

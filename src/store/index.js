@@ -1,12 +1,27 @@
 import { defineStore } from "pinia";
-import { ref, computed } from "vue";
-
-// Import the base URL from the environment
+import { ref, computed, reactive } from "vue";
 
 export default defineStore("spatial", () => {
-    const agent = ref({});
-    function setAgent(Agent) { agent.value = Agent }
+    const agent = ref({
+        accountId: "",
+        symbol: "",
+        headquarters: "",
+        credits: "",
+        startingFaction: "",
+        shipCount: ""
+    });
 
+    function setAgent(Agent) {
+        agent.value.accountId = Agent.accountId;
+        agent.value.symbol = Agent.symbol;
+        agent.value.headquarters = Agent.headquarters;
+        agent.value.credits = Agent.credits;
+        agent.value.startingFaction = Agent.startingFaction;
+        agent.value.shipCount = Agent.shipCount;
+    }
+    function getAgent() {
+        return agent;
+    }
     const fetchUrl = "https://api.spacetraders.io/v2/";
     const TOKEN = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiY21pajUyZzJrMDAwcnRtMTd1aGhhcGt0aCIsInZlcnNpb24iOiJ2Mi4zLjAiLCJpYXQiOjE3NjQzNTExMjgsInN1YiI6ImFjY291bnQtdG9rZW4ifQ.QZJ2w56H7HYN4PkDmVVWNrVI7ONK75rQfj-OVk0kAwCoVmHwLtFuj2zxA32iRDGYnThZbxMo7TsDE8pw3PcBika1f7fpXHxk6-eCkz8HX4KCH0J2NrJMMY8oTqLAH30eClBCT5yvwi3lvQsBalCZYbfNpqG2UsvEK3xf0FiIOUw9v6XQUVDpAYyiwNomzpk_aK3ociMeHn7sc8HeW2Nayn489ycKszddXTD9nt1kHCF1AX1FKGAgY5DkqQmp_FAvq7Q_IZz7fyuZKeYzlJS-pm2Ijl1iXhc0ZOImzapJ4IxxKfFHe4pYNo-BHuwJF2B9SPXgxpzFwNVVjxVINzPghKHGummfog9sakUUa7eudTS8jF3-_VYBIcqjElVMICY4kYByYm1Kejcgtg-fPx2QiMxCr7WcOZRUhwRd-KSmX9bzotfn6Y8FBS5sR_HXb3oDgy3mv_m2fTFdYlo2xUKUamNeEQyvnjGluiV2bEIxVgdqtVwzc-cDrGn8CybajJ7SLDiin4yiKQgF8VNToMC9WKj1eq-j1C_Nn3x-lXW75o4M5lismp1mFmmKt76Rct0HBrYxgICu7zxQ5D0ohVDs6eGQpYF-dO4-LrRadti8ksPM9x6TB6NOsNM4aQvNeBW7tBSq_0NzVNj--vMo4RajWsSVXBXnrNFtLhoHIPy0Juo"
     const MAIL = "bontempsbastien@gmail.com";
@@ -14,6 +29,7 @@ export default defineStore("spatial", () => {
 
     return {
         agent,
+        getAgent,
         setAgent,
         fetchUrl,
         TOKEN,
