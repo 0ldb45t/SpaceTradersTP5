@@ -1,36 +1,38 @@
 <template>
-    <div class="d-flex flex-column pt-5 mb-2 w-40 m-3 gap-2">
-        <div v-if="agent?.symbol !== ''" class="p-5 text-center align-self-end borderGreen">
-            <h4>Position de {{ agent.symbol }} : [ x: {{ shipPosition.x }}, y: {{ shipPosition.y }} ]</h4>
-            <h4 class="p-0 m-0">Symbole du systeme: {{ ships[0]?.nav.systemSymbol }}</h4>
-            <div v-for="trait in shipPosition.traits">
-                <p>{ Symbole: {{ trait.name }} }</p>
-                <p>{ Description: {{ trait.description }} }</p>
+    <div class="d-flex flex-row w-100 justify-content-between align-items-start">
+        <div class="d-flex flex-column justify-content-start w-40 m-3 gap-2">
+            <div v-if="agent?.symbol !== ''" class="p-4 text-center align-self-end borderGreen">
+                <h4>Position de {{ agent.symbol }} : [ x: {{ shipPosition.x }}, y: {{ shipPosition.y }} ]</h4>
+                <h4 class="p-0 m-0">Symbole du systeme: {{ ships[0]?.nav.systemSymbol }}</h4>
+                <div v-for="trait in shipPosition.traits">
+                    <p>{ Symbole: {{ trait.name }} }</p>
+                    <p>{ Description: {{ trait.description }} }</p>
+
+                </div>
+                <p>Position du WayPoint: { x: {{ shipPosition.x }}, y: {{ shipPosition.y }} }</p>
 
             </div>
-            <p>Position du WayPoint: { x: {{ shipPosition.x }}, y: {{ shipPosition.y }} }</p>
-
+            <div class="data p-5 text-center flex-column borderGreen" v-if="cell.length > 0">
+                <strong>
+                    <h4>
+                        'Vous visez : '
+                    </h4>
+                    <div v-for="item in cell">
+                        <p :class="{ vousEtesIci: item.vousEtesIci }">{{ item.vousEtesIci }}</p>
+                        <p>
+                            {{ item.symbol }} : {{ item.type }} :
+                        </p>
+                        <p>
+                            [x:{{ item.x }}, y:{{ item.y }}]
+                        </p>
+                    </div>
+                </strong>
+            </div>
         </div>
-        <div class="data p-5 text-center flex-column borderGreen" v-if="cell.length > 0">
-            <strong>
-                <h4>
-                    'Vous visez : '
-                </h4>
-                <div v-for="item in cell">
-                    <p :class="{ vousEtesIci: item.vousEtesIci }">{{ item.vousEtesIci }}</p>
-                    <p>
-                        {{ item.symbol }} : {{ item.type }} :
-                    </p>
-                    <p>
-                        [x:{{ item.x }}, y:{{ item.y }}]
-                    </p>
-                </div>
-            </strong>
+        <div class="w-100 m-3">
+            <MapComponent v-if="readytoMap" :astres="systemData" :position="shipPosition"
+                @displayData="(cell) => { onCellHover(cell) }" />
         </div>
-    </div>
-    <div class="w-100 mb-5">
-        <MapComponent v-if="readytoMap" :astres="systemData" :position="shipPosition"
-            @displayData="(cell) => { onCellHover(cell) }" />
     </div>
 </template>
 <script setup>
