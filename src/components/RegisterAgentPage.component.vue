@@ -12,9 +12,9 @@
 </template>
 <script setup>
 import { onBeforeMount, ref } from 'vue';
-import { SPIKE_TOKEN, TOKEN } from '../stores/env';
-import { fetchUrl } from "../stores/fetchUrl";
-import { Agent, agent } from '@/stores/agent';
+import { SPIKE_TOKEN, TOKEN } from '../store/env';
+import { fetchUrl } from "../store/fetchUrl";
+import { Agent, agent } from '@/store/agent';
 import CreateAgent from './CreateAgent.component.vue';
 import AgentComponent from './Agent.component.vue';
 

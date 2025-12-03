@@ -8,8 +8,8 @@
     </div>
 </template>
 <script setup>
-import { fetchUrl } from '@/stores/fetchUrl';
-import { TOKEN, MAIL } from '@/stores/env';
+import { fetchUrl } from '@/store/fetchUrl';
+import { TOKEN, MAIL } from '@/store/env';
 import { ref } from 'vue';
 const symbol = ref("");
 const props = defineProps(

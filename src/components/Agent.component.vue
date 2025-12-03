@@ -17,6 +17,6 @@
     </div>
 </template>
 <script setup>
-import { agent } from '@/stores/agent';
+import { agent } from '@/store/agent';
 
 </script>

@@ -1,5 +1,9 @@
 <template>
-    <h1 class="mt-5">Traders in space</h1>
+    <h1 class="mt-5">TRADERS IN SPACE</h1>
 </template>
 <script setup></script>
-<style scoped></style>
+<style scoped>
+h1 {
+    font-size: 90;
+}
+</style>

@@ -31,8 +31,8 @@
 <script setup>
 import { onBeforeMount, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { SPIKE_TOKEN, TOKEN } from '../stores/env';
-import { fetchUrl } from '@/stores/fetchUrl';
+import { SPIKE_TOKEN, TOKEN } from '../store/env';
+import { fetchUrl } from '@/store/fetchUrl';
 import MapComponent from './Map.component.vue';
 const ships = ref({});
 const shipPosition = ref({});
