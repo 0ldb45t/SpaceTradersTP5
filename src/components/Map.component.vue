@@ -44,7 +44,6 @@ for (let i = 0; i < astres.length; i++) {
         yMin.value = dividedY;
     if (dividedY > yMax.value)
         yMax.value = dividedY;
-
     if (astresXY[`${dividedX}, ${dividedY}`] !== undefined)
         astresXY[`${dividedX}, ${dividedY}`].push(astres[i]);
     else {
@@ -57,34 +56,25 @@ for (let i = 0; i < astres.length; i++) {
         item.class = 'jaune';
         item.vousEtesIci = `Vous êtes ici!`
     }
-    else if (astres[i].type === 'MOON') {
-        item.class = 'bg-info';
-    }
-    else if (astres[i].type === 'ORBITAL_STATION') {
-        item.class = 'bg-success';
-    }
-    else if (astres[i].type === 'ASTEROID') {
-        item.class = 'bg-dark';
-    }
-    else if (astres[i].type === 'FUEL_STATION') {
-        item.class = 'bg-warning';
-    }
-    else if (astres[i].type === 'PLANET') {
-        item.class = 'bg-primary';
-    }
-    else if (astres[i].type === 'JUMP_GATE') {
-        item.class = 'bg-danger';
-    }
-    else if (astres[i].type === 'GAS_GIANT') {
-        item.class = 'bg-danger';
-    }
+    else if (astres[i].type === 'MOON') item.class = 'bg-info';
 
-    else {
-        item.class = 'bg-secondary';
-    }
+    else if (astres[i].type === 'ORBITAL_STATION') item.class = 'bg-success';
+
+    else if (astres[i].type === 'ASTEROID') item.class = 'bg-dark';
+
+    else if (astres[i].type === 'FUEL_STATION') item.class = 'bg-warning';
+
+    else if (astres[i].type === 'PLANET') item.class = 'bg-primary';
+
+    else if (astres[i].type === 'JUMP_GATE') item.class = 'bg-danger';
+
+    else if (astres[i].type === 'GAS_GIANT') item.class = 'bg-danger';
+
+    else item.class = 'bg-secondary';
+
     item.class += ' rond';
-
 }
+
 const toAbsolute = () => {
     let returned = [];
     for (let y = yMin.value; y <= yMax.value; y++) {
@@ -110,7 +100,9 @@ const absoluteCoordinate = ref(toAbsolute());
     flex-wrap: nowrap;
     flex-grow: 0;
 }
-
+.map {
+    cursor: none
+}
 .map:hover {
     border: 2px solid green;
     padding: 5px;
