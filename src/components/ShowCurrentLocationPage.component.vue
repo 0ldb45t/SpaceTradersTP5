@@ -35,7 +35,6 @@
 </template>
 <script setup>
 import { onBeforeMount, ref } from 'vue';
-import { useRoute } from 'vue-router';
 import useSpatialStore from '@/store';
 import MapComponent from './Map.component.vue';
 
@@ -53,8 +52,6 @@ const options = {
     headers: { Accept: 'application/json', Authorization: 'Bearer ' + SPIKE_TOKEN }
 };
 
-const route = useRoute();
-const nomAgent = route.params.nomAgent;
 const cell = ref({});
 const fetchDataShips = async () => {
     fetch(fetchUrl + "my/ships", options)
@@ -75,14 +72,12 @@ const fetchDataSystem = () => {
         .then(response => {
             if (response.ok)
                 return response.json()
-
         })
         .then(json => {
             systemData.value = json.data.waypoints;
             systemFacts.value = json.data;
             readytoMap.value = true;
         })
-
 }
 const fetchDataCurrentSystem = () => {
     let shipData = ships.value[0].nav;
