@@ -31,9 +31,12 @@
 <script setup>
 import { onBeforeMount, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { SPIKE_TOKEN, TOKEN } from '../store/env';
-import { fetchUrl } from '@/store/fetchUrl';
+import useSpatialStore from '@/store';
 import MapComponent from './Map.component.vue';
+
+const store = useSpatialStore();
+const fetchUrl = store.fetchUrl;
+const SPIKE_TOKEN = store.SPIKE_TOKEN;
 const ships = ref({});
 const shipPosition = ref({});
 const systemData = ref({});

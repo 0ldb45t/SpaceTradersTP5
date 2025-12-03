@@ -8,9 +8,12 @@
     </div>
 </template>
 <script setup>
-import { fetchUrl } from '@/store/fetchUrl';
-import { TOKEN, MAIL } from '@/store/env';
 import { ref } from 'vue';
+import useSpatialStore from '@/store';
+const store = useSpatialStore();
+const fetchUrl = store.fetchUrl;
+const TOKEN = store.TOKEN;
+const MAIL = store.MAIL;
 const symbol = ref("");
 const props = defineProps(
     {

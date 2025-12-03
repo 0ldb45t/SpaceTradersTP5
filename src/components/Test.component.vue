@@ -2,8 +2,8 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import Map from './Map.component.vue';
-import { fetchUrl } from '@/store/fetchUrl';
-import { SPIKE_TOKEN } from '@/store/env';
+import { fetchUrl } from '@/test/fetchUrl';
+import { SPIKE_TOKEN } from '@/test/env';
 const optionsMain = {
     method: 'GET',
     headers: { Accept: 'application/json', Authorization: 'Bearer ' + SPIKE_TOKEN }
