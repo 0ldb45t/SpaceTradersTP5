@@ -30,7 +30,7 @@ const doWeDisplayData = (e) => {
 }
 
 .noir {
-    background-color: black;
+    background-color: rgb(0, 0, 0);
 }
 
 .jaune {
@@ -54,6 +54,9 @@ const doWeDisplayData = (e) => {
 
 .square:hover {
     background-color: #3cff00;
+}
 
+.position {
+    background-color: #00ff15;
 }
 </style>

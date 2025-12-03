@@ -1,7 +1,7 @@
 <template>
 
-    <div class="map">
-        <div class="d-flex justify-content-center flex-column align-items-center w-100 mb-5">
+    <div class="map p-4">
+        <div class="d-flex justify-content-center flex-column align-items-center w-100">
             <div v-for="(row, x) in absoluteCoordinate" :key="x" class="row flex-shrink-0">
                 <MapCellComponent v-for="(y, i) in row" :cell="y" :key="i"
                     @displayData="(cell) => $emit('displayData', (cell))" />
@@ -31,6 +31,8 @@ let yMax = ref(0);
 
 
 const divideByt10AndRounded = (n) => Math.floor(n / 10);
+const positionX = divideByt10AndRounded(props.position.x);
+const positionY = divideByt10AndRounded(props.position.y);
 
 for (let i = 0; i < astres.length; i++) {
     const dividedX = divideByt10AndRounded(astres[i].x);
@@ -51,30 +53,41 @@ for (let i = 0; i < astres.length; i++) {
         astresXY[`${dividedX}, ${dividedY}`].push(astres[i]);
     }
     const item = astresXY[`${dividedX}, ${dividedY}`][astresXY[`${dividedX}, ${dividedY}`].length - 1];
-
-    if (dividedX === divideByt10AndRounded(props.position.x) && dividedY === divideByt10AndRounded(props.position.y)) {
+    item.class = 'rond ';
+    if (dividedX === positionX && dividedY === positionY) {
         item.class = 'jaune';
         item.vousEtesIci = `Vous êtes ici!`
+        continue;
     }
-    else if (astres[i].type === 'MOON') item.class = 'bg-info';
-
-    else if (astres[i].type === 'ORBITAL_STATION') item.class = 'bg-success';
-
-    else if (astres[i].type === 'ASTEROID') item.class = 'bg-dark';
-
-    else if (astres[i].type === 'FUEL_STATION') item.class = 'bg-warning';
-
-    else if (astres[i].type === 'PLANET') item.class = 'bg-primary';
-
-    else if (astres[i].type === 'JUMP_GATE') item.class = 'bg-danger';
-
-    else if (astres[i].type === 'GAS_GIANT') item.class = 'bg-danger';
-
-    else item.class = 'bg-secondary';
-
-    item.class += ' rond';
+    switch (astres[i].type) {
+        case 'MOON': item.class += 'bg-info';
+            break;
+        case 'ORBITAL_STATION': item.class += 'bg-success';
+            break;
+        case 'ASTEROID': item.class += 'bg-dark';
+            break;
+        case 'FUEL_STATION': item.class += 'bg-warning';
+            break;
+        case 'PLANET': item.class += 'bg-primary';
+            break;
+        case 'JUMP_GATE': item.class += 'bg-danger';
+            break;
+        case 'GAS_GIANT': item.class += 'bg-danger';
+            break;
+        default: item.class += 'bg-secondary';
+            break;
+    }
 }
 
+for (let x = positionX - 1; x <= positionX + 1; x++) {
+    for (let y = positionY - 1; y <= positionY + 1; y++) {
+        if (!(x === positionX && y === positionY)) {
+            astresXY[`${x}, ${y}`] = [];
+            astresXY[`${x}, ${y}`].push({ class: "position" });
+        }
+
+    }
+}
 const toAbsolute = () => {
     let returned = [];
     for (let y = yMin.value; y <= yMax.value; y++) {
@@ -100,9 +113,11 @@ const absoluteCoordinate = ref(toAbsolute());
     flex-wrap: nowrap;
     flex-grow: 0;
 }
+
 .map {
     cursor: none
 }
+
 .map:hover {
     border: 2px solid green;
     padding: 5px;
