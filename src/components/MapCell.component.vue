@@ -30,11 +30,11 @@ const doWeDisplayData = (e) => {
 }
 
 .noir {
-    background-color: black;
+    background-color: rgb(0, 0, 0);
 }
 
 .jaune {
-    background: radial-gradient(closest-side, #d3be00, #ffd900, #fff569);
+    background: radial-gradient(closest-side, #004103, #2bff00, #7bff69);
 }
 
 .rond {
@@ -54,6 +54,13 @@ const doWeDisplayData = (e) => {
 
 .square:hover {
     background-color: #3cff00;
+}
 
+.position {
+    background-color: rgba(0, 255, 0, 0.7);
+    }
+    
+    .mainStar {
+        background-color: white;
 }
 </style>
