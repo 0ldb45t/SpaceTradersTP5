@@ -79,7 +79,7 @@ for (let i = 0; i < astres.length; i++) {
     }
 }
 astresXY[`${0}, ${0}`] = [];
-astresXY[`${0}, ${0}`].push({ class: "mainStar", symbol: props.position.system });
+astresXY[`${0}, ${0}`].push({ class: "mainStar", symbol: props.position.system, type: "MAIN_STAR" });
 
 for (let x = positionX - 1; x <= positionX + 1; x++) {
     for (let y = positionY - 1; y <= positionY + 1; y++) {

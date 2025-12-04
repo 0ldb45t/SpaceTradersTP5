@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex flex-row w-100 justify-content-center align-items-start">
+    <div class="d-flex flex-row w-100 justify-content-center align-items-start flex-grow-0">
         <div class="d-flex flex-column justify-content-start w-40 m-3 mt-0 gap-3">
             <div v-if="agent?.symbol !== ''" class="p-4 text-center align-self-end borderGreen">
                 <h4>Position de {{ agent.symbol }} : [ x: {{ shipPosition.x }}, y: {{ shipPosition.y }} ]</h4>
@@ -17,8 +17,8 @@
                     <h4>
                         Vous visez :
                     </h4>
-                    <div v-for="item in cell">
-                        <p :class="{ vousEtesIci: item.vousEtesIci }">{{ item.vousEtesIci }}</p>
+                    <div v-for="(item, i) in cell">
+                        <p v-if="i === 0" :class="{ vousEtesIci: item.vousEtesIci }">{{ item.vousEtesIci }}</p>
                         <p>
                             {{ item.symbol }} : {{ item.type }} :
                         </p>
@@ -43,7 +43,7 @@ import MapComponent from './Map.component.vue';
 const store = useSpatialStore();
 let agent = store.agent;
 const fetchUrl = store.fetchUrl;
-const SPIKE_TOKEN = store.SPIKE_TOKEN;
+const AGENT_TOKEN = store.localStorageToken[0];
 const ships = ref({});
 const shipPosition = ref({});
 const systemData = ref({});
@@ -51,7 +51,7 @@ const systemFacts = ref({});
 let readytoMap = ref(false);
 const options = {
     method: 'GET',
-    headers: { Accept: 'application/json', Authorization: 'Bearer ' + SPIKE_TOKEN }
+    headers: { Accept: 'application/json', Authorization: 'Bearer ' + AGENT_TOKEN }
 };
 
 const cell = ref({});
@@ -98,6 +98,7 @@ const onCellHover = (aCell) => {
     cell.value = aCell;
 }
 onBeforeMount(() => {
+    if (AGENT_TOKEN !== undefined)
     fetchDataShips()
 });
 watch(

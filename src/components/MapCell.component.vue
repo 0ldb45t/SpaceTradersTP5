@@ -58,9 +58,9 @@ const doWeDisplayData = (e) => {
 
 .position {
     background-color: rgba(0, 255, 0, 0.7);
-    }
-    
-    .mainStar {
-        background-color: white;
+}
+
+.mainStar {
+    background-color: white;
 }
 </style>

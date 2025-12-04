@@ -5,7 +5,7 @@
         <input class="text-center" v-model="symbol" />
         <p>{{ symbol }}</p>
         <button @click="postAgentRequest">Créer votre agent</button>
-        <p>{{ feedBack }}</p>
+        <p>{{ feedBack[0] }}</p>
     </div>
 </template>
 <script setup>
@@ -27,17 +27,24 @@ const postAgentRequest = () => (
         }
     )
         .then(response => {
-            if (response.ok) {
-                return response.json()
-            }
-            else store.setSubscriptionFeedBack(response.error.message);
+            return response.json()
         })
         .then(jsonItem => {
-            localStorage.setItem("agent", JSON.stringify(jsonItem.data.agent))
-            store.setSubscriptionFeedBack("Sauvegarde réussie!");
+            if (jsonItem.error !== undefined) {
+                store.setSubscriptionFeedBack(jsonItem.error.data.zodIssues[0].message);
+            }
+            else {
+                const newToken = jsonItem.data.token;
+                const newAgent = jsonItem.data.agent;
+                localStorage.setItem("newAgentToken", JSON.stringify(newToken));
+                localStorage.setItem("agent", JSON.stringify(newAgent));
+                store.setAgent(newAgent);
+                store.setLocalStorageToken(newToken);
+                store.setSubscriptionFeedBack("Sauvegarde réussie!");
+            }
             console.log(jsonItem)
         })
-        .catch(error => { store.setSubscriptionFeedBack(error); })
+        .catch(error => { "console.log(error)" })
 );
 </script>
 <style scoped>

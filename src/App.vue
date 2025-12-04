@@ -10,6 +10,7 @@ import { onBeforeMount, watch } from 'vue';
 import HeaderComponent from './components/Header.component.vue';
 import useSpatialStore from './store'
 const store = useSpatialStore();
+store.setLocalStorageToken(JSON.parse(localStorage.getItem("newAgentToken")));
 let agent = store.agent;
 
 </script>

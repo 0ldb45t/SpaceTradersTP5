@@ -3,8 +3,8 @@
 
 
         <CreateAgent v-if="localAgent.symbol === undefined" :feedback="feedBack" />
-        <p v-if='feedBack !== ""'>{{ feedBack }}</p>
-        <ShowCurrentLocationPageComponent v-else />
+        <p v-if='feedBack[0] !== ""'>{{ feedBack[0] }}</p>
+        <ShowCurrentLocationPageComponent />
         <div>
             <p v-if="statusData.serverResets !== undefined">
                 Cet agent a jusqu'au{{ new Date(statusData.serverResets.next) }} pour faire top1
@@ -24,13 +24,13 @@ const store = useSpatialStore();
 
 const fetchUrl = store.fetchUrl;
 const TOKEN = store.TOKEN;
-const SPIKE_TOKEN = undefined;//store.SPIKE_TOKEN;
+const agentToken = store.localStorageToken[0]; //store.SPIKE_TOKEN;
 const feedBack = store.subscriptionFeedBack;
 const localAgent = ref({});
 const statusData = ref({});
 const options = {
     method: 'GET',
-    headers: { Accept: 'application/json', Authorization: 'Bearer ' + SPIKE_TOKEN }
+    headers: { Accept: 'application/json', Authorization: 'Bearer ' + agentToken }
 };
 const optionsMain = {
     method: 'GET',
@@ -55,7 +55,7 @@ onBeforeMount(() => {
         store.setAgent(localAgent.value);
         return;
     }
-    if (SPIKE_TOKEN !== undefined) {
+    if (agentToken !== undefined) {
         getCurrentAccount();
         fetchDataAgent()
     }
