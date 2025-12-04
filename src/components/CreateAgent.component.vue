@@ -1,10 +1,11 @@
 <template>
-    <div>
-        <h1>Créer votre agent:</h1>
-        <label>Quel est le nom de votre agent? </label>
-        <input v-model="symbol" />
+    <div class="d-flex flex-column justify-content-center align-items-center">
+        <h1>Pour commencer, créer votre agent:</h1>
+        <h4>Quel est le nom de votre agent? </h4>
+        <input class="text-center" v-model="symbol" />
         <p>{{ symbol }}</p>
-        <button @click="postAgentRequest">Créer votre agent.</button>
+        <button @click="postAgentRequest">Créer votre agent</button>
+        <p>{{ feedBack }}</p>
     </div>
 </template>
 <script setup>
@@ -15,11 +16,8 @@ const fetchUrl = store.fetchUrl;
 const TOKEN = store.TOKEN;
 const MAIL = store.MAIL;
 const symbol = ref("");
-const props = defineProps(
-    {
-        feedBack: { type: Object, required: true }
-    }
-);
+
+const feedBack = store.subscriptionFeedBack;
 const postAgentRequest = () => (
     fetch(`${fetchUrl}register`,
         {
@@ -30,16 +28,24 @@ const postAgentRequest = () => (
     )
         .then(response => {
             if (response.ok) {
-                feedBack = "Sauvegarde réussie!";
                 return response.json()
             }
-            else feedBack = response.error.message;
+            else store.setSubscriptionFeedBack(response.error.message);
         })
         .then(jsonItem => {
             localStorage.setItem("agent", JSON.stringify(jsonItem.data.agent))
+            store.setSubscriptionFeedBack("Sauvegarde réussie!");
             console.log(jsonItem)
         })
-        .catch(error => console.log(error))
+        .catch(error => { store.setSubscriptionFeedBack(error); })
 );
 </script>
-<style scoped></style>
+<style scoped>
+input,
+button {
+    background-color: black;
+    color: #3cff00;
+    border: 1px solid #3cff00;
+    ;
+}
+</style>

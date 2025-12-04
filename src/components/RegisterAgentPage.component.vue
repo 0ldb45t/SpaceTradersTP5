@@ -2,7 +2,7 @@
     <div class="w-100 d-flex flex-column justify-content-between mt-3 gap-2">
 
 
-        <CreateAgent v-if="localAgent === undefined" :feedback="feedBack" />
+        <CreateAgent v-if="localAgent.symbol === undefined" :feedback="feedBack" />
         <p v-if='feedBack !== ""'>{{ feedBack }}</p>
         <ShowCurrentLocationPageComponent v-else />
         <div>
@@ -24,8 +24,8 @@ const store = useSpatialStore();
 
 const fetchUrl = store.fetchUrl;
 const TOKEN = store.TOKEN;
-const SPIKE_TOKEN = store.SPIKE_TOKEN;
-const feedBack = ref("");
+const SPIKE_TOKEN = undefined;//store.SPIKE_TOKEN;
+const feedBack = store.subscriptionFeedBack;
 const localAgent = ref({});
 const statusData = ref({});
 const options = {
@@ -55,9 +55,10 @@ onBeforeMount(() => {
         store.setAgent(localAgent.value);
         return;
     }
-    getCurrentAccount();
-    fetchDataAgent()
-
+    if (SPIKE_TOKEN !== undefined) {
+        getCurrentAccount();
+        fetchDataAgent()
+    }
 });
 const getCurrentAccount = async () => {
     fetch(fetchUrl, optionsMain)
