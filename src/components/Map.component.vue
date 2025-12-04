@@ -78,14 +78,19 @@ for (let i = 0; i < astres.length; i++) {
             break;
     }
 }
+astresXY[`${0}, ${0}`] = [];
+astresXY[`${0}, ${0}`].push({ class: "mainStar", symbol: props.position.system });
 
 for (let x = positionX - 1; x <= positionX + 1; x++) {
     for (let y = positionY - 1; y <= positionY + 1; y++) {
         if (!(x === positionX && y === positionY)) {
             astresXY[`${x}, ${y}`] = [];
-            astresXY[`${x}, ${y}`].push({ class: "position" });
+            astresXY[`${x}, ${y}`].push(
+                {
+                    class: "position",
+                    vousEtesIci: "Vous êtes ici!"
+                });
         }
-
     }
 }
 const toAbsolute = () => {

@@ -34,7 +34,7 @@ const doWeDisplayData = (e) => {
 }
 
 .jaune {
-    background: radial-gradient(closest-side, #d3be00, #ffd900, #fff569);
+    background: radial-gradient(closest-side, #004103, #2bff00, #7bff69);
 }
 
 .rond {
@@ -57,6 +57,10 @@ const doWeDisplayData = (e) => {
 }
 
 .position {
-    background-color: #00ff15;
+    background-color: rgba(0, 255, 0, 0.7);
+    }
+    
+    .mainStar {
+        background-color: white;
 }
 </style>
