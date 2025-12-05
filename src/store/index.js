@@ -60,42 +60,32 @@ export const useSystemStore = defineStore("systemData", () => {
   const systemData = ref({});
   const readytoMap = ref(false);
 
-  function getSystemData(agentToken) {
+  async function getSystemData(agentToken) {
     const options = {
       method: 'GET',
       headers: { Accept: 'application/json', Authorization: 'Bearer ' + agentToken }
     };
-    fetch(fetchUrl + "my/ships", options)
-      .then(response => {
-        if (response.ok)
-          return response.json()
-
-      })
-      .then(json => {
+    try {
+      let response = await fetch(fetchUrl + "my/ships", options);
+      if (response.ok) {
+        const json = await response.json()
         ships.value = json.data;
-      })
-      .then(() => {
-        let shipData = ships.value[0].nav;
-        fetch(fetchUrl + `systems/${shipData.systemSymbol}/waypoints/${shipData.waypointSymbol}`, options)
-          .then(response => {
-            if (response.ok)
-              return response.json()
-          })
-          .then(json => {
-            shipPosition.value = json.data;
-          })
-          .then(() => {
-            fetch(fetchUrl + `systems/${shipData.systemSymbol}`, options)
-              .then(response => {
-                if (response.ok)
-                  return response.json()
-              })
-              .then(json => {
-                systemData.value = json.data.waypoints;
-                readytoMap.value = true;
-              })
-          })
-      });
+      }
+      let shipData = ships.value[0].nav;
+      response = await fetch(fetchUrl + `systems/${shipData.systemSymbol}/waypoints/${shipData.waypointSymbol}`, options)
+      if (response.ok) {
+        const json = await response.json()
+        shipPosition.value = json.data;
+      }
+      response = await fetch(fetchUrl + `systems/${shipData.systemSymbol}`, options)
+      if (response.ok) {
+        const json = await response.json()
+        systemData.value = json.data.waypoints;
+        readytoMap.value = true;
+      }
+    }
+    catch (error) { console.log(error); }
+
   }
   return {
     ships,
