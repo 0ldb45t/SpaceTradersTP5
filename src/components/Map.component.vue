@@ -1,5 +1,4 @@
 <template>
-
     <div class="map p-4">
         <div class="d-flex justify-content-center flex-column align-items-center w-100">
             <div v-for="(row, x) in absoluteCoordinate" :key="x" class="row flex-shrink-0">
@@ -7,13 +6,12 @@
             </div>
         </div>
     </div>
-
-
 </template>
 <script setup>
 import MapCellComponent from './MapCell.component.vue';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useSystemStore } from '@/store';
+
 const store = useSystemStore();
 
 const astres = store.astres;
@@ -88,7 +86,7 @@ for (let x = positionX - 1; x <= positionX + 1; x++) {
         }
     }
 }
-const toAbsolute = () => {
+const absoluteCoordinate = computed(() => {
     let returned = [];
     for (let y = yMin.value; y <= yMax.value; y++) {
         const row = [];
@@ -98,11 +96,7 @@ const toAbsolute = () => {
         returned.push(row);
     }
     return returned;
-
-}
-
-const absoluteCoordinate = ref(toAbsolute());
-
+});
 
 </script>
 <style scoped>
@@ -113,11 +107,9 @@ const absoluteCoordinate = ref(toAbsolute());
     flex-wrap: nowrap;
     flex-grow: 0;
 }
-
 .map {
     cursor: none
 }
-
 .map:hover {
     border: 2px solid green;
     padding: 5px;
