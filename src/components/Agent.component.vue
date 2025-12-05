@@ -17,8 +17,8 @@
     </div>
 </template>
 <script setup>
-import { useSpatialStore } from '@/store';
-const store = useSpatialStore();
+import { useAdminAgentStore } from '@/store';
+const store = useAdminAgentStore();
 const agent = store.agent;
 
 </script>

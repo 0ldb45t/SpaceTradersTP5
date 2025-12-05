@@ -10,8 +10,8 @@
 </template>
 <script setup>
 import { ref } from 'vue';
-import { useSpatialStore } from '@/store';
-const store = useSpatialStore();
+import { useAdminAgentStore } from '@/store';
+const store = useAdminAgentStore();
 const fetchUrl = store.fetchUrl;
 const TOKEN = store.TOKEN;
 const MAIL = store.MAIL;

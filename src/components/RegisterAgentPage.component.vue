@@ -12,12 +12,12 @@
 </template>
 <script setup>
 import { onBeforeMount, ref, watch } from 'vue';
-import { useSpatialStore } from '@/store';
+import { useAdminAgentStore } from '@/store';
 import CreateAgent from './CreateAgent.component.vue';
 import { Agent } from '@/models/agent';
 import ShowCurrentLocationPageComponent from './ShowCurrentLocationPage.component.vue';
 
-const store = useSpatialStore();
+const store = useAdminAgentStore();
 
 
 const fetchUrl = store.fetchUrl;
