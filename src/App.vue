@@ -8,9 +8,9 @@
 import { RouterView } from 'vue-router';
 import { onBeforeMount, watch } from 'vue';
 import HeaderComponent from './components/Header.component.vue';
-import useSpatialStore from './store'
-const store = useSpatialStore();
-let agent = store.agent;
+import { useAdminAgentStore } from './store'
+const store = useAdminAgentStore();
+store.setLocalStorageToken(JSON.parse(localStorage.getItem("newAgentToken")));
 
 </script>
 <style>
