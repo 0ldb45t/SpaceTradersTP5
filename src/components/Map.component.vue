@@ -12,7 +12,7 @@
 </template>
 <script setup>
 import MapCellComponent from './MapCell.component.vue';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useSystemStore } from '@/store';
 const store = useSystemStore();
 
@@ -88,7 +88,7 @@ for (let x = positionX - 1; x <= positionX + 1; x++) {
         }
     }
 }
-const toAbsolute = () => {
+const absoluteCoordinate = computed(() => {
     let returned = [];
     for (let y = yMin.value; y <= yMax.value; y++) {
         const row = [];
@@ -98,9 +98,8 @@ const toAbsolute = () => {
         returned.push(row);
     }
     return returned;
+});
 
-}
-const absoluteCoordinate = ref(toAbsolute());
 </script>
 <style scoped>
 .row {
