@@ -9,8 +9,8 @@
 
 <script setup>
 import { watch } from 'vue';
-import useSpatialStore from '@/store';
-const store = useSpatialStore();
+import { useAdminAgentStore } from '@/store';
+const store = useAdminAgentStore();
 let agent = store.agent;
 console.log(agent);
 watch(

@@ -1,25 +1,23 @@
 <template>
-    <div>
-        <h1>Créer votre agent:</h1>
-        <label>Quel est le nom de votre agent? </label>
-        <input v-model="symbol" />
+    <div class="d-flex flex-column justify-content-center align-items-center">
+        <h1>Pour commencer, créer votre agent:</h1>
+        <h4>Quel est le nom de votre agent? </h4>
+        <input class="text-center" v-model="symbol" />
         <p>{{ symbol }}</p>
-        <button @click="postAgentRequest">Créer votre agent.</button>
+        <button @click="postAgentRequest">Créer votre agent</button>
+        <p>{{ feedBack[0] }}</p>
     </div>
 </template>
 <script setup>
 import { ref } from 'vue';
-import useSpatialStore from '@/store';
-const store = useSpatialStore();
+import { useAdminAgentStore } from '@/store';
+const store = useAdminAgentStore();
 const fetchUrl = store.fetchUrl;
 const TOKEN = store.TOKEN;
 const MAIL = store.MAIL;
 const symbol = ref("");
-const props = defineProps(
-    {
-        feedBack: { type: Object, required: true }
-    }
-);
+
+const feedBack = store.subscriptionFeedBack;
 const postAgentRequest = () => (
     fetch(`${fetchUrl}register`,
         {
@@ -29,17 +27,32 @@ const postAgentRequest = () => (
         }
     )
         .then(response => {
-            if (response.ok) {
-                feedBack = "Sauvegarde réussie!";
-                return response.json()
-            }
-            else feedBack = response.error.message;
+            return response.json()
         })
         .then(jsonItem => {
-            localStorage.setItem("agent", JSON.stringify(jsonItem.data.agent))
+            if (jsonItem.error !== undefined) {
+                store.setSubscriptionFeedBack(jsonItem.error.data.zodIssues[0].message);
+            }
+            else {
+                const newToken = jsonItem.data.token;
+                const newAgent = jsonItem.data.agent;
+                localStorage.setItem("newAgentToken", JSON.stringify(newToken));
+                localStorage.setItem("agent", JSON.stringify(newAgent));
+                store.setAgent(newAgent);
+                store.setLocalStorageToken(newToken);
+                store.setSubscriptionFeedBack("Sauvegarde réussie!");
+            }
             console.log(jsonItem)
         })
-        .catch(error => console.log(error))
+        .catch(error => { "console.log(error)" })
 );
 </script>
-<style scoped></style>
+<style scoped>
+input,
+button {
+    background-color: black;
+    color: #3cff00;
+    border: 1px solid #3cff00;
+    ;
+}
+</style>

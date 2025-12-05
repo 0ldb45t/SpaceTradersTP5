@@ -2,18 +2,19 @@
     <div :class="cell[0].class" class="square flex-shrink-0" @mouseover="doWeDisplayData"></div>
 </template>
 <script setup>
-import { defineProps, ref } from 'vue';
-const emit = defineEmits(['displayData'])
+import { defineProps } from 'vue';
+import { useMapStore } from '@/store';
+const store = useMapStore();
+
 const props = defineProps({ cell: { type: Object, required: false } });
 let cell = props.cell;
 
 if (props.cell === undefined)
     cell = [new Object({ class: 'noir' })];
 
-const doWeDisplayData = (e) => {
-
+const doWeDisplayData = () => {
     if (cell[0].symbol !== undefined)
-        emit('displayData', cell)
+        store.cellHoverd(cell)
 };
 </script>
 <style scoped>
@@ -58,9 +59,9 @@ const doWeDisplayData = (e) => {
 
 .position {
     background-color: rgba(0, 255, 0, 0.7);
-    }
+}
     
-    .mainStar {
+.mainStar {
         background-color: white;
 }
 </style>
