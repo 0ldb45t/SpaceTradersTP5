@@ -13,16 +13,12 @@
 </template>
 <script setup>
 import MapCellComponent from './MapCell.component.vue';
-import { ref } from 'vue';
-const props = defineProps(
-    {
-        astres: { type: Array, required: true },
-        position: { type: Object, required: false }
-    }
-);
+import { computed, ref } from 'vue';
+import { useSystemStore } from '@/store';
+const store = useSystemStore();
 
-const astres = props.astres;
-
+const astres = store.astres;
+const position = store.position;
 let astresXY = [];
 let xMin = ref(0);
 let xMax = ref(0);
@@ -31,8 +27,8 @@ let yMax = ref(0);
 
 
 const divideByt10AndRounded = (n) => Math.floor(n / 10);
-const positionX = divideByt10AndRounded(props.position.x);
-const positionY = divideByt10AndRounded(props.position.y);
+const positionX = divideByt10AndRounded(position.x);
+const positionY = divideByt10AndRounded(position.y);
 
 for (let i = 0; i < astres.length; i++) {
     const dividedX = divideByt10AndRounded(astres[i].x);
@@ -79,7 +75,7 @@ for (let i = 0; i < astres.length; i++) {
     }
 }
 astresXY[`${0}, ${0}`] = [];
-astresXY[`${0}, ${0}`].push({ class: "mainStar", symbol: props.position.system, type: "MAIN_STAR" });
+astresXY[`${0}, ${0}`].push({ class: "mainStar", symbol: position.system, type: "MAIN_STAR" });
 
 for (let x = positionX - 1; x <= positionX + 1; x++) {
     for (let y = positionY - 1; y <= positionY + 1; y++) {

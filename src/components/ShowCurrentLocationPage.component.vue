@@ -30,8 +30,7 @@
             </div>
         </div>
         <div class=" d-flex justify-content-center align-items-center mr-3">
-            <MapComponent v-if="readytoMap" :astres="systemData" :position="shipPosition"
-                @displayData="(cell) => { onCellHover(cell) }" />
+            <MapComponent v-if="readytoMap" @displayData="(cell) => { onCellHover(cell) }" />
         </div>
     </div>
 </template>
@@ -43,8 +42,7 @@ import MapComponent from './Map.component.vue';
 const agentStore = useAdminAgentStore();
 const systemStore = useSystemStore();
 let agent = agentStore.agent;
-const shipPosition = computed(() => systemStore.shipPosition);
-const systemData = computed(() => systemStore.systemData);
+const shipPosition = computed(() => systemStore.position);
 const readytoMap = computed(() => systemStore.readytoMap);
 
 const cell = ref({});
@@ -66,11 +64,9 @@ watch(
 .vousEtesIci {
     color: red;
 }
-
 .borderGreen {
     border: 2px solid green;
 }
-
 ul {
     list-style: none;
 }

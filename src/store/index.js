@@ -56,8 +56,8 @@ export const useAdminAgentStore = defineStore("spatial", () => {
 export const useSystemStore = defineStore("systemData", () => {
 
   const ships = ref({});
-  const shipPosition = ref({});
-  const systemData = ref({});
+  const position = ref({});
+  const astres = ref([]);
   const readytoMap = ref(false);
 
   async function getSystemData(agentToken) {
@@ -75,12 +75,12 @@ export const useSystemStore = defineStore("systemData", () => {
       response = await fetch(fetchUrl + `systems/${shipData.systemSymbol}/waypoints/${shipData.waypointSymbol}`, options)
       if (response.ok) {
         const json = await response.json()
-        shipPosition.value = json.data;
+        position.value = json.data;
       }
       response = await fetch(fetchUrl + `systems/${shipData.systemSymbol}`, options)
       if (response.ok) {
         const json = await response.json()
-        systemData.value = json.data.waypoints;
+        astres.value = json.data.waypoints;
         readytoMap.value = true;
       }
     }
@@ -89,8 +89,8 @@ export const useSystemStore = defineStore("systemData", () => {
   }
   return {
     ships,
-    shipPosition,
-    systemData,
+    position,
+    astres,
     readytoMap,
     getSystemData
   };
