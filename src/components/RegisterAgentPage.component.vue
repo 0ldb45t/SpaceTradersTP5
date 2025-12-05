@@ -11,7 +11,7 @@
     </div>
 </template>
 <script setup>
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, ref, watch } from 'vue';
 import useSpatialStore from '@/store';
 import CreateAgent from './CreateAgent.component.vue';
 import { Agent } from '@/models/agent';
@@ -22,13 +22,13 @@ const store = useSpatialStore();
 
 const fetchUrl = store.fetchUrl;
 const TOKEN = store.TOKEN;
-const agentToken = store.localStorageToken[0]; //store.SPIKE_TOKEN;
+
 const feedBack = store.subscriptionFeedBack;
 const localAgent = ref({});
 const statusData = ref({});
 const options = {
     method: 'GET',
-    headers: { Accept: 'application/json', Authorization: 'Bearer ' + agentToken }
+    headers: { Accept: 'application/json', Authorization: 'Bearer ' + store.agentToken }
 };
 const optionsMain = {
     method: 'GET',
@@ -52,7 +52,7 @@ onBeforeMount(() => {
         localAgent.value = JSON.parse(localStorage.getItem("agent"));
         store.setAgent(localAgent.value);
     }
-    else {
+    else if (store.agentToken !== null) {
         fetchDataAgent()
     }
     getCurrentAccount();
@@ -62,6 +62,9 @@ const getCurrentAccount = async () => {
         .then(response => response.json())
         .then(json => statusData.value = json);
 };
-
+watch(
+    () => store.agentToken,
+    () => localAgent.value = store.agent
+);
 </script>
 <style scoped></style>

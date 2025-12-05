@@ -29,33 +29,32 @@
                 </strong>
             </div>
         </div>
-        <div class=" d-flex justify-content-center align-items-center">
+        <div class=" d-flex justify-content-center align-items-center mr-3">
             <MapComponent v-if="readytoMap" :astres="systemData" :position="shipPosition"
                 @displayData="(cell) => { onCellHover(cell) }" />
         </div>
     </div>
 </template>
 <script setup>
-import { onBeforeMount, ref, watch } from 'vue';
+import { onBeforeMount, computed, ref, watch } from 'vue';
 import useSpatialStore from '@/store';
 import MapComponent from './Map.component.vue';
 
 const store = useSpatialStore();
 let agent = store.agent;
 const fetchUrl = store.fetchUrl;
-const AGENT_TOKEN = store.localStorageToken[0];
 const ships = ref({});
 const shipPosition = ref({});
 const systemData = ref({});
 const systemFacts = ref({});
 let readytoMap = ref(false);
-const options = {
-    method: 'GET',
-    headers: { Accept: 'application/json', Authorization: 'Bearer ' + AGENT_TOKEN }
-};
 
 const cell = ref({});
-const fetchDataShips = async () => {
+const fetchDataShips = (agentToken) => {
+    const options = {
+        method: 'GET',
+        headers: { Accept: 'application/json', Authorization: 'Bearer ' + agentToken }
+    };
     fetch(fetchUrl + "my/ships", options)
         .then(response => {
             if (response.ok)
@@ -63,12 +62,15 @@ const fetchDataShips = async () => {
 
         })
         .then(json => {
-            console.log(ships);
             ships.value = json.data;
         })
-        .then(() => fetchDataCurrentSystem());
+        .then(() => fetchDataCurrentSystem(agentToken));
 }
-const fetchDataSystem = () => {
+const fetchDataSystem = (agentToken) => {
+    const options = {
+        method: 'GET',
+        headers: { Accept: 'application/json', Authorization: 'Bearer ' + agentToken }
+    };
     let shipData = ships.value[0].nav;
     fetch(fetchUrl + `systems/${shipData.systemSymbol}`, options)
         .then(response => {
@@ -81,7 +83,11 @@ const fetchDataSystem = () => {
             readytoMap.value = true;
         })
 }
-const fetchDataCurrentSystem = () => {
+const fetchDataCurrentSystem = (agentToken) => {
+    const options = {
+        method: 'GET',
+        headers: { Accept: 'application/json', Authorization: 'Bearer ' + agentToken }
+    };
     let shipData = ships.value[0].nav;
     fetch(fetchUrl + `systems/${shipData.systemSymbol}/waypoints/${shipData.waypointSymbol}`, options)
         .then(response => {
@@ -90,23 +96,19 @@ const fetchDataCurrentSystem = () => {
         })
         .then(json => {
             shipPosition.value = json.data;
-            console.log(shipPosition);
         })
-        .then(() => fetchDataSystem())
+        .then(() => fetchDataSystem(agentToken))
 }
 const onCellHover = (aCell) => {
     cell.value = aCell;
 }
 onBeforeMount(() => {
-    if (AGENT_TOKEN !== undefined)
-    fetchDataShips()
+    if (store.agentToken !== undefined)
+        fetchDataShips(store.agentToken)
 });
 watch(
-    () => store.agentChanged,
-    () => {
-        agent = store.getAgent();
-    },
-    { deep: true }
+    () => store.agentToken,
+    (value) => fetchDataShips(value)
 );
 </script>
 <style scoped>
