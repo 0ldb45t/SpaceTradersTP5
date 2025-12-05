@@ -7,7 +7,6 @@
                 <div v-for="trait in shipPosition.traits">
                     <p>{ Symbole: {{ trait.name }} }</p>
                     <p>{ Description: {{ trait.description }} }</p>
-
                 </div>
                 <p>Position du WayPoint: { x: {{ shipPosition.x }}, y: {{ shipPosition.y }} }</p>
 
@@ -30,22 +29,23 @@
             </div>
         </div>
         <div class=" d-flex justify-content-center align-items-center mr-3">
-            <MapComponent v-if="readytoMap" @displayData="(cell) => { onCellHover(cell) }" />
+            <MapComponent v-if="readytoMap" />
         </div>
     </div>
 </template>
 <script setup>
 import { onBeforeMount, computed, ref, watch } from 'vue';
-import { useAdminAgentStore, useSystemStore } from '@/store';
+import { useAdminAgentStore, useMapStore, useSystemStore } from '@/store';
 import MapComponent from './Map.component.vue';
 
 const agentStore = useAdminAgentStore();
 const systemStore = useSystemStore();
-let agent = agentStore.agent;
+const mapStore = useMapStore();
+const agent = agentStore.agent;
 const shipPosition = computed(() => systemStore.position);
 const readytoMap = computed(() => systemStore.readytoMap);
 
-const cell = ref({});
+const cell = computed(() => mapStore.cell);
 
 const onCellHover = (aCell) => {
     cell.value = aCell;

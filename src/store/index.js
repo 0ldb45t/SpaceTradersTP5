@@ -95,6 +95,15 @@ export const useSystemStore = defineStore("systemData", () => {
     getSystemData
   };
 });
+export const useMapStore = defineStore("map", () => {
+  const cell = ref({});
+  function cellHoverd(aCell) { cell.value = aCell }
+
+  return {
+    cell,
+    cellHoverd
+  }
+});
 /*const baseUrl = import.meta.env.VITE_API_URL || "";
   const panier = ref([]);
 
