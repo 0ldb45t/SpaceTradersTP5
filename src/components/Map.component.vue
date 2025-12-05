@@ -1,5 +1,4 @@
 <template>
-
     <div class="map p-4">
         <div class="d-flex justify-content-center flex-column align-items-center w-100">
             <div v-for="(row, x) in absoluteCoordinate" :key="x" class="row flex-shrink-0">
@@ -7,13 +6,12 @@
             </div>
         </div>
     </div>
-
-
 </template>
 <script setup>
 import MapCellComponent from './MapCell.component.vue';
 import { computed, ref } from 'vue';
 import { useSystemStore } from '@/store';
+
 const store = useSystemStore();
 
 const astres = store.astres;

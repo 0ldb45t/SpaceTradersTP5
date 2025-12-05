@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex flex-row w-100 justify-content-center align-items-start ">
+    <div class="d-flex flex-row w-100 justify-content-between align-items-start ">
         <div class="d-flex flex-column justify-content-start w-25 m-3 mt-0 gap-3">
             <div v-if="agent?.symbol !== '' && readytoMap" class="p-3 align-self-end borderGreen">
                 <h4>Position de {{ agent.symbol }} : [ x: {{ shipPosition.x }}, y: {{ shipPosition.y }} ]</h4>
@@ -13,9 +13,6 @@
 
             </div>
 
-        </div>
-        <div class=" d-flex justify-content-center align-items-center mr-3 w-50 flex-shrink-0">
-            <MapComponent v-if="readytoMap" />
         </div>
         <div class="data p-5 text-center flex-column borderGreen w-25 me-3" v-if="cell.length > 0">
             <strong>
@@ -33,6 +30,10 @@
                 </div>
             </strong>
         </div>
+        <div class=" d-flex justify-content-center align-items-center mr-3 w-50 flex-shrink-0">
+            <MapComponent v-if="readytoMap" />
+        </div>
+
     </div>
 </template>
 <script setup>
