@@ -17,7 +17,7 @@
     </div>
 </template>
 <script setup>
-import useSpatialStore from '@/store';
+import { useSpatialStore } from '@/store';
 const store = useSpatialStore();
 const agent = store.agent;
 

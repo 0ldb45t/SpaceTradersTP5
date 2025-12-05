@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { ref, computed, reactive } from "vue";
 
-export default defineStore("spatial", () => {
+export const useSpatialStore = defineStore("spatial", () => {
   const agent = reactive({
     accountId: "",
     symbol: "",
@@ -38,7 +38,6 @@ export default defineStore("spatial", () => {
   function setSubscriptionFeedBack(feedBack) {
     subscriptionFeedBack.value.push(feedBack);
   }
-
   return {
     agent,
     subscriptionFeedBack,
@@ -53,6 +52,9 @@ export default defineStore("spatial", () => {
     localStorageToken,
     agentToken
   };
+});
+export const useSystemStore = defineStore("systemData", () => {
+
 });
 /*const baseUrl = import.meta.env.VITE_API_URL || "";
   const panier = ref([]);

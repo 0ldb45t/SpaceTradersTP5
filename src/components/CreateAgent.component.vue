@@ -10,7 +10,7 @@
 </template>
 <script setup>
 import { ref } from 'vue';
-import useSpatialStore from '@/store';
+import { useSpatialStore } from '@/store';
 const store = useSpatialStore();
 const fetchUrl = store.fetchUrl;
 const TOKEN = store.TOKEN;

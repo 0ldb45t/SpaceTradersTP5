@@ -37,7 +37,7 @@
 </template>
 <script setup>
 import { onBeforeMount, computed, ref, watch } from 'vue';
-import useSpatialStore from '@/store';
+import { useSpatialStore } from '@/store';
 import MapComponent from './Map.component.vue';
 
 const store = useSpatialStore();
@@ -46,7 +46,6 @@ const fetchUrl = store.fetchUrl;
 const ships = ref({});
 const shipPosition = ref({});
 const systemData = ref({});
-const systemFacts = ref({});
 let readytoMap = ref(false);
 
 const cell = ref({});
@@ -79,7 +78,6 @@ const fetchDataSystem = (agentToken) => {
         })
         .then(json => {
             systemData.value = json.data.waypoints;
-            systemFacts.value = json.data;
             readytoMap.value = true;
         })
 }

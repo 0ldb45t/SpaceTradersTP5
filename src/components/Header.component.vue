@@ -9,7 +9,7 @@
 
 <script setup>
 import { watch } from 'vue';
-import useSpatialStore from '@/store';
+import { useSpatialStore } from '@/store';
 const store = useSpatialStore();
 let agent = store.agent;
 console.log(agent);

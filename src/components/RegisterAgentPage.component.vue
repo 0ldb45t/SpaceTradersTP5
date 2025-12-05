@@ -12,7 +12,7 @@
 </template>
 <script setup>
 import { onBeforeMount, ref, watch } from 'vue';
-import useSpatialStore from '@/store';
+import { useSpatialStore } from '@/store';
 import CreateAgent from './CreateAgent.component.vue';
 import { Agent } from '@/models/agent';
 import ShowCurrentLocationPageComponent from './ShowCurrentLocationPage.component.vue';
