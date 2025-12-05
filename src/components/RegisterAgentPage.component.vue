@@ -1,13 +1,11 @@
 <template>
     <div class="w-100 d-flex flex-column justify-content-between mt-3 gap-2">
-
-
         <CreateAgent v-if="localAgent.symbol === undefined" :feedback="feedBack" />
         <p v-if='feedBack[0] !== ""'>{{ feedBack[0] }}</p>
-        <ShowCurrentLocationPageComponent />
-        <div>
-            <p v-if="statusData.serverResets !== undefined">
-                Cet agent a jusqu'au{{ new Date(statusData.serverResets.next) }} pour faire top1
+        <ShowCurrentLocationPageComponent v-if="localAgent.symbol !== undefined" />
+        <div v-if="statusData.serverResets !== undefined" class="text-center">
+            <p>
+                Cet agent a jusqu'au {{ new Date(statusData.serverResets.next) }} pour faire top1
             </p>
         </div>
     </div>
@@ -53,12 +51,11 @@ onBeforeMount(() => {
     if (localStorage.getItem("agent") !== null) {
         localAgent.value = JSON.parse(localStorage.getItem("agent"));
         store.setAgent(localAgent.value);
-        return;
     }
-    if (agentToken !== undefined) {
-        getCurrentAccount();
+    else {
         fetchDataAgent()
     }
+    getCurrentAccount();
 });
 const getCurrentAccount = async () => {
     fetch(fetchUrl, optionsMain)
