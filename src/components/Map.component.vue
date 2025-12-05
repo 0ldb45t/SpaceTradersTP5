@@ -100,10 +100,7 @@ const toAbsolute = () => {
     return returned;
 
 }
-
 const absoluteCoordinate = ref(toAbsolute());
-
-
 </script>
 <style scoped>
 .row {
@@ -113,11 +110,9 @@ const absoluteCoordinate = ref(toAbsolute());
     flex-wrap: nowrap;
     flex-grow: 0;
 }
-
 .map {
     cursor: none
 }
-
 .map:hover {
     border: 2px solid green;
     padding: 5px;
