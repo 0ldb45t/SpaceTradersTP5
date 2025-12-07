@@ -11,10 +11,11 @@
             </div>
         </div>
         <br></br>
-        <div class="infos w-100 d-flex flex-column justify-content-center align-item-center" v-if="contratInfo !== undefined">
+        <div class="infos w-100 d-flex flex-column justify-content-center align-item-center"
+            v-if="contratInfo !== undefined">
             <h2>Termes</h2>
             <div>
-                <p>Date d'expiration: {{ contratInfo.deadline }}</p>
+                <p>Date d'expiration: {{ contratInfo.terms.deadline }}</p>
             </div>
         </div>
     </div>
@@ -42,9 +43,9 @@ watch(
     (value) => systemStore.getSystemData(value)
 );
 
-function afficherInfos(contratId){
-    systemStore.getContratInfos(token, contratId);
-    contratInfo.value = systemStore.contratInfo.value;
+async function afficherInfos(contratId) {
+    await systemStore.getContratInfos(token, contratId);
+    contratInfo.value = systemStore.contratInfo;
     console.log(contratInfo.value);
 }
 </script>
