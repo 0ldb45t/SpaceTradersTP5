@@ -4,6 +4,9 @@
             <div v-if="agent?.symbol !== '' && readytoMap" class="p-3 align-self-end borderGreen">
                 <h4>Position de {{ agent.symbol }} : [ x: {{ shipPosition.x }}, y: {{ shipPosition.y }} ]</h4>
                 <h4 class="p-0 m-0">Symbole du systeme: {{ shipPosition?.systemSymbol }}</h4>
+                <router-link to="/currentLocation/contrats">
+                    <button>Afficher les contrats</button>
+                </router-link>
                 <div v-for="trait in shipPosition.traits">
                     <p class="text-end textMid">{ Symbole: {{ trait.name }} }</p>
                     <p class="text-start textMid"> Description: {{ trait.description }} </p>
@@ -70,5 +73,11 @@ watch(
 
 .textMid {
     font-size: large;
+}
+
+button {
+    border: 2px solid #3cff00;
+    background-color: black;
+    color: #3cff00
 }
 </style>
