@@ -1,5 +1,6 @@
 <template>
-    <div :class="cell[0].class" class="square flex-shrink-0" @mouseover="doWeDisplayData"></div>
+    <div :class="cell[0].class" class="square flex-shrink-0" @mouseover="doWeDisplayData" @click="store.getNewCellData">
+    </div>
 </template>
 <script setup>
 import { defineProps } from 'vue';

@@ -12,83 +12,22 @@
                     <div class="position"></div>
                 </td>
             </tr>
-            <tr class="d-flex w-100 flex-row justify-content-between">
+            <tr v-for="astre in store.mapDataMap" class="d-flex w-100 flex-row justify-content-between">
                 <td>
-                    <p>ORBITAL_STATION</p>
+                    <p>{{ astre[0] }}</p>
                 </td>
                 <td class="d-flex align-content-center justify-content-center align-items-center">
-                    <div class="bg-warning rond petit"></div>
+                    <div :class="astre[1]" class="bg-warning rond petit"></div>
                 </td>
             </tr>
-            <tr class="d-flex w-100 flex-row justify-content-between">
-                <td>
-                    <p>FUEL_STATION</p>
-                </td>
-                <td class="d-flex align-content-center justify-content-center align-items-center">
-                    <div class="bg-warning-subtle rond petit"></div>
-                </td>
 
-            </tr>
-            <tr class="d-flex w-100 flex-row justify-content-between">
-                <td>
-                    <p>ASTEROID_BASE</p>
-                </td>
-                <td class="d-flex align-content-center justify-content-center align-items-center">
-                    <div class="bg-dark-subtle rond petit"></div>
-                </td>
-            </tr>
-            <tr class="d-flex w-100 flex-row justify-content-between">
-                <td>
-                    <p>ENGINEERED_ASTEROID</p>
-                </td>
-                <td class="d-flex align-content-center justify-content-center align-items-center">
-                    <div class="bg-success-subtle rond petit"></div>
-                </td>
-            </tr>
-            <tr class="d-flex w-100 flex-row justify-content-between">
-                <td>
-                    <p>GAS_GIANT</p>
-                </td>
-                <td class="d-flex align-content-center justify-content-center align-items-center">
-                    <div class="bg-danger rond petit"></div>
-                </td>
-            </tr>
-            <tr class="d-flex w-100 flex-row justify-content-between">
-                <td>
-                    <p>MOON</p>
-                </td>
-                <td class="d-flex align-content-center justify-content-center align-items-center">
-                    <div class="bg-info-subtle rond petit"></div>
-                </td>
-            </tr>
-            <tr class="d-flex w-100 flex-row justify-content-between">
-                <td>
-                    <p>PLANET</p>
-                </td>
-                <td class="d-flex align-content-center justify-content-center align-items-center">
-                    <div class="bg-primary rond petit"></div>
-                </td>
-            </tr>
-            <tr class="d-flex w-100 flex-row justify-content-between">
-                <td>
-                    <p>JUMP_GATE</p>
-                </td>
-                <td class="d-flex align-content-center justify-content-center align-items-center">
-                    <div class="bg-success rond petit"></div>
-                </td>
-            </tr>
-            <tr class="d-flex w-100 flex-row justify-content-between">
-                <td>
-                    <p>ASTEROID</p>
-                </td>
-                <td class="d-flex align-content-center justify-content-center align-items-center">
-                    <div class="bg-dark rond petit"></div>
-                </td>
-            </tr>
         </table>
     </div>
 </template>
-<script setup></script>
+<script setup>
+import { useSystemStore } from '@/store';
+const store = useSystemStore();
+</script>
 <style scoped>
 .buttonDetails {
     border: 2px solid #3cff00;

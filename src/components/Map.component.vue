@@ -52,27 +52,9 @@ for (let i = 0; i < astres.length; i++) {
         item.vousEtesIci = `Vous êtes ici!`
         continue;
     }
-    switch (astres[i].type) {
-        case 'MOON': item.class += 'bg-info-subtle';
-            break;
-        case 'ORBITAL_STATION': item.class += 'bg-warning-subtle';
-            break;
-        case 'ASTEROID': item.class += 'bg-dark';
-            break;
-        case 'FUEL_STATION': item.class += 'bg-warning';
-            break;
-        case 'PLANET': item.class += 'bg-primary';
-            break;
-        case 'JUMP_GATE': item.class += 'bg-success';
-            break;
-        case 'GAS_GIANT': item.class += 'bg-danger';
-            break;
-        case 'ENGINEERED_ASTEROID': item.class += 'bg-success-subtle';
-            break;
-        case 'ASTEROID_BASE': item.class += 'bg-dark-subtle';
-            break;
-        default: item.class += 'bg-secondary';
-            break;
+    for (let j = 0; j < store.mapDataMap.length; j++) {
+        if (store.mapDataMap[j][0] === astres[i].type)
+            item.class += store.mapDataMap[j][1]
     }
 }
 astresXY[`${0}, ${0}`] = [];

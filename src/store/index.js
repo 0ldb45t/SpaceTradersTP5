@@ -59,7 +59,17 @@ export const useSystemStore = defineStore("systemData", () => {
   const position = ref({});
   const astres = ref([]);
   const readytoMap = ref(false);
-
+  const mapDataMap = [
+    ['MOON', 'bg-info-subtle'],
+    ['ORBITAL_STATION', 'bg-warning-subtle'],
+    ['ASTEROID', 'bg-dark'],
+    ['FUEL_STATION', 'bg-warning'],
+    ['PLANET', 'bg-primary'],
+    ['JUMP_GATE', 'bg-success'],
+    ['GAS_GIANT', 'bg-danger'],
+    ['ENGINEERED_ASTEROID', 'bg-success-subtle'],
+    ['ASTEROID_BASE', 'bg-dark-subtle'],
+  ]
   async function getSystemData(agentToken) {
     const options = {
       method: "GET",
@@ -99,6 +109,7 @@ export const useSystemStore = defineStore("systemData", () => {
     position,
     astres,
     readytoMap,
+    mapDataMap,
     getSystemData,
   };
 });
@@ -108,10 +119,13 @@ export const useMapStore = defineStore("map", () => {
   function cellHoverd(aCell) {
     cell.value = aCell;
   }
+  function getNewCellData(aCell) {
 
+  }
   return {
     cell,
     cellHoverd,
+    getNewCellData
   };
 });
 
