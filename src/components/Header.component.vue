@@ -22,7 +22,6 @@ import { watch, ref } from 'vue';
 import { useAdminAgentStore } from '@/store';
 const store = useAdminAgentStore();
 let agent = store.agent;
-const agentToken = store.agentToken;
 const statusData = ref({});
 const TOKEN = store.TOKEN;
 const fetchUrl = store.fetchUrl;

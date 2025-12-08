@@ -16,7 +16,6 @@ const store = useAdminAgentStore();
 
 
 const fetchUrl = store.fetchUrl;
-const TOKEN = store.TOKEN;
 
 const feedBack = store.subscriptionFeedBack;
 const localAgent = ref({});
