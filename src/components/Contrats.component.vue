@@ -11,11 +11,18 @@
             </div>
         </div>
         <br></br>
-        <div class="infos w-100 d-flex flex-column justify-content-center align-item-center"
+        <div class="infos w-25 d-flex flex-column justify-content-center align-item-center text-center rounded"
             v-if="contratInfo !== undefined">
-            <h2>Termes</h2>
-            <div>
-                <p>Date d'expiration: {{ contratInfo.terms.deadline }}</p>
+            <h2>Détails de la livraison</h2>
+            <p>Nombre de matériaux: {{ contratInfo.terms.deliver.length }}</p>
+            <div v-for="materiau in contratInfo.terms.deliver">  
+                <div class="materiau">
+                    <p>Matériau à livrer: {{ materiau.tradeSymbol }}</p>
+                    <p>Destination: {{ materiau.destinationSymbol }}</p>
+                    <p>Nombre requis: {{ materiau.unitsRequired }}</p>
+                    <p v-if="contratInfo.accepted == true">Nombre livré: {{ materiau.unitsFulfilled }}</p>
+                </div>
+                
             </div>
         </div>
     </div>
@@ -59,5 +66,15 @@ async function afficherInfos(contratId) {
     border: 2px solid #3cff00;
     background-color: green;
     color: #3cff00;
+    }
+    .infos{
+        border: 2px solid #3BD7ED;
+        background-color: #288594;
+        color: #3BD7ED;
+    }
+    .materiau{
+        border: 2px solid #3BD7ED;
+        background-color: #288594;
+        color: #3BD7ED;
     }
 </style>
