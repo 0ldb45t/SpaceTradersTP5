@@ -4,9 +4,7 @@
             <div v-if="agent?.symbol !== '' && readytoMap" class="p-3 align-self-end borderGreen">
                 <h4>Position de {{ agent.symbol }} : [ x: {{ shipPosition.x }}, y: {{ shipPosition.y }} ]</h4>
                 <h4 class="p-0 m-0">Symbole du systeme: {{ shipPosition?.systemSymbol }}</h4>
-                <router-link :to="{ name: 'Contrats' }">
-                    <button class="buttonDetails">Afficher les contrats</button>
-                </router-link>
+
                 <hr class="borderGreen ms-5 me-5" />
                 <div v-for="trait, i in shipPosition.traits">
                     <p class="text-end textMid">{ Symbole: {{ trait.name }} }</p>
@@ -15,8 +13,10 @@
                 </div>
             </div>
         </div>
-        <div class="w-25 d-flex flex-column">
-            <div class="borderGreen w-100"></div>
+        <div class="w-25 d-flex flex-column" v-if="readytoMap">
+            <div class="borderGreen w-100">
+                <MapLegend />
+            </div>
             <div class="data text-center flex-column borderGreen w-100" v-if="cell.length > 0">
                 <strong>
                     <h4>
@@ -44,6 +44,7 @@
 import { onBeforeMount, computed, watch } from 'vue';
 import { useAdminAgentStore, useMapStore, useSystemStore } from '@/store';
 import MapComponent from './Map.component.vue';
+import MapLegend from './MapLegend.component.vue';
 
 const agentStore = useAdminAgentStore();
 const systemStore = useSystemStore();
@@ -68,11 +69,6 @@ watch(
     color: red;
 }
 
-.buttonDetails {
-    border: 2px solid #3cff00;
-    background-color: green;
-    color: #3cff00;
-}
 .borderGreen {
     border: 2px solid green;
 }
@@ -81,9 +77,4 @@ watch(
     font-size: large;
 }
 
-button {
-    border: 2px solid #3cff00;
-    background-color: black;
-    color: #3cff00
-}
 </style>

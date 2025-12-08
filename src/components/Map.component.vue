@@ -53,9 +53,9 @@ for (let i = 0; i < astres.length; i++) {
         continue;
     }
     switch (astres[i].type) {
-        case 'MOON': item.class += 'bg-info';
+        case 'MOON': item.class += 'bg-info-subtle';
             break;
-        case 'ORBITAL_STATION': item.class += 'bg-success';
+        case 'ORBITAL_STATION': item.class += 'bg-warning-subtle';
             break;
         case 'ASTEROID': item.class += 'bg-dark';
             break;
@@ -63,9 +63,13 @@ for (let i = 0; i < astres.length; i++) {
             break;
         case 'PLANET': item.class += 'bg-primary';
             break;
-        case 'JUMP_GATE': item.class += 'bg-danger';
+        case 'JUMP_GATE': item.class += 'bg-success';
             break;
         case 'GAS_GIANT': item.class += 'bg-danger';
+            break;
+        case 'ENGINEERED_ASTEROID': item.class += 'bg-success-subtle';
+            break;
+        case 'ASTEROID_BASE': item.class += 'bg-dark-subtle';
             break;
         default: item.class += 'bg-secondary';
             break;
