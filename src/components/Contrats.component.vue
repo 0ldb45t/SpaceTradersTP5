@@ -29,7 +29,7 @@
             <h2>Détails de la livraison</h2>
             <p class="mb-0">Date limite: {{ new Date(contratInfo.terms.deadline) }}</p>
             <p class="mb-0">Nombre de matériaux: {{ contratInfo.terms.deliver.length }}</p>
-            <div v-for="materiau in contratInfo.terms.deliver">  
+            <div v-for="materiau in contratInfo.terms.deliver">
                 <div class="materiau rounded">
                     <p class="mb-0">Matériau à livrer: {{ materiau.tradeSymbol }}</p>
                     <p class="mb-0">Destination: {{ materiau.destinationSymbol }}</p>
