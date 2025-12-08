@@ -6,10 +6,10 @@
         <table class="w-50 d-flex flex-column justify-content-between text-center mt-3">
             <tr class="d-flex w-100 flex-row justify-content-between">
                 <td>
-                    <p>Votre position</p>
+                    <p class="text-light">Votre position</p>
                 </td>
                 <td class="d-flex align-content-center justify-content-center align-items-center">
-                    <div class="position rond"></div>
+                    <div class="position"></div>
                 </td>
             </tr>
             <tr class="d-flex w-100 flex-row justify-content-between">
@@ -105,6 +105,7 @@
 
 .rond {
     border-radius: 50%;
+    margin-bottom: 7px
 }
 
 .petit {
@@ -112,6 +113,6 @@
     height: 5px;
     align-self: center;
     vertical-align: middle;
-    margin-right: 6px
+    margin-right: 6px;
 }
 </style>

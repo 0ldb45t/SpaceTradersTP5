@@ -48,7 +48,7 @@ for (let i = 0; i < astres.length; i++) {
     const item = astresXY[`${dividedX}, ${dividedY}`][astresXY[`${dividedX}, ${dividedY}`].length - 1];
     item.class = 'rond ';
     if (dividedX === positionX && dividedY === positionY) {
-        item.class = 'jaune';
+        item.class = "position";
         item.vousEtesIci = `Vous êtes ici!`
         continue;
     }

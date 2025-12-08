@@ -4,13 +4,13 @@
       <h1 class="p-1 d-inline">TRADERS IN SPACE</h1>
     </router-link>
 
-    <p class="bg-danger" v-if="statusData.serverResets !== undefined">
+    <p class="bg-danger p-1 mt-3 text-light" v-if="statusData.serverResets !== undefined">
       Prochaine réinitalisation: {{ new Date(statusData.serverResets.next) }}
     </p>
     <div class="me-3">
-      <p class="mb-0">Agent {{ agent.symbol }}</p>
-      <p class="mb-0">Crédits: {{ agent.credits }}</p>
-      <p class="mb-0">Id: {{ agent.accountId }}</p>
+      <p class="mb-0 text-end">Agent {{ agent.symbol }}</p>
+      <p class="mb-0 text-end">Crédits: {{ agent.credits }}</p>
+      <p class="mb-0 text-end">Id: {{ agent.accountId }}</p>
       <!-- <p class="mb-0">Jeton: {{ agentToken }}</p> -->
       <!--J'ai mis la ligne du dessus en commentaire parce que c'est LAID-->
     </div>
@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-import { watch, ref } from 'vue';
+import { ref } from 'vue';
 import { useAdminAgentStore } from '@/store';
 const store = useAdminAgentStore();
 let agent = store.agent;

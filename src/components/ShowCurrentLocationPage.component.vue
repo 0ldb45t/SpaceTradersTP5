@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-        <div class="w-25 d-flex flex-column" v-if="readytoMap">
+        <div class="w-25 d-flex flex-column mb-2" v-if="readytoMap">
             <div class="data text-center flex-column borderGreen w-100 mb-2" v-if="cell.length > 0">
                 <strong>
                     <h4>
