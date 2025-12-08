@@ -1,7 +1,7 @@
 <template>
     <div class="w-100 d-flex flex-column justify-content-between mt-3 gap-2">
         <CreateAgent v-if="localAgent.symbol === undefined" :feedback="feedBack" />
-        <p v-if='feedBack[0] !== ""'>{{ feedBack[0] }}</p>
+        <p v-if='feedBack[0] !== ""' class="align-self-center">{{ feedBack[0] }}</p>
         <ShowCurrentLocationPageComponent v-if="localAgent.symbol !== undefined" />
     </div>
 </template>
@@ -14,10 +14,10 @@ import ShowCurrentLocationPageComponent from './ShowCurrentLocationPage.componen
 
 const store = useAdminAgentStore();
 
-
 const fetchUrl = store.fetchUrl;
 
 const feedBack = store.subscriptionFeedBack;
+
 const localAgent = ref({});
 const options = {
     method: 'GET',
