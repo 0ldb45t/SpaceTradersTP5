@@ -16,8 +16,8 @@
             <h2>Statut</h2>
             <div v-if="contratInfo.accepted">
                 <p class="mb-0">Contrat accepté.</p>
-                <p v-if="contratInfo.fulfilled">Conditions remplies, vous pouvez encaisser votre récompense.</p>
-                <p v-else>Vous n'avez pas encore rempli les conditions du contrat.</p>
+                <p v-if="contratInfo.fulfilled" class="mb-0">Conditions remplies, vous pouvez encaisser votre récompense.</p>
+                <p v-else class="mb-0">Vous n'avez pas encore rempli les conditions du contrat.</p>
             </div>
             <div v-else>
                 <p class="mb-0">Vous n'avez pas encore accepté ce contrat.</p>
@@ -38,7 +38,7 @@
                 </div>
             </div>
             <p>Date d'expiration de ce contrat: {{ new Date(contratInfo.expiration) }}</p>
-            <button class="btn buttonAccepter" v-if="!contratInfo.accepted">Accepter ce contrat</button>
+            <button class="btn buttonAccepter" v-if="!contratInfo.accepted" @click="accepterContrat(contratInfo.id)">Accepter ce contrat</button>
         </div>
     </div>
 </template>
@@ -50,9 +50,11 @@ import { useAdminAgentStore, useContratStore, useSystemStore } from '@/store';
 const agentStore = useAdminAgentStore();
 const contratStore = useContratStore();
 const systemStore = useSystemStore();
-const contrats = computed(() => contratStore.contrats);
+
 const agent = agentStore.agent;
 const token = agentStore.agentToken;
+contratStore.getListContrats(token);
+const contrats = computed(() => contratStore.contrats);
 
 let contratInfo = ref(undefined);
 
@@ -68,6 +70,10 @@ watch(
 
 async function afficherInfos(contratId) {
     await contratStore.getContratInfos(token, contratId);
+    contratInfo.value = contratStore.contratInfo;
+}
+async function accepterContrat(contratId){
+    await contratStore.acceptContrat(token, contratId);
     contratInfo.value = contratStore.contratInfo;
 }
 </script>
