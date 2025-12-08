@@ -12,12 +12,9 @@ const routes = [
         component: RegisterAgentPage,
     },
     {
-        path: "/currentLocation/:nomAgent",
+        path: "/currentLocation",
         name: "CurrentLocationPage",
         component: ShowCurrentLocationPageComponent,
-        params: {
-            nomAgent: String,
-        }
     },
     {
         path: "/currentLocation/contrats",

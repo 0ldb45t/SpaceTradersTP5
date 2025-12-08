@@ -1,15 +1,18 @@
 <template>
   <div class="entete mt-5 d-flex flex-row align-items-center justify-content-between">
-    <h1 class="p-1 d-inline">TRADERS IN SPACE</h1>
+    <router-link :to="{ name: 'RegisterAgentPage' }" style="text-decoration: none; color: inherit;">
+      <h1 class="p-1 d-inline">TRADERS IN SPACE</h1>
+    </router-link>
+
     <p class="bg-danger" v-if="statusData.serverResets !== undefined">
-        Prochaine réinitalisation: {{ new Date(statusData.serverResets.next) }}
-      </p>
+      Prochaine réinitalisation: {{ new Date(statusData.serverResets.next) }}
+    </p>
     <div class="me-3">
       <p class="mb-0">Agent {{ agent.symbol }}</p>
       <p class="mb-0">Crédits: {{ agent.credits }}</p>
       <p class="mb-0">Id: {{ agent.accountId }}</p>
       <!-- <p class="mb-0">Jeton: {{ agentToken }}</p> -->
-       <!--J'ai mis la ligne du dessus en commentaire parce que c'est LAID-->
+      <!--J'ai mis la ligne du dessus en commentaire parce que c'est LAID-->
     </div>
   </div>
 </template>
@@ -33,10 +36,6 @@ const getCurrentAccount = async () => {
         .then(response => response.json())
         .then(json => statusData.value = json);
 };
-watch(
-    () => store.agentToken,
-    () => localAgent.value = store.agent
-);
 
 getCurrentAccount();
 </script>

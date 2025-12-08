@@ -4,7 +4,7 @@
             <div v-if="agent?.symbol !== '' && readytoMap" class="p-3 align-self-end borderGreen">
                 <h4>Position de {{ agent.symbol }} : [ x: {{ shipPosition.x }}, y: {{ shipPosition.y }} ]</h4>
                 <h4 class="p-0 m-0">Symbole du systeme: {{ shipPosition?.systemSymbol }}</h4>
-                <router-link to="/currentLocation/contrats">
+                <router-link :to="{ name: 'Contrats' }">
                     <button>Afficher les contrats</button>
                 </router-link>
                 <div v-for="trait in shipPosition.traits">
@@ -12,10 +12,7 @@
                     <p class="text-start textMid"> Description: {{ trait.description }} </p>
                     <hr class="borderGreen ms-5 me-5" />
                 </div>
-                <p>Position du WayPoint: { x: {{ shipPosition.x }}, y: {{ shipPosition.y }} }</p>
-
             </div>
-
         </div>
         <div class="data p-5 text-center flex-column borderGreen w-25 me-3" v-if="cell.length > 0">
             <strong>
