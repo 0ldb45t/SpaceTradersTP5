@@ -28,6 +28,10 @@ export const useAdminAgentStore = defineStore("spatial", () => {
   const MAIL = "bontempsbastien@gmail.com";
   const AGENT_TOKEN = undefined; //"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiNVBJS0VfNVBJRUdFTCIsInZlcnNpb24iOiJ2Mi4zLjAiLCJyZXNldF9kYXRlIjoiMjAyNS0xMS0zMCIsImlhdCI6MTc2NDUyNzI5Miwic3ViIjoiYWdlbnQtdG9rZW4ifQ.qLxp2tZGwXqs8Ae2nJhAvGbE9cdcED-mHEBrh4Lpfqdsw8HG0nSHKyW8XOwE15h1dFMtrl8n3SbdiYhjdhwfrRqkdkGxEr9B-qOIcGFHTpXVYJtUOlDWbNwtphjmkrfNqkuYNVToZiZAR-avjkITbZH4E84_Ae9UCozWDHmDgDzV_EqoTevNOjD3Io4SGGohDauKwoVHWxuEmZIqSqVJBQewxKi9ckoy71ejmJuET0fYj7z0hWjJ9aodJKHr9ifG8wVWixA9dBhpHrWfL-ZfBNNHMxS8aIrRzeaMmLjwjJJMsIMVYpSZbTt2fcJG-Acsg5jncDYVLsI7gi3_Q-PbHcJWoThw0KlAcz1Bx8mrGSnkp3zyLFZ8Kn0Bv_-mUFoWh5fa8agrFcmXh-vuKtfvI2NMRwtnOChh8Guncx8PddSB8JWE69uzBuy_K5Aycq6Gl7NXB0mQvfszzDeIMCgKt39m-Cj9ptE7YwW-iM0oWPdELZacYnXjnEYKLJoQHTk3vTxJHELD0AvdStw-AI23DYaldPf4EyIel3G8_KCLwPVgAmNSMSlOUB3jN2dOxlra3W1e9CLAQv3eMVOwSTNwWnvJk_6l_-6FGggSOg0X54OJ3KYy_tY_qVaz5rvso62MsMSmJLc4gQS9MEw3fIBDKdAdurGt_coAzOkDAYSy1ww"
   const localStorageToken = ref("");
+  const fetchOptions = {
+    method: "GET",
+    headers: { Authorization: "Bearer " + localStorageToken.value },
+  };
   const agentToken = computed(() => {
     return AGENT_TOKEN ?? localStorageToken.value;
   });
@@ -51,6 +55,7 @@ export const useAdminAgentStore = defineStore("spatial", () => {
     AGENT_TOKEN,
     localStorageToken,
     agentToken,
+    fetchOptions
   };
 });
 
@@ -70,6 +75,7 @@ export const useSystemStore = defineStore("systemData", () => {
     ['ENGINEERED_ASTEROID', 'bg-success-subtle'],
     ['ASTEROID_BASE', 'bg-dark-subtle'],
   ]
+
   async function getSystemData(agentToken) {
     const options = {
       method: "GET",
@@ -115,19 +121,28 @@ export const useSystemStore = defineStore("systemData", () => {
 });
 
 export const useMapStore = defineStore("map", () => {
+
   const cell = ref({});
   const canHover = ref(true);
+
+  const newWayPointData = ref({});
+
   function cellHoverd(aCell) {
     cell.value = aCell;
   }
-  function switchCanHover() {
+  function setNewWayPoint(newData) {
+    newWayPointData.value = newData;
+  }
+  async function switchCanHover() {
     canHover.value = canHover.value ? false : true;
   }
   return {
     cell,
     canHover,
+    newWayPointData,
     switchCanHover,
     cellHoverd,
+    setNewWayPoint
   };
 });
 
