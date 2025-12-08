@@ -1,5 +1,5 @@
 <template>
-    <div :class="cell[0].class" class="square flex-shrink-0" @mouseover="doWeDisplayData" @click="store.getNewCellData">
+    <div :class="cell[0].class" class="square flex-shrink-0" @mouseover="doWeDisplayData" @click="store.switchCanHover">
     </div>
 </template>
 <script setup>
@@ -14,7 +14,7 @@ if (props.cell === undefined)
     cell = [new Object({ class: 'noir' })];
 
 const doWeDisplayData = () => {
-    if (!canHover) return;
+    if (!canHover.value) return;
     if (cell[0].symbol !== undefined)
         store.cellHoverd(cell)
 };

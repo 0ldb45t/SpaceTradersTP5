@@ -120,14 +120,14 @@ export const useMapStore = defineStore("map", () => {
   function cellHoverd(aCell) {
     cell.value = aCell;
   }
-  function getNewCellData(aCell) {
-    canHover.value = false;
+  function switchCanHover() {
+    canHover.value = canHover.value ? false : true;
   }
   return {
     cell,
     canHover,
+    switchCanHover,
     cellHoverd,
-    getNewCellData
   };
 });
 

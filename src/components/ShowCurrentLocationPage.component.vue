@@ -15,20 +15,7 @@
         </div>
         <div class="w-25 d-flex flex-column mb-2" v-if="readytoMap">
             <div class="data text-center flex-column borderGreen w-100 mb-2" v-if="cell.length > 0">
-                <strong>
-                    <h4>
-                        Vous visez :
-                    </h4>
-                    <div v-for="(item, i) in cell">
-                        <p v-if="i === 0" :class="{ vousEtesIci: item.vousEtesIci }">{{ item.vousEtesIci }}</p>
-                        <p>
-                            {{ item.symbol }} : {{ item.type }} :
-                        </p>
-                        <p>
-                            [x:{{ item.x }}, y:{{ item.y }}]
-                        </p>
-                    </div>
-                </strong>
+                <PositionDiv />
             </div>
             <div class="borderGreen w-100">
                 <MapLegend />
@@ -46,7 +33,7 @@ import { onBeforeMount, computed, watch } from 'vue';
 import { useAdminAgentStore, useMapStore, useSystemStore } from '@/store';
 import MapComponent from './Map.component.vue';
 import MapLegend from './MapLegend.component.vue';
-
+import PositionDiv from './PositionDiv.component.vue';
 const agentStore = useAdminAgentStore();
 const systemStore = useSystemStore();
 const mapStore = useMapStore();
