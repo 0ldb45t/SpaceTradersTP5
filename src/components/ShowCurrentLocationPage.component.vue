@@ -14,10 +14,7 @@
             </div>
         </div>
         <div class="w-25 d-flex flex-column" v-if="readytoMap">
-            <div class="borderGreen w-100">
-                <MapLegend />
-            </div>
-            <div class="data text-center flex-column borderGreen w-100" v-if="cell.length > 0">
+            <div class="data text-center flex-column borderGreen w-100 mb-2" v-if="cell.length > 0">
                 <strong>
                     <h4>
                         Vous visez :
@@ -33,6 +30,10 @@
                     </div>
                 </strong>
             </div>
+            <div class="borderGreen w-100">
+                <MapLegend />
+            </div>
+
         </div>
         <div class="d-flex justify-content-center align-items-center flex-shrink-0 m-0 p-0">
             <MapComponent v-if="readytoMap" />
