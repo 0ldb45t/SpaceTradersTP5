@@ -3,10 +3,10 @@
     </div>
 </template>
 <script setup>
-import { defineProps } from 'vue';
+import { computed } from 'vue';
 import { useMapStore } from '@/store';
 const store = useMapStore();
-
+const canHover = computed(() => store.canHover);
 const props = defineProps({ cell: { type: Object, required: false } });
 let cell = props.cell;
 
@@ -14,6 +14,7 @@ if (props.cell === undefined)
     cell = [new Object({ class: 'noir' })];
 
 const doWeDisplayData = () => {
+    if (!canHover) return;
     if (cell[0].symbol !== undefined)
         store.cellHoverd(cell)
 };

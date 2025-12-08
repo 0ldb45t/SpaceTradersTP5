@@ -116,14 +116,16 @@ export const useSystemStore = defineStore("systemData", () => {
 
 export const useMapStore = defineStore("map", () => {
   const cell = ref({});
+  const canHover = ref(true);
   function cellHoverd(aCell) {
     cell.value = aCell;
   }
   function getNewCellData(aCell) {
-
+    canHover.value = false;
   }
   return {
     cell,
+    canHover,
     cellHoverd,
     getNewCellData
   };
