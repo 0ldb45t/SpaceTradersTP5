@@ -153,10 +153,30 @@ export const useContratStore = defineStore("contrat", () => {
     }
   }
 
+  async function acceptContrat(agentToken, contratId) {
+    const options = {
+      method: "POST",
+      headers: { Authorization: "Bearer " + agentToken },
+    };
+    try {
+      let response = await fetch(
+        fetchUrl + "my/contracts/" + contratId + "/accept",
+        options
+      );
+      if (response.ok) {
+        const json = await response.json();
+        contratInfo.value = json.data.contract;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return {
     contrats,
     contratInfo,
     getListContrats,
     getContratInfos,
+    acceptContrat
   };
 });
