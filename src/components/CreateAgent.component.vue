@@ -44,7 +44,7 @@ const postAgentRequest = () => (
             }
             console.log(jsonItem)
         })
-        .catch(error => { "console.log(error)" })
+        .catch(error => { console.log(error) })
 );
 </script>
 <style scoped>

@@ -1,6 +1,7 @@
 import { createWebHistory, createRouter } from "vue-router";
 import RegisterAgentPage from "@/components/RegisterAgentPage.component.vue";
 import ShowCurrentLocationPageComponent from "@/components/ShowCurrentLocationPage.component.vue";
+import ContratsComponent from "@/components/Contrats.component.vue";
 
 
 
@@ -11,12 +12,14 @@ const routes = [
         component: RegisterAgentPage,
     },
     {
-        path: "/currentLocation/:nomAgent",
+        path: "/currentLocation",
         name: "CurrentLocationPage",
         component: ShowCurrentLocationPageComponent,
-        params: {
-            nomAgent: String,
-        }
+    },
+    {
+        path: "/currentLocation/contrats",
+        name: "Contrats",
+        component: ContratsComponent
     }
 ];
 export const router = createRouter({

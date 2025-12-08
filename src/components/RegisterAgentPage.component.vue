@@ -1,13 +1,8 @@
 <template>
     <div class="w-100 d-flex flex-column justify-content-between mt-3 gap-2">
         <CreateAgent v-if="localAgent.symbol === undefined" :feedback="feedBack" />
-        <p v-if='feedBack[0] !== ""'>{{ feedBack[0] }}</p>
+        <p v-if='feedBack[0] !== ""' class="align-self-center">{{ feedBack[0] }}</p>
         <ShowCurrentLocationPageComponent v-if="localAgent.symbol !== undefined" />
-        <div v-if="statusData.serverResets !== undefined" class="text-center">
-            <p>
-                Cet agent a jusqu'au {{ new Date(statusData.serverResets.next) }} pour faire top1
-            </p>
-        </div>
     </div>
 </template>
 <script setup>
@@ -19,20 +14,14 @@ import ShowCurrentLocationPageComponent from './ShowCurrentLocationPage.componen
 
 const store = useAdminAgentStore();
 
-
 const fetchUrl = store.fetchUrl;
-const TOKEN = store.TOKEN;
 
 const feedBack = store.subscriptionFeedBack;
+
 const localAgent = ref({});
-const statusData = ref({});
 const options = {
     method: 'GET',
-    headers: { Accept: 'application/json', Authorization: 'Bearer ' + store.agentToken }
-};
-const optionsMain = {
-    method: 'GET',
-    headers: { Accept: 'application/json', Authorization: 'Bearer ' + TOKEN }
+    headers: { Authorization: 'Bearer ' + store.agentToken }
 };
 const fetchDataAgent = async () => {
     fetch(fetchUrl + "my/agent", options)
@@ -55,13 +44,7 @@ onBeforeMount(() => {
     else if (store.agentToken !== null) {
         fetchDataAgent()
     }
-    getCurrentAccount();
 });
-const getCurrentAccount = async () => {
-    fetch(fetchUrl, optionsMain)
-        .then(response => response.json())
-        .then(json => statusData.value = json);
-};
 watch(
     () => store.agentToken,
     () => localAgent.value = store.agent
