@@ -12,7 +12,7 @@
 import { ref } from 'vue';
 import { useAdminAgentStore } from '@/store';
 const store = useAdminAgentStore();
-const fetchUrl = store.fetchUrl;
+const fetchUrl = store.FETCH_URL;
 const TOKEN = store.TOKEN;
 const MAIL = store.MAIL;
 const symbol = ref("");

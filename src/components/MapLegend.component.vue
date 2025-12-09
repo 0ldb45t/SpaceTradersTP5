@@ -17,7 +17,7 @@
                     <p>{{ astre[0] }}</p>
                 </td>
                 <td class="d-flex align-content-center justify-content-center align-items-center">
-                    <div :class="astre[1]" class="bg-warning rond petit"></div>
+                    <div :class="astre[1]" class="rond petit"></div>
                 </td>
             </tr>
 

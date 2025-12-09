@@ -24,7 +24,7 @@ const store = useAdminAgentStore();
 let agent = store.agent;
 const statusData = ref({});
 const TOKEN = store.TOKEN;
-const fetchUrl = store.fetchUrl;
+const fetchUrl = store.FETCH_URL;
 const optionsMain = {
     method: 'GET',
     headers: { Authorization: 'Bearer ' + TOKEN }

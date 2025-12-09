@@ -14,7 +14,7 @@ import ShowCurrentLocationPageComponent from './ShowCurrentLocationPage.componen
 
 const store = useAdminAgentStore();
 
-const fetchUrl = store.fetchUrl;
+const fetchUrl = store.FETCH_URL;
 
 const feedBack = store.subscriptionFeedBack;
 

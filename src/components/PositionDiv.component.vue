@@ -1,25 +1,10 @@
 <template>
     <div class="data text-center flex-column w-100 mb-2" v-if="cell.length > 0">
         <strong>
-            <div v-if="!mapStore.canHover" class="w-100 d-flex flex-column align-items-center mt-2">
-                <div v-if="mapStore.newWayPointData.traits !== undefined"
-                    class="w-100 d-flex flex-column align-items-center mt-2">
-                    <div v-for="trait, i in mapStore.newWayPointData.traits" class="w-75 align-items-center">
-                        <p class="text-end textMid">{ Symbole: {{ trait.name }} }</p>
-                        <p class="text-start textMid"> Description: {{ trait.description }} </p>
-                    </div>
-                </div>
-            </div>
             <h4>
                 Vous visez :
             </h4>
             <div v-for="(item, i) in cell">
-                <div v-if="!mapStore.canHover">
-                    <button class="buttonDetails mt-2" @click="() => getWayPointData(i)">Obtenir des informations
-                        précises
-                        sur {{ item.symbol }}
-                    </button>
-                </div>
                 <p v-if="i === 0" :class="{ vousEtesIci: item.vousEtesIci }">{{ item.vousEtesIci }}</p>
                 <p>
                     {{ item.symbol }} : {{ item.type }} :
@@ -27,8 +12,28 @@
                 <p>
                     [x:{{ item.x }}, y:{{ item.y }}]
                 </p>
+                <div v-if="!mapStore.canHover && mapStore.newWayPointData.symbol !== item.symbol">
+                    <button class="buttonDetails mb-2" @click="() => getWayPointData(i)">Obtenir des informations
+                        précises
+                        sur {{ item.symbol }}
+                    </button>
+                </div>
+                <hr class="borderGreen ms-5 me-5" />
             </div>
         </strong>
+        <div v-if="!mapStore.canHover" class="w-100 d-flex flex-column align-items-center mt-2">
+            <div v-if="mapStore.newWayPointData.traits !== undefined"
+                class="w-100 d-flex flex-column align-items-center mt-2">
+                <h3>Traits de {{ mapStore.newWayPointData.symbol }}</h3>
+                <div v-for="trait, i in mapStore.newWayPointData.traits" class="w-75 align-items-center">
+                    <p class="text-end textMid">{ Symbole: {{ trait.name }} }</p>
+                    <p class="text-start textMid"> Description: {{ trait.description }} </p>
+                    <button class="buttonDetails">Accéder à {{ mapStore.newWayPointData.symbol }} <br />Coût:{{
+                        mapStore.getDistanceFromWaypoints(systemStore.position, mapStore.newWayPointData)
+                        }} Fuel</button>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script setup>
@@ -42,15 +47,13 @@ const mapStore = useMapStore();
 const cell = computed(() => mapStore.cell);
 const getWayPointData = async (i) => {
     const cell = mapStore.cell[i];
-    console.log(systemStore.position);
     try {
-        let response = await fetch(agentStore.fetchUrl +
+        let response = await fetch(agentStore.FETCH_URL +
             `systems/${systemStore.position.systemSymbol}/waypoints/${cell.symbol}`,
             agentStore.fetchOptions);
         if (response.ok) {
             const json = await response.json();
             mapStore.setNewWayPoint(json.data);
-            console.log(mapStore.newWayPointData);
         }
     } catch (error) { console.log(error) }
 };

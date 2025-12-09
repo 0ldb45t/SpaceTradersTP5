@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { ref, computed, reactive } from "vue";
-const fetchUrl = "https://api.spacetraders.io/v2/";
+const FETCH_URL = "https://api.spacetraders.io/v2/";
 
 export const useAdminAgentStore = defineStore("spatial", () => {
   const agent = reactive({
@@ -49,7 +49,7 @@ export const useAdminAgentStore = defineStore("spatial", () => {
     setAgent,
     setSubscriptionFeedBack,
     setLocalStorageToken,
-    fetchUrl,
+    FETCH_URL,
     TOKEN,
     MAIL,
     AGENT_TOKEN,
@@ -82,14 +82,14 @@ export const useSystemStore = defineStore("systemData", () => {
       headers: { Authorization: "Bearer " + agentToken },
     };
     try {
-      let response = await fetch(fetchUrl + "my/ships", options);
+      let response = await fetch(FETCH_URL + "my/ships", options);
       if (response.ok) {
         const json = await response.json();
         ships.value = json.data;
       }
       let shipData = ships.value[0].nav;
       response = await fetch(
-        fetchUrl +
+        FETCH_URL +
           `systems/${shipData.systemSymbol}/waypoints/${shipData.waypointSymbol}`,
         options
       );
@@ -98,7 +98,7 @@ export const useSystemStore = defineStore("systemData", () => {
         position.value = json.data;
       }
       response = await fetch(
-        fetchUrl + `systems/${shipData.systemSymbol}`,
+        FETCH_URL + `systems/${shipData.systemSymbol}`,
         options
       );
       if (response.ok) {
@@ -138,13 +138,17 @@ export const useMapStore = defineStore("map", () => {
     if (canHover.value)
       newWayPointData.value = {};
   }
+  function getDistanceFromWaypoints(a, b) {
+    return Math.round(Math.sqrt(Math.pow((a.x - b.x), 2) + Math.pow((a.y - b.y), 2)))
+  }
   return {
     cell,
     canHover,
     newWayPointData,
     switchCanHover,
     cellHoverd,
-    setNewWayPoint
+    setNewWayPoint,
+    getDistanceFromWaypoints
   };
 });
 
@@ -158,7 +162,7 @@ export const useContratStore = defineStore("contrat", () => {
       headers: { Authorization: "Bearer " + agentToken },
     };
     try {
-      let response = await fetch(fetchUrl + "my/contracts", options);
+      let response = await fetch(FETCH_URL + "my/contracts", options);
       if (response.ok) {
         const json = await response.json();
         contrats.value = json.data;
@@ -174,7 +178,7 @@ export const useContratStore = defineStore("contrat", () => {
     };
     try {
       let response = await fetch(
-        fetchUrl + "my/contracts/" + contratId,
+        FETCH_URL + "my/contracts/" + contratId,
         options
       );
       if (response.ok) {
@@ -193,7 +197,7 @@ export const useContratStore = defineStore("contrat", () => {
     };
     try {
       let response = await fetch(
-        fetchUrl + "my/contracts/" + contratId + "/accept",
+        FETCH_URL + "my/contracts/" + contratId + "/accept",
         options
       );
       if (response.ok) {

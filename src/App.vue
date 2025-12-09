@@ -26,4 +26,7 @@ html {
         font-style: normal;
 
 }
+.borderGreen {
+    border: 2px solid green;
+}
 </style>
