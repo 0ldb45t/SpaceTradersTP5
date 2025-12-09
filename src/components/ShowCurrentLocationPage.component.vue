@@ -53,9 +53,7 @@ watch(
 );
 </script>
 <style scoped>
-.vousEtesIci {
-    color: red;
-}
+
 
 .borderGreen {
     border: 2px solid green;

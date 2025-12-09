@@ -135,6 +135,8 @@ export const useMapStore = defineStore("map", () => {
   }
   async function switchCanHover() {
     canHover.value = canHover.value ? false : true;
+    if (canHover.value)
+      newWayPointData.value = {};
   }
   return {
     cell,

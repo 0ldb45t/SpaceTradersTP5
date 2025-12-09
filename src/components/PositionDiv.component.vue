@@ -1,12 +1,12 @@
 <template>
     <div class="data text-center flex-column w-100 mb-2" v-if="cell.length > 0">
         <strong>
-            <div v-if="!mapStore.canHover">
+            <div v-if="!mapStore.canHover" class="w-100 d-flex flex-column align-items-center mt-2">
                 <button class="buttonDetails mt-2" @click="getWayPointData">Obtenir des informations précises sur cet
                     astre
                 </button>
                 <div v-if="mapStore.newWayPointData.traits !== undefined"
-                    v-for="trait, i in mapStore.newWayPointData.traits">
+                    v-for="trait, i in mapStore.newWayPointData.traits" class="w-75 align-items-center">
                     <p class="text-end textMid">{ Symbole: {{ trait.name }} }</p>
                     <p class="text-start textMid"> Description: {{ trait.description }} </p>
                 </div>
@@ -15,6 +15,12 @@
                 Vous visez :
             </h4>
             <div v-for="(item, i) in cell">
+                <div v-if="!mapStore.canHover">
+                    <button class="buttonDetails mt-2" @click="() => getWayPointData(i)">Obtenir des informations
+                        précises
+                        sur {{ item.symbol }}
+                    </button>
+                </div>
                 <p v-if="i === 0" :class="{ vousEtesIci: item.vousEtesIci }">{{ item.vousEtesIci }}</p>
                 <p>
                     {{ item.symbol }} : {{ item.type }} :
@@ -35,8 +41,8 @@ const systemStore = useSystemStore();
 const mapStore = useMapStore();
 
 const cell = computed(() => mapStore.cell);
-const getWayPointData = async () => {
-    const cell = mapStore.cell[0];
+const getWayPointData = async (i) => {
+    const cell = mapStore.cell[i];
     console.log(systemStore.position);
     try {
         let response = await fetch(agentStore.fetchUrl +
@@ -56,5 +62,9 @@ const getWayPointData = async () => {
     border: 2px solid #3cff00;
     background-color: green;
     color: #3cff00;
+}
+
+.vousEtesIci {
+    color: red;
 }
 </style>
