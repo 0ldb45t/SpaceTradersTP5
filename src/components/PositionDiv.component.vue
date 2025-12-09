@@ -2,13 +2,12 @@
     <div class="data text-center flex-column w-100 mb-2" v-if="cell.length > 0">
         <strong>
             <div v-if="!mapStore.canHover" class="w-100 d-flex flex-column align-items-center mt-2">
-                <button class="buttonDetails mt-2" @click="getWayPointData">Obtenir des informations précises sur cet
-                    astre
-                </button>
                 <div v-if="mapStore.newWayPointData.traits !== undefined"
-                    v-for="trait, i in mapStore.newWayPointData.traits" class="w-75 align-items-center">
-                    <p class="text-end textMid">{ Symbole: {{ trait.name }} }</p>
-                    <p class="text-start textMid"> Description: {{ trait.description }} </p>
+                    class="w-100 d-flex flex-column align-items-center mt-2">
+                    <div v-for="trait, i in mapStore.newWayPointData.traits" class="w-75 align-items-center">
+                        <p class="text-end textMid">{ Symbole: {{ trait.name }} }</p>
+                        <p class="text-start textMid"> Description: {{ trait.description }} </p>
+                    </div>
                 </div>
             </div>
             <h4>
