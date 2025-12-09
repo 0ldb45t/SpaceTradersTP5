@@ -17,8 +17,9 @@
                         précises
                         sur {{ item.symbol }}
                     </button>
+                    <hr class="borderGreen ms-5 me-5" />
                 </div>
-                <hr class="borderGreen ms-5 me-5" />
+
             </div>
         </strong>
         <div v-if="!mapStore.canHover" class="w-100 d-flex flex-column align-items-center mt-2">
@@ -28,9 +29,13 @@
                 <div v-for="trait, i in mapStore.newWayPointData.traits" class="w-75 align-items-center">
                     <p class="text-end textMid">{ Symbole: {{ trait.name }} }</p>
                     <p class="text-start textMid"> Description: {{ trait.description }} </p>
-                    <button class="buttonDetails">Accéder à {{ mapStore.newWayPointData.symbol }} <br />Coût:{{
-                        mapStore.getDistanceFromWaypoints(systemStore.position, mapStore.newWayPointData)
-                        }} Fuel</button>
+                    <button
+                        v-if="navStore.getDistanceFromWaypoints(systemStore.position, mapStore.newWayPointData) < systemStore.ships[0].fuel.current"
+                        @click="navStore.navigateToWaypoint(systemStore.ships[0], mapStore.newWayPointData, agentStore.agentToken)"
+                        class="buttonDetails">
+                        Accéder à {{ mapStore.newWayPointData.symbol }} <br />Coût:
+                        {{ navStore.getDistanceFromWaypoints(systemStore.position, mapStore.newWayPointData) }} Fuel
+                    </button>
                 </div>
             </div>
         </div>
@@ -38,11 +43,12 @@
 </template>
 <script setup>
 import { computed } from 'vue';
-import { useAdminAgentStore, useMapStore, useSystemStore } from '@/store';
+import { useAdminAgentStore, useMapStore, useNavigationStore, useSystemStore } from '@/store';
 
 const agentStore = useAdminAgentStore();
 const systemStore = useSystemStore();
 const mapStore = useMapStore();
+const navStore = useNavigationStore();
 
 const cell = computed(() => mapStore.cell);
 const getWayPointData = async (i) => {
@@ -60,12 +66,6 @@ const getWayPointData = async (i) => {
 
 </script>
 <style scoped>
-.buttonDetails {
-    border: 2px solid #3cff00;
-    background-color: green;
-    color: #3cff00;
-}
-
 .vousEtesIci {
     color: red;
 }

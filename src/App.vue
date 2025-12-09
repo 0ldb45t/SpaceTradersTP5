@@ -29,4 +29,9 @@ html {
 .borderGreen {
     border: 2px solid green;
 }
+.buttonDetails {
+    border: 2px solid #3cff00;
+    background-color: green;
+    color: #3cff00;
+}
 </style>

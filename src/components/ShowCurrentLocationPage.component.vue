@@ -4,8 +4,15 @@
             <div v-if="agent?.symbol !== '' && readytoMap" class="p-3 align-self-end borderGreen">
                 <h4>Position de {{ agent.symbol }} : [ x: {{ shipPosition.x }}, y: {{ shipPosition.y }} ]</h4>
                 <h4 class="p-0 m-0 text-end">Symbole du systeme: <strong>{{ shipPosition?.systemSymbol }}</strong></h4>
-                <h4 class="mt-1">Reserve de fuel de {{ ships[0].symbol }} : {{ ships[0].fuel.current }}/{{
-                    ships[0].fuel.capacity }}
+                <h4 class="mt-1">
+                    Reserve de fuel de {{ ships[0].symbol }} : {{ ships[0].fuel.current }}/{{ ships[0].fuel.capacity }}
+                </h4>
+                <h4 class="p-0 m-0 text-end">
+                    Statut du vaisseau:
+                    <button class="buttonDetails"
+                        @click="() => navStore.dockUndockShip(ships[0], agentStore.agentToken)">
+                        {{ ships[0].nav.status }}
+                    </button>
                 </h4>
                 <hr class="borderGreen ms-5 me-5" />
                 <div v-for="trait, i in shipPosition.traits">
@@ -31,13 +38,15 @@
 </template>
 <script setup>
 import { onBeforeMount, computed, watch } from 'vue';
-import { useAdminAgentStore, useMapStore, useSystemStore } from '@/store';
+import { useAdminAgentStore, useMapStore, useNavigationStore, useSystemStore } from '@/store';
 import MapComponent from './Map.component.vue';
 import MapLegend from './MapLegend.component.vue';
 import PositionDiv from './PositionDiv.component.vue';
 const agentStore = useAdminAgentStore();
 const systemStore = useSystemStore();
 const mapStore = useMapStore();
+const navStore = useNavigationStore();
+
 const agent = agentStore.agent;
 const shipPosition = computed(() => systemStore.position);
 const readytoMap = computed(() => systemStore.readytoMap);
