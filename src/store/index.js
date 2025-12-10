@@ -149,55 +149,7 @@ export const useMapStore = defineStore("map", () => {
 
   };
 });
-export const useNavigationStore = defineStore("navigation", () => {
 
-  async function dockUndockShip(ship, agentToken) {
-    const toDockOrOrbit = ship.nav.status === "DOCKED" ? 'orbit' : 'dock'
-    const options = {
-      method: "POST",
-      headers: { Authorization: "Bearer " + agentToken },
-      /*body: JSON.stringify({
-        waypointSymbol: ":" + ship.waypointSymbol,
-      })*/
-    };
-    try {
-      let response = await fetch(`${FETCH_URL}my/ships/${ship.symbol}/${toDockOrOrbit}`, options);
-      if (response.ok) {
-        const json = await response.json();
-        console.log(json);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  async function navigateToWaypoint(ship, waypoint, agentToken) {
-
-    const options = {
-      method: "POST",
-      headers: { 'Content-Type': 'application/json', Authorization: "Bearer " + agentToken },
-      body: JSON.stringify({
-        waypointSymbol: waypoint.symbol,
-      })
-    };
-    try {
-      let response = await fetch(`${FETCH_URL}my/ships/${ship.symbol}/navigate`, options);
-      if (response.ok) {
-        const json = await response.json();
-        console.log(json);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  function getDistanceFromWaypoints(a, b) {
-    return Math.round(Math.sqrt(Math.pow((a.x - b.x), 2) + Math.pow((a.y - b.y), 2)))
-  }
-  return {
-    getDistanceFromWaypoints,
-    navigateToWaypoint,
-    dockUndockShip
-  };
-});
 export const useContratStore = defineStore("contrat", () => {
   const contrats = ref({});
   const contratInfo = ref({});

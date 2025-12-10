@@ -43,8 +43,8 @@
 </template>
 <script setup>
 import { computed } from 'vue';
-import { useAdminAgentStore, useMapStore, useNavigationStore, useSystemStore } from '@/store';
-
+import { useAdminAgentStore, useMapStore, useSystemStore } from '@/store';
+import { useNavigationStore } from '@/store/navigationStore';
 const agentStore = useAdminAgentStore();
 const systemStore = useSystemStore();
 const mapStore = useMapStore();
