@@ -14,8 +14,9 @@
                     <br />
                     }
                 </p>
-                <p>Coordonnées du système:[x: {{ system?.x }},y:{{ system?.y }}]</p>
-                <p v-if="agentStore.agentWayPoint">Coordonnées de l'astre :[x: {{ agentStore.agentWayPoint.x }},y:{{
+                <p>Coordonnées du système:<br />[x: {{ system?.x }},y:{{ system?.y }}]</p>
+                <p v-if="agentStore.agentWayPoint">Coordonnées de l'astre :<br />[x: {{ agentStore.agentWayPoint.x
+                }},y:{{
                     agentStore.agentWayPoint.y }}]</p>
                 <div v-if="system?.factions.length > 0">
                     <p v-for="faction in system?.faction">
@@ -27,7 +28,8 @@
         </div>
         <div class="p-5 d-flex flex-column align-items-center align-content-center borderGreen">
             <div v-if="agentStore.agentWayPoint?.traits">
-                <h2 class="text-center">Liste des points d'intérêts sur {{ agentStore.agentWayPoint.symbol }}</h2>
+                <h2 class="text-start">Liste des points d'intérêts sur {{ agentStore.agentWayPoint.symbol }}</h2>
+                <h3 class="text-end">Controllé par {{ agentStore.agentWayPoint.faction.symbol }}</h3>
                 <div v-for="trait, i in agentStore.agentWayPoint.traits">
                     <div class="d-flex flex-row justify-content-between">
                         <p class="text-end textMid">{ Symbole: {{ trait.name }} }</p>
@@ -63,7 +65,7 @@
                     <div v-if="systemStore.displayWayPoints">
                         <div v-for="astre in astres">
                             <div :class="{ vousEtesIci: astre.symbol === agentStore.agentWayPoint.symbol }"
-                                class="d-flex flex-row justify-content-between">
+                                class="d-flex flex-row justify-content-between itemList">
                                 <p>{{ astre.symbol }}</p>
                                 <p>Coordonnées : [x: {{ astre.x }},y:{{ astre.y }}]</p>
                             </div>
@@ -89,7 +91,13 @@ const astres = computed(() => systemStore.astresAgent);
 <style scoped>
 .vousEtesIci {
     border: 2px solid #3cff00;
+    background-color: rgb(135, 255, 135);
+        color: #0f3f00;
+    }
+    
+    .itemList:hover {
+        border: 2px solid #3cff00;
     background-color: rgb(0, 233, 0);
-    color: #0f3f00;
+    color: #000000;
 }
 </style>
