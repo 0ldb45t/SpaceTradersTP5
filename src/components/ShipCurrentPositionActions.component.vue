@@ -1,7 +1,6 @@
 <template>
-
     <div v-if="agent?.symbol !== '' && systemStore.readytoMap" class="p-3 align-self-end borderGreen">
-        <h4>Position de {{ agent.symbol }} : [ x: {{ shipPosition.x }}, y: {{ shipPosition.y }} ]</h4>
+        <h4>Position du vaisseau {{ ships[0].symbol }} : <br />[ x: {{ shipPosition.x }}, y: {{ shipPosition.y }} ]</h4>
         <h4 class="p-0 m-0 text-end">Symbole du systeme: <strong>{{ shipPosition?.systemSymbol }}</strong></h4>
         <h4>Lieu controlé par {{ shipPosition.faction.symbol }}</h4>
         <hr class="borderGreen ms-5 me-5" />
@@ -33,7 +32,8 @@
 <script setup>
 
 import { computed } from 'vue';
-import { useAdminAgentStore, useSystemStore } from '@/store';
+import { useAdminAgentStore } from '@/store';
+import { useSystemStore } from '@/store/systemStore';
 import { useNavigationStore } from '@/store/navigationStore';
 const agentStore = useAdminAgentStore();
 const systemStore = useSystemStore();
@@ -41,7 +41,6 @@ const navStore = useNavigationStore();
 
 const agent = agentStore.agent;
 const shipPosition = computed(() => systemStore.position);
-console.log(shipPosition);
 const ships = computed(() => systemStore.ships);
 
 </script>

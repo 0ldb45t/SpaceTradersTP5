@@ -7,9 +7,23 @@
       <p class="mb-0 w-25">Jeton (facile à copier mais moche)</p><span class="petit p-0 m-0">{{ store.agentToken
       }}</span>
     </div>
-    <p class="bg-danger p-1 mt-3 text-light z-1" v-if="statusData.serverResets !== undefined">
-      Prochaine réinitalisation: {{ new Date(statusData.serverResets.next) }}
-    </p>
+    <div class="d-flex flex-column">
+      <p class="bg-danger p-1 mt-3 text-light z-1" v-if="statusData.serverResets !== undefined">
+        Prochaine réinitalisation: {{ new Date(statusData.serverResets.next) }}
+      </p>
+      <div class="d-flex flex-row justify-content-center align-items-stretch">
+        <router-link :to="{ name: 'CurrentAgentLocationPage' }" style="text-decoration: none; color: inherit;">
+          <button class="p-1 d-inline buttonDetails">Agent</button>
+        </router-link>
+        <router-link :to="{ name: 'CurrentShipLocationPage' }" style="text-decoration: none; color: inherit;">
+          <button class="p-1 d-inline buttonDetails">Vaisseaux</button>
+        </router-link>
+        <router-link :to="{ name: 'Contrats' }" style="text-decoration: none; color: inherit;">
+          <button class="p-1 d-inline buttonDetails">Contrats</button>
+        </router-link>
+      </div>
+
+    </div>
     <div class="me-3">
       <p class="mb-0 text-end">Agent {{ agent.symbol }}</p>
       <p class="mb-0 text-end">Crédits: {{ agent.credits }}</p>

@@ -13,9 +13,8 @@
                     [x:{{ item.x }}, y:{{ item.y }}]
                 </p>
                 <div v-if="!mapStore.canHover && mapStore.newWayPointData.symbol !== item.symbol">
-                    <button class="buttonDetails mb-2" @click="() => getWayPointData(i)">Obtenir des informations
-                        précises
-                        sur {{ item.symbol }}
+                    <button class="buttonDetails mb-2" @click="() => getWayPointData(i)">
+                        Obtenir des informations précises sur {{ item.symbol }}
                     </button>
                     <hr class="borderGreen ms-5 me-5" />
                 </div>
@@ -43,7 +42,8 @@
 </template>
 <script setup>
 import { computed } from 'vue';
-import { useAdminAgentStore, useMapStore, useSystemStore } from '@/store';
+import { useAdminAgentStore, useMapStore } from '@/store';
+import { useSystemStore } from '@/store/systemStore';
 import { useNavigationStore } from '@/store/navigationStore';
 const agentStore = useAdminAgentStore();
 const systemStore = useSystemStore();

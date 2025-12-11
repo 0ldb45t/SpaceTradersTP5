@@ -1,5 +1,7 @@
 import { defineStore } from "pinia";
-import { useAdminAgentStore, useSystemStore } from ".";
+import { useAdminAgentStore } from ".";
+import { useSystemStore } from "./systemStore";
+
 const FETCH_URL = "https://api.spacetraders.io/v2/";
 export const useNavigationStore = defineStore("navigation", () => {
 

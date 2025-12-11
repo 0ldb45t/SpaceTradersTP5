@@ -20,7 +20,8 @@
 </template>
 <script setup>
 import { onBeforeMount, computed, watch } from 'vue';
-import { useAdminAgentStore, useMapStore, useSystemStore } from '@/store';
+import { useAdminAgentStore, useMapStore } from '@/store';
+import { useSystemStore } from '@/store/systemStore';
 import ShipCurrentPositionActions from './ShipCurrentPositionActions.component.vue';
 import MapComponent from './Map.component.vue';
 import MapLegend from './MapLegend.component.vue';

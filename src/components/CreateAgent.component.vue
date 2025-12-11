@@ -1,11 +1,9 @@
 <template>
-    <div class="d-flex flex-column justify-content-center align-items-center">
+    <div class="d-flex flex-column justify-content-center align-items-center gap-3">
         <h1>Pour commencer, créer votre agent:</h1>
-        <h4>Quel est le nom de votre agent? </h4>
+        <h4>Quel nom voulez-vous lui attribuer? </h4>
         <input class="text-center" v-model="symbol" />
-        <p>{{ symbol }}</p>
         <button @click="postAgentRequest">Créer votre agent</button>
-        <p>{{ feedBack[0] }}</p>
     </div>
 </template>
 <script setup>
@@ -17,7 +15,6 @@ const TOKEN = store.TOKEN;
 const MAIL = store.MAIL;
 const symbol = ref("");
 
-const feedBack = store.subscriptionFeedBack;
 const postAgentRequest = () => (
     fetch(`${fetchUrl}register`,
         {
@@ -31,7 +28,7 @@ const postAgentRequest = () => (
         })
         .then(jsonItem => {
             if (jsonItem.error !== undefined) {
-                store.setSubscriptionFeedBack(jsonItem.error.data.zodIssues[0].message);
+                store.setSubscriptionFeedBack(jsonItem.error.data.zodIssues ? jsonItem.error.data.zodIssues[0].message : jsonItem.error.message);
             }
             else {
                 const newToken = jsonItem.data.token;

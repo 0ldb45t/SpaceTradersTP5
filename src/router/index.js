@@ -2,6 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import RegisterAgentPage from "@/components/RegisterAgentPage.component.vue";
 import ShowCurrentLocationPageComponent from "@/components/ShowCurrentLocationPage.component.vue";
 import ContratsComponent from "@/components/Contrats.component.vue";
+import AgentComponent from "@/components/Agent.component.vue";
 
 
 
@@ -12,12 +13,17 @@ const routes = [
         component: RegisterAgentPage,
     },
     {
-        path: "/currentLocation",
-        name: "CurrentLocationPage",
+        path: "/currentShipLocation",
+        name: "CurrentShipLocationPage",
         component: ShowCurrentLocationPageComponent,
     },
     {
-        path: "/currentLocation/contrats",
+        path: "/currentAgentLocation",
+        name: "CurrentAgentLocationPage",
+        component: AgentComponent,
+    },
+    {
+        path: "/contrats",
         name: "Contrats",
         component: ContratsComponent
     }

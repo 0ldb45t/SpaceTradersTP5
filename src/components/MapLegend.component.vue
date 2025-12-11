@@ -6,7 +6,7 @@
         <table class="w-50 d-flex flex-column justify-content-between text-center mt-3">
             <tr class="d-flex w-100 flex-row justify-content-between">
                 <td>
-                    <p class="text-light">Votre position</p>
+                    <p class="text-light">Position de {{ store.ships[0].symbol }}</p>
                 </td>
                 <td class="d-flex align-content-center justify-content-center align-items-center">
                     <div class="position"></div>
@@ -25,7 +25,7 @@
     </div>
 </template>
 <script setup>
-import { useSystemStore } from '@/store';
+import { useSystemStore } from '@/store/systemStore';
 const store = useSystemStore();
 </script>
 <style scoped>

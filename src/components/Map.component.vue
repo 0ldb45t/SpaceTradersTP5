@@ -10,7 +10,7 @@
 <script setup>
 import MapCellComponent from './MapCell.component.vue';
 import { computed, ref } from 'vue';
-import { useSystemStore } from '@/store';
+import { useSystemStore } from '@/store/systemStore';
 
 const store = useSystemStore();
 
