@@ -11,15 +11,21 @@
       <p class="bg-danger p-1 mt-3 text-light z-1" v-if="statusData.serverResets !== undefined">
         Prochaine réinitalisation: {{ new Date(statusData.serverResets.next) }}
       </p>
-      <div class="d-flex flex-row justify-content-center align-items-stretch">
+      <div class="d-flex flex-row justify-content-center align-items-stretch gap-1">
         <router-link :to="{ name: 'CurrentAgentLocationPage' }" style="text-decoration: none; color: inherit;">
-          <button class="p-1 d-inline buttonDetails">Agent</button>
+          <button class="p-1 d-inline buttonDetails">
+            <p class="textButton mb-0">Agent</p>
+          </button>
         </router-link>
         <router-link :to="{ name: 'CurrentShipLocationPage' }" style="text-decoration: none; color: inherit;">
-          <button class="p-1 d-inline buttonDetails">Vaisseaux</button>
+          <button class="p-1 d-inline buttonDetails">
+            <p class="textButton mb-0">Vaisseaux</p>
+          </button>
         </router-link>
         <router-link :to="{ name: 'Contrats' }" style="text-decoration: none; color: inherit;">
-          <button class="p-1 d-inline buttonDetails">Contrats</button>
+          <button class="p-1 d-inline buttonDetails">
+            <p class="textButton mb-0">Contrats</p>
+          </button>
         </router-link>
       </div>
 
@@ -58,7 +64,9 @@ h1 {
   font-size: 90;
   margin: 0;
 }
-
+.textButton {
+  font-size: 1.5em;
+}
 .entete {
   background-color: rgba(0, 255, 0, 0.897);
   color: black;

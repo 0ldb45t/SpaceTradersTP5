@@ -31,10 +31,11 @@
                     <button
                         v-if="navStore.getDistanceFromWaypoints(systemStore.position, mapStore.newWayPointData) < systemStore.ships[0].fuel.current"
                         @click="navStore.navigateToWaypoint(systemStore.ships[0], mapStore.newWayPointData, agentStore.agentToken)"
-                        class="buttonDetails">
+                        class="buttonDetails mb-2">
                         Accéder à {{ mapStore.newWayPointData.symbol }} <br />Coût:
                         {{ navStore.getDistanceFromWaypoints(systemStore.position, mapStore.newWayPointData) }} Fuel
                     </button>
+                    <hr v-if="i < mapStore.newWayPointData.traits.length - 1" class="borderGreen ms-5 me-5" />
                 </div>
             </div>
         </div>

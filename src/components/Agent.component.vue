@@ -16,8 +16,8 @@
                 </p>
                 <p>Coordonnées du système:<br />[x: {{ system?.x }},y:{{ system?.y }}]</p>
                 <p v-if="agentStore.agentWayPoint">Coordonnées de l'astre :<br />[x: {{ agentStore.agentWayPoint.x
-                }},y:{{
-                    agentStore.agentWayPoint.y }}]</p>
+}},y:{{
+                        agentStore.agentWayPoint.y }}]</p>
                 <div v-if="system?.factions.length > 0">
                     <p v-for="faction in system?.faction">
                         Ce système est controllé par {{ faction.symbol }}
@@ -92,7 +92,7 @@ const astres = computed(() => systemStore.astresAgent);
 .vousEtesIci {
     border: 2px solid #3cff00;
     background-color: rgb(135, 255, 135);
-        color: #0f3f00;
+    color: #0f3f00;
     }
     
     .itemList:hover {
