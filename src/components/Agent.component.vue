@@ -11,7 +11,8 @@
                     <br />Nom: <strong>{{ system?.name }}</strong>,
                     <br />Symbole: <strong>{{ system?.symbol }}</strong>,
                     <br />Type: <strong>{{ system?.type }}</strong>
-                    <br />}
+                    <br />
+                    }
                 </p>
                 <p>Coordonnées du système:[x: {{ system?.x }},y:{{ system?.y }}]</p>
                 <p v-if="agentStore.agentWayPoint">Coordonnées de l'astre :[x: {{ agentStore.agentWayPoint.x }},y:{{
@@ -23,7 +24,6 @@
                 </div>
                 <p v-else>Ce systeme n'est controllé par aucune faction.</p>
             </div>
-
         </div>
         <div class="p-5 d-flex flex-column align-items-center align-content-center borderGreen">
             <div v-if="agentStore.agentWayPoint?.traits">

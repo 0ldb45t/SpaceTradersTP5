@@ -23,7 +23,7 @@ export const useSystemStore = defineStore("systemData", () => {
     ]
     async function setDisplayWayPoints(agentToken) {
         displayWayPoints.value = displayWayPoints.value ? false : true;
-        if (astres.value.length === 0) {
+        if (astresAgent.value.length === 0) {
             const options = {
                 method: "GET",
                 headers: { Authorization: "Bearer " + agentToken },
