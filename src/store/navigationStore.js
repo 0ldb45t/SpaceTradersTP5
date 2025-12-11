@@ -45,7 +45,6 @@ export const useNavigationStore = defineStore("navigation", () => {
         }
     }
     async function refuelShip(ship, agentToken) {
-        console.log(ship)
         const options = {
             method: "POST",
             headers: { 'Content-Type': 'application/json', Authorization: "Bearer " + agentToken },

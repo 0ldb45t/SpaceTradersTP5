@@ -37,7 +37,13 @@ const fetchDataAgent = async () => {
 }
 
 onBeforeMount(() => {
-    fetchDataAgent()
+    if (localStorage.getItem("agent") !== null) {
+        localAgent.value = JSON.parse(localStorage.getItem("agent"));
+        store.setAgent(localAgent.value);
+    }
+    else if (store.agentToken !== null) {
+        fetchDataAgent()
+    }
 });
 watch(
     () => store.agentToken,

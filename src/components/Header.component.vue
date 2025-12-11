@@ -3,16 +3,17 @@
     <router-link :to="{ name: 'RegisterAgentPage' }" style="text-decoration: none; color: inherit;">
       <h1 class="p-1 d-inline">TRADERS IN SPACE</h1>
     </router-link>
-
-    <p class="bg-danger p-1 mt-3 text-light" v-if="statusData.serverResets !== undefined">
+    <div class="mb-0 w-25">
+      <p class="mb-0 w-25">Jeton (facile à copier mais moche)</p><span class="petit p-0 m-0">{{ store.agentToken
+      }}</span>
+    </div>
+    <p class="bg-danger p-1 mt-3 text-light z-1" v-if="statusData.serverResets !== undefined">
       Prochaine réinitalisation: {{ new Date(statusData.serverResets.next) }}
     </p>
     <div class="me-3">
       <p class="mb-0 text-end">Agent {{ agent.symbol }}</p>
       <p class="mb-0 text-end">Crédits: {{ agent.credits }}</p>
       <p class="mb-0 text-end">Id: {{ agent.accountId }}</p>
-      <!-- <p class="mb-0">Jeton: {{ agentToken }}</p> -->
-      <!--J'ai mis la ligne du dessus en commentaire parce que c'est LAID-->
     </div>
   </div>
 </template>
@@ -26,14 +27,14 @@ const statusData = ref({});
 const TOKEN = store.TOKEN;
 const fetchUrl = store.FETCH_URL;
 const optionsMain = {
-    method: 'GET',
-    headers: { Authorization: 'Bearer ' + TOKEN }
+  method: 'GET',
+  headers: { Authorization: 'Bearer ' + TOKEN }
 };
 
 const getCurrentAccount = async () => {
-    fetch(fetchUrl, optionsMain)
-        .then(response => response.json())
-        .then(json => statusData.value = json);
+  fetch(fetchUrl, optionsMain)
+    .then(response => response.json())
+    .then(json => statusData.value = json);
 };
 
 getCurrentAccount();
@@ -47,5 +48,10 @@ h1 {
 .entete {
   background-color: rgba(0, 255, 0, 0.897);
   color: black;
+}
+
+.petit {
+  font-size: 0.2em !important;
+  line-height: 0%;
 }
 </style>
