@@ -6,7 +6,7 @@
                 <h1>Bienvenue <strong>{{ agent?.symbol }}</strong></h1>
                 <p>Nombre de vaisseaux: <strong>{{ agent?.shipCount }}</strong></p>
                 <p>Crédits: <strong>{{ agent?.credits }}</strong></p>
-                <h3>Vous êtes dans le système: </h3>
+                <h3 class="text-center">Vous êtes dans le système: </h3>
                 <p>{
                     <br />Nom: <strong>{{ system?.name }}</strong>,
                     <br />Symbole: <strong>{{ system?.symbol }}</strong>,
@@ -93,10 +93,10 @@ const astres = computed(() => systemStore.astresAgent);
     border: 2px solid #3cff00;
     background-color: rgb(135, 255, 135);
     color: #0f3f00;
-    }
-    
-    .itemList:hover {
-        border: 2px solid #3cff00;
+}
+
+.itemList:hover {
+    border: 2px solid #3cff00;
     background-color: rgb(0, 233, 0);
     color: #000000;
 }
