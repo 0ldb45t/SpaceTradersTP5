@@ -13,7 +13,7 @@ export const useNavigationStore = defineStore("navigation", () => {
         const toDockOrOrbit = ship.nav.status === "DOCKED" ? 'orbit' : 'dock'
         const options = {
             method: "POST",
-            headers: { Authorization: "Bearer " + agentToken },
+            headers: { Authorization: "Bearer " + agentToken.value },
         };
         try {
             let response = await fetch(`${FETCH_URL}my/ships/${ship.symbol}/${toDockOrOrbit}`, options);
@@ -31,7 +31,7 @@ export const useNavigationStore = defineStore("navigation", () => {
             return;
         const options = {
             method: "POST",
-            headers: { 'Content-Type': 'application/json', Authorization: "Bearer " + agentToken },
+            headers: { 'Content-Type': 'application/json', Authorization: "Bearer " + agentToken.value },
             body: JSON.stringify({
                 waypointSymbol: waypoint.symbol,
             })
@@ -49,7 +49,7 @@ export const useNavigationStore = defineStore("navigation", () => {
     async function refuelShip(ship, agentToken) {
         const options = {
             method: "POST",
-            headers: { 'Content-Type': 'application/json', Authorization: "Bearer " + agentToken },
+            headers: { 'Content-Type': 'application/json', Authorization: "Bearer " + agentToken.value },
             body: JSON.stringify({
                 units: (ship.fuel.capacity - ship.fuel.current),
                 fromCargo: false

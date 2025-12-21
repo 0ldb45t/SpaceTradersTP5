@@ -34,7 +34,9 @@ export const useAdminAgentStore = defineStore("spatial", () => {
     method: "GET",
     headers: { Authorization: "Bearer " + localStorageToken.value },
   };
-  const agentToken = computed(() => AGENT_TOKEN ?? localStorageToken.value);
+  const agentToken = computed(() =>
+    localStorageToken
+  );
 
   function setLocalStorageToken(token) {
     localStorageToken.value = token;
@@ -128,7 +130,7 @@ export const useContratStore = defineStore("contrat", () => {
   async function getListContrats(agentToken) {
     const options = {
       method: "GET",
-      headers: { Authorization: "Bearer " + agentToken },
+      headers: { Authorization: "Bearer " + agentToken.value },
     };
     try {
       let response = await fetch(FETCH_URL + "my/contracts", options);
@@ -143,7 +145,7 @@ export const useContratStore = defineStore("contrat", () => {
   async function getContratInfos(agentToken, contratId) {
     const options = {
       method: "GET",
-      headers: { Authorization: "Bearer " + agentToken },
+      headers: { Authorization: "Bearer " + agentToken.value },
     };
     try {
       let response = await fetch(
@@ -162,7 +164,7 @@ export const useContratStore = defineStore("contrat", () => {
   async function acceptContrat(agentToken, contratId) {
     const options = {
       method: "POST",
-      headers: { Authorization: "Bearer " + agentToken },
+      headers: { Authorization: "Bearer " + agentToken.value },
     };
     try {
       let response = await fetch(

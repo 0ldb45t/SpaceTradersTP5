@@ -1,7 +1,8 @@
 <template>
     <div class="h-100 mb-5">
         <HeaderComponent />
-        <div class="w-100 d-flex flex-column justify-content-between mt-3 gap-2">
+       <div class="w-100 d-flex flex-column justify-content-between mt-3 gap-2"
+            v-if="systemStore.readyToFetchSystemData">
             <RouterView />
         </div>
     </div>
@@ -10,28 +11,36 @@
 import { onBeforeMount } from 'vue';
 import { RouterView } from 'vue-router';
 import HeaderComponent from './components/Header.component.vue';
+import { Agent } from './models/agent';
 import { useAdminAgentStore } from './store'
+import { useSystemStore } from './store/systemStore';
 const store = useAdminAgentStore();
+const systemStore = useSystemStore();
+const fetchUrl = store.FETCH_URL;
+const options = {
+    method: "GET",
+    headers: { Authorization: "Bearer " + store.agentToken },
+};
 store.setLocalStorageToken(JSON.parse(localStorage.getItem("newAgentToken")));
 const fetchDataAgent = async () => {
-    fetch(fetchUrl + "my/agent", options)
+    fetch(fetchUrl + "my/agent", {
+        method: "GET",
+        headers: { Authorization: "Bearer " + store.agentToken.value },
+    })
         .then(response => {
             if (response.ok)
                 return response.json();
         })
         .then(json => {
             localStorage.setItem("agent", JSON.stringify(json.data))
-            store.agent.value = new Agent(json.data)
-            store.setAgent(store.agent.value);
+            store.agent = new Agent(json.data);
+            store.setAgent(store.agent);
+
+            systemStore.readyToFetchSystemData = true;
         })
 }
 onBeforeMount(() => {
-    if (localStorage.getItem("agent") !== null) {
-        store.setAgent(JSON.parse(localStorage.getItem("agent")));
-    }
-    else if (store.agentToken !== null) {
-        fetchDataAgent()
-    }
+    fetchDataAgent()
 });
 </script>
 <style>

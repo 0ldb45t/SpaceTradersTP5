@@ -1,7 +1,7 @@
 import { createWebHistory, createRouter } from "vue-router";
 import RegisterAgentPage from "@/components/RegisterAgentPage.component.vue";
 import ShowCurrentLocationPageComponent from "@/components/ShowCurrentLocationPage.component.vue";
-import ContratsComponent from "@/components/SchowCurrentContracts.component.vue";
+import ContratsComponent from "@/components/ShowCurrentContracts.component.vue";
 import AgentComponent from "@/components/Agent.component.vue";
 
 

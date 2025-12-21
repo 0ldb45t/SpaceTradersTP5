@@ -59,28 +59,35 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useAdminAgentStore, useContratStore } from '@/store';
 
 const agentStore = useAdminAgentStore();
 const contratStore = useContratStore();
 
 
-const agent = agentStore.agent;
-const token = agentStore.agentToken;
-contratStore.getListContrats(token);
+const agent = computed(()=>agentStore.agent);
 const contrats = computed(() => contratStore.contrats);
 
 const contratInfo = ref();
 
 async function afficherInfos(contratId) {
-    await contratStore.getContratInfos(token, contratId);
+    await contratStore.getContratInfos(agentStore.agentToken, contratId);
     contratInfo.value = contratStore.contratInfo;
 }
 async function accepterContrat(contratId) {
-    await contratStore.acceptContrat(token, contratId);
+    await contratStore.acceptContrat(agentStore.agentToken, contratId);
     contratInfo.value = contratStore.contratInfo;
 }
+onMounted(async ()=> {
+    if (agent.accountId !== undefined)
+        contratStore.getListContrats(agentStore.agentToken)
+    else 
+    {
+        await agentStore.getAgent();
+        contratStore.getListContrats(agentStore.agentToken)
+    }
+})
 </script>
 <style scoped>
 .conteneur {

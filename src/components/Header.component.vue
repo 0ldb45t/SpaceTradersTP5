@@ -1,30 +1,23 @@
 <template>
   <div class="entete mt-5 d-flex flex-row align-items-center justify-content-between">
     <router-link :to="{ name: 'RegisterAgentPage' }" style="text-decoration: none; color: inherit;">
-      <h1 class="p-1 d-inline">TRADERS IN SPACE</h1>
+     <h1 class="p-1 d-inline ms-2">TRADERS IN SPACE</h1>
     </router-link>
-    <div class="mb-0 w-25">
-      <p class="mb-0 w-25">Jeton (facile à copier mais moche)</p><span class="petit p-0 m-0">{{ store.agentToken
-      }}</span>
-    </div>
-    <div class="d-flex flex-column">
-      <p class="bg-danger p-1 mt-3 text-light z-1" v-if="statusData.serverResets !== undefined">
-        Prochaine réinitalisation: {{ new Date(statusData.serverResets.next) }}
-      </p>
-      <div class="d-flex flex-row justify-content-center align-items-stretch gap-1">
+   <div class="d-flex flex-column align-content-stretch align-items-stretch">
+      <div class="d-flex flex-row justify-content-center align-items-stretch gap-1 w-100">
         <router-link :to="{ name: 'CurrentAgentLocationPage' }" style="text-decoration: none; color: inherit;">
-          <button class="p-1 d-inline buttonDetails">
-            <p class="textButton mb-0">Agent</p>
+         <button class="p-3 buttonDetails">
+            <p class="textButton mb-0">AGENT</p>
           </button>
         </router-link>
         <router-link :to="{ name: 'CurrentShipLocationPage' }" style="text-decoration: none; color: inherit;">
-          <button class="p-1 d-inline buttonDetails">
-            <p class="textButton mb-0">Vaisseaux</p>
+         <button class="p-3 buttonDetails">
+            <p class="textButton mb-0">VAISSEAUX</p>
           </button>
         </router-link>
         <router-link :to="{ name: 'Contrats' }" style="text-decoration: none; color: inherit;">
-          <button class="p-1 d-inline buttonDetails">
-            <p class="textButton mb-0">Contrats</p>
+         <button class="p-3 buttonDetails">
+            <p class="textButton mb-0">CONTRATS</p>
           </button>
         </router-link>
       </div>
@@ -39,25 +32,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useAdminAgentStore } from '@/store';
 const store = useAdminAgentStore();
-let agent = store.agent;
-const statusData = ref({});
-const TOKEN = store.TOKEN;
-const fetchUrl = store.FETCH_URL;
-const optionsMain = {
-  method: 'GET',
-  headers: { Authorization: 'Bearer ' + TOKEN }
-};
+let agent = computed(() => store.agent);
 
-const getCurrentAccount = async () => {
-  fetch(fetchUrl, optionsMain)
-    .then(response => response.json())
-    .then(json => statusData.value = json);
-};
-
-getCurrentAccount();
 </script>
 <style scoped>
 h1 {

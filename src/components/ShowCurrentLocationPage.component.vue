@@ -31,7 +31,7 @@ const systemStore = useSystemStore();
 const mapStore = useMapStore();
 
 
-const agent = agentStore.agent;
+const agent = computed(() => agentStore.agent);
 const readytoMap = computed(() => systemStore.readytoMap);
 const cell = computed(() => mapStore.cell);
 

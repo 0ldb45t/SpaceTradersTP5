@@ -8,6 +8,7 @@ export const useSystemStore = defineStore("systemData", () => {
     const position = ref({});
     const astres = ref([]);
     const astresAgent= ref([]);
+    const readyToFetchSystemData = ref(false);
     const readytoMap = ref(false);
     const displayWayPoints = ref(false);
     const mapDataMap = [
@@ -26,7 +27,7 @@ export const useSystemStore = defineStore("systemData", () => {
         if (astresAgent.value.length === 0) {
             const options = {
                 method: "GET",
-                headers: { Authorization: "Bearer " + agentToken },
+                headers: { Authorization: "Bearer " + agentToken.value },
             };
             try {
                 let response = await fetch(
@@ -45,7 +46,7 @@ export const useSystemStore = defineStore("systemData", () => {
     async function getSystemData(agentToken) {
         const options = {
             method: "GET",
-            headers: { Authorization: "Bearer " + agentToken },
+            headers: { Authorization: "Bearer " + agentToken.value },
         };
         try {
             let response = await fetch(FETCH_URL + "my/ships", options);
@@ -84,6 +85,7 @@ export const useSystemStore = defineStore("systemData", () => {
         readytoMap,
         mapDataMap,
         displayWayPoints,
+        readyToFetchSystemData,
         getSystemData,
         setDisplayWayPoints
     };

@@ -1,8 +1,6 @@
 <template>
     <div class="w-100 d-flex flex-column justify-content-center align-items-center mt-3 mb-3">
-        <router-link :to="{ name: 'Contrats' }">
-            <button class="buttonDetails">Afficher les contrats</button>
-        </router-link>
+       <h3 style="text-decoration: underline;">Légende de la carte:</h3>
         <table class="w-50 d-flex flex-column justify-content-between text-center mt-3">
             <tr class="d-flex w-100 flex-row justify-content-between">
                 <td>
@@ -29,12 +27,7 @@ import { useSystemStore } from '@/store/systemStore';
 const store = useSystemStore();
 </script>
 <style scoped>
-.buttonDetails {
-    border: 2px solid #3cff00;
-    background-color: green;
-    color: #3cff00;
-    font-size: larger;
-}
+
 
 .position {
     background-color: rgba(0, 255, 0, 0.7);
