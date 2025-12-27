@@ -1,4 +1,7 @@
 <template>
+   <ModaleComponent>
+
+   
    <div class="modale d-flex flex-column align-items-center">
        <div class="modalHeader w-100 justify-content-between no=wrap d-flex flex-row p-3">
             <h1>Soute de {{ ship.symbol }}</h1>
@@ -11,14 +14,17 @@
             <li v-else>La soute est vide pour le moment!</li>
         </ul>
     </div>
+   </ModaleComponent>
 </template>
 <script setup>
+import ModaleComponent from './Modale.component.vue';
+
 const props = defineProps({ ship: { type: Object, required: true } });
 const ship = props.ship;
 </script>
 <style scoped>
 .modale {
-    z-index: 1000;
+    z-index: 1500;
     color: wheat;
     background-color: rgba(0, 255, 0, 0.897);
     color: black;
