@@ -1,6 +1,6 @@
 <template>
-    <div class="d-flex flex-row w-100 justify-content-around align-items-start gap-0">
-       <LoaderComponent v-if="systemStore.notReadytoDisplayMap" />
+   <div class="d-flex flex-row w-100 justify-content-around align-items-start gap-0 h-100">
+        <LoaderComponent v-if="!systemStore.readytoMap" />
         <div v-if="agent?.symbol !== '' && readytoMap"
             class="d-flex flex-column justify-content-start w-25 m-3 mt-0 me-0 gap-3">
             <ShipCurrentPositionActions />
