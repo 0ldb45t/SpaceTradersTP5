@@ -10,6 +10,7 @@ export const useSystemStore = defineStore("systemData", () => {
     const astresAgent= ref([]);
     const readyToFetchSystemData = ref(false);
     const readytoMap = ref(false);
+    const notReadytoDisplayMap = ref(true);
     const displayWayPoints = ref(false);
     const mapDataMap = [
         ['MOON', 'bg-info-subtle'],
@@ -21,7 +22,8 @@ export const useSystemStore = defineStore("systemData", () => {
         ['GAS_GIANT', 'bg-danger'],
         ['ENGINEERED_ASTEROID', 'bg-success-subtle'],
         ['ASTEROID_BASE', 'bg-dark-subtle'],
-    ]
+    ];
+    const coolDown = ref(0);
     async function setDisplayWayPoints(agentToken) {
         displayWayPoints.value = displayWayPoints.value ? false : true;
         if (astresAgent.value.length === 0) {
@@ -53,6 +55,7 @@ export const useSystemStore = defineStore("systemData", () => {
             if (response.ok) {
                 const json = await response.json();
                 ships.value = json.data;
+                coolDown.value = ships.value[0].cooldown.remainingSeconds;
             }
             let shipData = ships.value[0].nav;
             response = await fetch(
@@ -75,7 +78,7 @@ export const useSystemStore = defineStore("systemData", () => {
             }
         } catch (error) {
             console.log(error);
-        }
+        }        
     }
     return {
         ships,
@@ -83,7 +86,9 @@ export const useSystemStore = defineStore("systemData", () => {
         astres,
         astresAgent,
         readytoMap,
+        notReadytoDisplayMap,
         mapDataMap,
+        coolDown,
         displayWayPoints,
         readyToFetchSystemData,
         getSystemData,

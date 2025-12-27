@@ -57,7 +57,10 @@ const getWayPointData = async (i) => {
     try {
         let response = await fetch(agentStore.FETCH_URL +
             `systems/${systemStore.position.systemSymbol}/waypoints/${cell.symbol}`,
-            agentStore.fetchOptions);
+            {
+                method: "GET",
+                headers: { Authorization: "Bearer " + agentStore.localStorageToken },
+            });
         if (response.ok) {
             const json = await response.json();
             mapStore.setNewWayPoint(json.data);

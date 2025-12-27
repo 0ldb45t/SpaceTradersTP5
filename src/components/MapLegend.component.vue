@@ -1,6 +1,8 @@
 <template>
     <div class="w-100 d-flex flex-column justify-content-center align-items-center mt-3 mb-3">
-       <h3 style="text-decoration: underline;">Légende de la carte:</h3>
+       <button @click="() => openModale = openModale ? false : true" class="buttonDetails"
+            @onClose="() => openModale = false">
+            Afficher les infos de {{ store.ships[0].symbol }}</button>
         <table class="w-50 d-flex flex-column justify-content-between text-center mt-3">
             <tr class="d-flex w-100 flex-row justify-content-between">
                 <td>
@@ -17,17 +19,26 @@
                 <td class="d-flex align-content-center justify-content-center align-items-center">
                     <div :class="astre[1]" class="rond petit"></div>
                 </td>
-            </tr>
-
+           </tr>
         </table>
+       <ShipDataModal v-if="openModale" :ship="store.ships[0]" @onClose="() => openModale = false" />
     </div>
 </template>
 <script setup>
+import { ref } from 'vue';
 import { useSystemStore } from '@/store/systemStore';
+import ShipDataModal from "./ShipDataModal.component.vue";
+
 const store = useSystemStore();
+const openModale = ref(false);
 </script>
 <style scoped>
-
+.buttonDetails {
+    border: 2px solid #3cff00;
+    background-color: green;
+    color: #3cff00;
+    font-size: larger;
+}
 
 .position {
     background-color: rgba(0, 255, 0, 0.7);

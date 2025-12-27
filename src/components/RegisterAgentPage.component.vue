@@ -1,5 +1,5 @@
 <template>
-    <CreateAgent v-if="store.agentToken === null" :feedback="feedBack" />
+   <CreateAgent v-if="store.localStorageToken === null" :feedback="feedBack" />
     <p v-if='feedBack !== ""' class="align-self-center">{{ feedBack }}</p>
    <AgentComponent v-if="store.agent !== null && systemStore.readyToFetchSystemData" />
 </template>

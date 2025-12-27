@@ -81,6 +81,7 @@ const absoluteCoordinate = computed(() => {
         }
         returned.push(row);
     }
+    store.notReadytoDisplayMap = false;
     return returned;
 });
 

@@ -1,5 +1,6 @@
 <template>
     <div class="d-flex flex-row w-100 justify-content-around align-items-start gap-0">
+       <LoaderComponent v-if="systemStore.notReadytoDisplayMap" />
         <div v-if="agent?.symbol !== '' && readytoMap"
             class="d-flex flex-column justify-content-start w-25 m-3 mt-0 me-0 gap-3">
             <ShipCurrentPositionActions />
@@ -14,8 +15,7 @@
         </div>
         <div class="d-flex justify-content-center align-items-center flex-shrink-0 m-0 p-0">
             <MapComponent v-if="readytoMap" />
-        </div>
-
+       </div>
     </div>
 </template>
 <script setup>
@@ -26,6 +26,7 @@ import ShipCurrentPositionActions from './ShipCurrentPositionActions.component.v
 import MapComponent from './Map.component.vue';
 import MapLegend from './MapLegend.component.vue';
 import PositionDiv from './PositionDiv.component.vue';
+import LoaderComponent from './Loader.component.vue';
 const agentStore = useAdminAgentStore();
 const systemStore = useSystemStore();
 const mapStore = useMapStore();

@@ -65,6 +65,22 @@ export const useNavigationStore = defineStore("navigation", () => {
             console.log(error);
         }
     }
+    async function extract(ship, agentToken) {
+        const options = {
+            method: "POST",
+            headers: { Authorization: "Bearer " + agentToken.value },
+        };
+        try {
+            let response = await fetch(`${FETCH_URL}my/ships/${ship.symbol}/extract`, options);
+            if (response.ok) {
+                const json = await response.json();
+                systemStore.getSystemData(agentToken);
+                console.log(json)
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
     function getDistanceFromWaypoints(a, b) {
         return Math.round(Math.sqrt(Math.pow((a.x - b.x), 2) + Math.pow((a.y - b.y), 2)))
     }
@@ -72,6 +88,7 @@ export const useNavigationStore = defineStore("navigation", () => {
         getDistanceFromWaypoints,
         navigateToWaypoint,
         dockUndockShip,
-        refuelShip
+        refuelShip,
+        extract
     };
 });

@@ -1,8 +1,7 @@
 <template>
     <div class="h-100 mb-5">
         <HeaderComponent />
-       <div class="w-100 d-flex flex-column justify-content-between mt-3 gap-2"
-            v-if="systemStore.readyToFetchSystemData">
+       <div class="w-100 d-flex flex-column justify-content-between mt-3 gap-2">
             <RouterView />
         </div>
     </div>
@@ -17,10 +16,7 @@ import { useSystemStore } from './store/systemStore';
 const store = useAdminAgentStore();
 const systemStore = useSystemStore();
 const fetchUrl = store.FETCH_URL;
-const options = {
-    method: "GET",
-    headers: { Authorization: "Bearer " + store.agentToken },
-};
+
 store.setLocalStorageToken(JSON.parse(localStorage.getItem("newAgentToken")));
 const fetchDataAgent = async () => {
     fetch(fetchUrl + "my/agent", {
@@ -40,6 +36,7 @@ const fetchDataAgent = async () => {
         })
 }
 onBeforeMount(() => {
+    if (store.localStorageToken !== null)
     fetchDataAgent()
 });
 </script>

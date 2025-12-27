@@ -14,12 +14,19 @@
                 {{ ships[0].nav.status }}
             </button>
         </h4>
+       <p v-if="systemStore.coolDown !== 0">CoolDown: {{ systemStore.coolDown }}</p>
         <hr class="borderGreen ms-5 me-5" />
         <div v-for="trait, i in shipPosition.traits">
             <div class="d-flex flex-row justify-content-between">
                 <button class="buttonDetails" v-if="trait.name === 'Marketplace'"
                     @click="() => navStore.refuelShip(ships[0], agentStore.agentToken)">
                     Faire le plein
+                </button>
+               <button class="buttonDetails" v-if="
+                    trait.name === 'Mineral Deposits'
+                    || trait.name === 'Common Metal Deposits'"
+                    @click="() => navStore.extract(ships[0], agentStore.agentToken)">
+                    Extraire
                 </button>
                 <p class="text-end textMid">{ Symbole: {{ trait.name }} }</p>
             </div>
@@ -30,7 +37,6 @@
 
 </template>
 <script setup>
-
 import { computed } from 'vue';
 import { useAdminAgentStore } from '@/store';
 import { useSystemStore } from '@/store/systemStore';
